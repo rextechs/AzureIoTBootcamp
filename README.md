@@ -45,7 +45,7 @@
 [Azure IoTHub with Event Grid Lab](https://github.com/Azure-Samples/azureiotlabs/blob/master/EventGrid/README.md)
 
 
-### Module 7: Device Provisioning Service 
+### Lab 4 : Device Provisioning Service 
 
 **Duration**: 60 minutes
 
@@ -53,6 +53,19 @@
 
 
 ## Day 3
+
+### Lab 1 : Connect and Monitor Devices Using IoT Central  
+
+**Duration**: 60 minutes
+
+[Connect and Monitor Devices Using IoT Central](https://docs.microsoft.com/en-us/azure/iot-central/howto-connect-devkit)
+
+
+### Lab 2 : Intelligent Edge  
+
+**Duration**: 90 minutes
+
+[Connect and Monitor Devices Using IoT Central](https://docs.microsoft.com/en-us/azure/iot-central/howto-connect-devkit)
 
 
 
