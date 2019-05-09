@@ -8,7 +8,7 @@
 
 **Duration**: 60 minutes
 
-[Windows + Azure IoT Edge - Basic Lab] (... )
+[Windows + Azure IoT Edge - Basic Lab] (https://docs.microsoft.com/en-us/azure/iot-edge/quickstart)
 
 ### Lab 2: Windows + Azure IoT Edge - Advanced Lab 
 
@@ -41,14 +41,14 @@
 
 **Duration**: 30 minutes
 
-[Azure IoTHub with Event Grid Lab](https://github.com/Azure-Samples/azureiotlabs/blob/master/EventGrid/README.md)
+[Capture Device Events and Send Notifications ](https://github.com/Azure-Samples/azureiotlabs/blob/master/EventGrid/README.md)
 
 
 ### Lab 4 : Device Provisioning Service 
 
 **Duration**: 60 minutes
 
-[Azure Date Lake Analytics Lab](https://docs.microsoft.com/en-us/azure/iot-dps/how-to-connect-mxchip-iot-devkit)
+[Device Provisioning Service](https://docs.microsoft.com/en-us/azure/iot-dps/how-to-connect-mxchip-iot-devkit)
 
 
 ## Day 3
