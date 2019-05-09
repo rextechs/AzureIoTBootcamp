@@ -29,7 +29,9 @@
 
 **Duration**: 60 minutes
 
-[Azure IoTHub Lab with MXChip](" https://github.com/Azure-Samples/azureiotlabs/blob/master/IoTHub/README.md")
+[Azure IoTHub Lab with MXChip] ("IotHub/README.md")
+
+<!-- (" https://github.com/Azure-Samples/azureiotlabs/blob/master/IoTHub/README.md") -->
 
 
 ### Lab 2 : Create Azure Time Series Insights and Visualize Device Data
