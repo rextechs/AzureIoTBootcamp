@@ -43,3 +43,8 @@ https://github.com/Microsoft/Windows-iotcore-samples/tree/develop/Samples/EdgeMo
 ## Step 10 : Run AI
 
 ## Step 11 : Clean up
+
+# <span style="color:red"> Reference Content Below (to be deleted) </span>
+[SqueezeNetObjectDetection:](https://github.com/Microsoft/Windows-iotcore-samples/tree/develop/Samples/EdgeModules/SqueezeNetObjectDetection/cs)
+
+

@@ -1,4 +1,4 @@
-# Azure IoT Hands on Labs
+# Eco-system Bootcamp Hands on Labs
 
 <!-- ![Imported Script](images/ref_architecture.png "Header Image") -->
 
@@ -8,19 +8,19 @@
 
 **Duration**: 60 minutes
 
-[Windows + Azure IoT Edge -Basic Lab](https://docs.microsoft.com/en-us/azure/iot-edge/quickstart)
+[Windows + Azure IoT Edge -Basic Lab](Day1-HOL1.md)
 
 ### Lab 2: Windows + Azure IoT Edge - Advanced Lab
 
 **Duration**: 60-90 minutes
 
-[Windows + Azure IoT - Advanced Lab](https://github.com/Microsoft/Windows-iotcore-samples/tree/develop/Samples/EdgeModules/SqueezeNetObjectDetection/cs)
+[Windows + Azure IoT Edge -Basic Lab](Day1-HOL2.md)
 
 ### Lab 3: Windows IoT Core + IoT Edge Lab
 
 **Duration**: 60 minutes
 
-[Windows IoT Core + IoT Edge Lab](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-stream-analytics)
+[Windows + Azure IoT Edge -Basic Lab](Day1-HOL3.md)
 
 ## Day 2
 

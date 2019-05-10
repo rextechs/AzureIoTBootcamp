@@ -35,3 +35,6 @@
 ## Step 8 : Confirm ASA method
 
 ## Step 9 : Cleanup
+
+# <span style="color:red"> Reference Content Below (to be deleted) </span>
+[Windows IoT Core + IoT Edge Lab](https://docs.microsoft.com/en-us/azure/iot-edge/tutorial-deploy-stream-analytics)

@@ -41,3 +41,7 @@ We will use virtual machines, however, the same steps described in this article 
 ## Step 6 : Clean up
 
 <Remove Simulated Temperature Sensor>
+
+# <span style="color:red"> Reference Content Below (to be deleted) </span>
+
+[Windows + Azure IoT Edge -Basic Lab](https://docs.microsoft.com/en-us/azure/iot-edge/quickstart)
