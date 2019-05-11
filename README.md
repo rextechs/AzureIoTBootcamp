@@ -8,19 +8,20 @@
 
 **Duration**: 60 minutes
 
-[Windows + Azure IoT Edge -Basic Lab](Day1-HOL1.md)
+[Windows + Azure IoT Edge -Basic Lab](Day1-HOL1.md)  --> Rex
+
 
 ### Lab 2: Windows + Azure IoT Edge - Advanced Lab
 
 **Duration**: 60-90 minutes
 
-[Windows + Azure IoT Edge -Basic Lab](Day1-HOL2.md)
+[Windows + Azure IoT Edge -Basic Lab](Day1-HOL2.md) --> Rex
 
 ### Lab 3: Windows IoT Core + IoT Edge Lab
 
 **Duration**: 60 minutes
 
-[Windows + Azure IoT Edge -Basic Lab](Day1-HOL3.md)
+[Windows + Azure IoT Edge -Basic Lab](Day1-HOL3.md) --> Rex
 
 ## Day 2
 
@@ -28,25 +29,30 @@
 
 **Duration**: 60 minutes
 
-[Azure IoTHub with MXChip](https://github.com/Azure-Samples/azureiotlabs/blob/master/IoTHub/README.md)
+[Windows + Azure IoT Edge -Basic Lab](Day2-HOL1.md) --> Ryan 
+<!-- [Azure IoTHub with MXChip](https://github.com/Azure-Samples/azureiotlabs/blob/master/IoTHub/README.md) -->
 
-### Lab 2 : Create Azure Time Series Insights and Visualize Device Data
+### Lab 2 : Device Provisioning Service 
 
 **Duration**: 60 minutes
 
-[Time Series Insights Lab](https://github.com/Azure-Samples/azureiotlabs/blob/master/timeseriesinsights/README.md)
+[Device Provisioning Service](Day2-HOL2.md) --> Ryan 
 
-### Lab 3: Capture Device Events and Send Notifications
+### Lab 3 : Create Azure Time Series Insights and Visualize Device Data
+
+**Duration**: 60 minutes
+
+[Time Series Insights Lab](https://github.com/Azure-Samples/azureiotlabs/blob/master/timeseriesinsights/README.md) --> Ryan
+
+### Lab 4: Capture Device Events and Send Notifications
 
 **Duration**: 30 minutes
 
-[Capture Device Events and Send Notifications](https://github.com/Azure-Samples/azureiotlabs/blob/master/EventGrid/README.md)
+[Capture Device Events and Send Notifications](https://github.com/Azure-Samples/azureiotlabs/blob/master/EventGrid/README.md) -->Rex
 
-### Lab 4 : Device Provisioning Service
 
-**Duration**: 60 minutes
 
-[Device Provisioning Service](https://docs.microsoft.com/en-us/azure/iot-dps/how-to-connect-mxchip-iot-devkit)
+
 
 ## Day 3
 
@@ -54,10 +60,10 @@
 
 **Duration**: 60 minutes
 
-[Connect and Monitor Devices Using IoT Central](https://docs.microsoft.com/en-us/azure/iot-central/howto-connect-devkit)
+[Connect and Monitor Devices Using IoT Central](https://docs.microsoft.com/en-us/azure/iot-central/howto-connect-devkit) --> Rex
 
 ### Lab 2 : Intelligent Edge  
 
 **Duration**: 90 minutes
 
-[Connect and Monitor Devices Using IoT Central](https://docs.microsoft.com/en-us/azure/iot-central/howto-connect-devkit)
+[Connect and Monitor Devices Using IoT Central](https://docs.microsoft.com/en-us/azure/iot-central/howto-connect-devkit) --> Daisuke
