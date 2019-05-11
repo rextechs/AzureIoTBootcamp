@@ -42,7 +42,7 @@
 
 **Duration**: 60 minutes
 
-[Time Series Insights Lab](https://github.com/Azure-Samples/azureiotlabs/blob/master/timeseriesinsights/README.md) --> Ryan
+[Time Series Insights Lab](Day2-HOL3.md) --> Ryan
 
 ### Lab 4: Capture Device Events and Send Notifications
 
