@@ -15,13 +15,13 @@
 
 **Duration**: 60-90 minutes
 
-[Windows + Azure IoT Edge -Basic Lab](Day1-HOL2.md) --> Rex
+[Windows + Azure IoT Edge -Advanced Lab](Day1-HOL2.md) --> Rex
 
 ### Lab 3: Windows IoT Core + IoT Edge Lab
 
 **Duration**: 60 minutes
 
-[Windows + Azure IoT Edge -Basic Lab](Day1-HOL3.md) --> Rex
+[Windows + Azure IoT Core + IoT Edge Lab](Day1-HOL3.md) --> Rex
 
 ## Day 2
 
@@ -29,7 +29,7 @@
 
 **Duration**: 60 minutes
 
-[Windows + Azure IoT Edge -Basic Lab](Day2-HOL1.md) --> Ryan 
+[Connect to Azure IoT Hub using MXChip](Day2-HOL1.md) --> Ryan 
 <!-- [Azure IoTHub with MXChip](https://github.com/Azure-Samples/azureiotlabs/blob/master/IoTHub/README.md) -->
 
 ### Lab 2 : Device Provisioning Service 
