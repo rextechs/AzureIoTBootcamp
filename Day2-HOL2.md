@@ -1,33 +1,48 @@
----
-title: How to use Azure IoT Hub Device Provisioning Service auto-provisioning to register the MXChip IoT DevKit with IoT Hub  | Microsoft Docs
-description: How to use Azure IoT Hub Device Provisioning Service auto-provisioning to register the MXChip IoT DevKit with IoT Hub.
-author: liydu
-ms.author: liydu
-ms.date: 12/18/2018
-ms.topic: conceptual
-ms.service: iot-dps
-services: iot-dps
-manager: jeffya
----
+# Device Provisioning Service
 
-# Use Azure IoT Hub Device Provisioning Service auto-provisioning to register the MXChip IoT DevKit with IoT Hub
-
-This article describes how to use Azure IoT Hub Device Provisioning Service [auto-provisioning](concepts-auto-provisioning.md), to register the MXChip IoT DevKit with Azure IoT Hub. In this tutorial, you learn how to:
+In this lab, you learn how to:
 
 * Configure the global endpoint of the Device Provisioning service on a device.
 * Use a unique device secret (UDS) to generate an X.509 certificate.
 * Enroll an individual device.
 * Verify that the device is registered.
 
-The [MXChip IoT DevKit](https://aka.ms/iot-devkit) is an all-in-one Arduino-compatible board with rich peripherals and sensors. You can develop for it using [Azure IoT Device Workbench](https://aka.ms/iot-workbench) or [Azure IoT Tools](https://aka.ms/azure-iot-tools) extension pack in Visual Studio Code. The DevKit comes with a growing [projects catalog](https://microsoft.github.io/azure-iot-developer-kit/docs/projects/) to guide your prototype Internet of Things (IoT) solutions that take advantage of Azure services.
+## Create a new instance for the IoT Hub Device Provisioning Service
 
-## Before you begin
+1. Click the **Create a resource** button found on the upper left-hand corner of the Azure portal.
 
-To complete the steps in this tutorial, first do the following tasks:
+2. *Search the Marketplace* for the **Device provisioning service**. Select **IoT Hub Device Provisioning Service** and click the **Create** button. 
 
-* Configure your DevKit's Wi-Fi and prepare your development environment by following the steps in [Connect IoT DevKit AZ3166 to Azure IoT Hub in the cloud](/azure/iot-hub/iot-hub-arduino-iot-devkit-az3166-get-started).
-* Upgrade to the latest firmware (1.3.0 or later) with the [Update DevKit firmware](https://microsoft.github.io/azure-iot-developer-kit/docs/firmware-upgrading/) tutorial.
-* Create and link an IoT Hub with a Device Provisioning service instance by following the steps in [Set up the IoT Hub Device Provisioning Service with the Azure portal](/azure/iot-dps/quick-setup-auto-provision).
+3. Provide the following information for your new Device Provisioning service instance and click **Create**.
+
+    * **Name:** Provide a unique name for your new Device Provisioning service instance. If the name you enter is available, a green check mark appears.
+    * **Subscription:** Choose the subscription that you want to use to create this Device Provisioning service instance.
+    * **Resource group:** Choose the same resource group that contains the Iot hub you created above.
+    * **Location:** Select the closest location to your devices.
+
+      ![Enter basic information about your Device Provisioning service instance in the portal blade](./images/IoTHub-Lab/create-dps.png)  
+
+4. Click the notification button to monitor the creation of the resource instance. Once the service is successfully deployed, click **Pin to dashboard**, and then **Go to resource**.
+
+    ![Monitor the deployment notification](./images/IoTHub-Lab/pin-to-dashboard.png)
+
+## Link the IoT hub and your Device Provisioning service
+
+In this section, you will add a configuration to the Device Provisioning service instance. This configuration sets the IoT hub for which devices will be provisioned.
+
+1. Click the **All resources** button from the left-hand menu of the Azure portal. Select the Device Provisioning service instance that you created in the preceding section.  
+
+2. On the Device Provisioning Service summary blade, select **Linked IoT hubs**. Click the **+ Add** button seen at the top. 
+
+3. On the **Add link to IoT hub** page, provide the following information to link your new Device Provisioning service instance to an IoT hub. Then click  **Save**. 
+
+    * **Subscription:** Select the subscription containing the IoT hub that you want to link with your new Device Provisioning service instance.
+    * **Iot hub:** Select the IoT hub to link with your new Device Provisioning service instance.
+    * **Access Policy:** Select **iothubowner** as the credentials for establishing the link with the IoT hub.  
+
+      ![Link the hub name to link to the Device Provisioning service instance in the portal blade](./images/IoTHub-Lab/link-iot-hub-to-dps-portal.png)  
+
+3. Now you should see the selected hub under the **Linked IoT hubs** blade. You might need to click **Refresh** to show **Linked IoT hubs**.
 
 ## Open sample project
 
@@ -74,7 +89,7 @@ In device code, you need to specify the [Device provisioning endpoint](/azure/io
 1. In the Azure portal, select the **Overview** pane of your Device Provisioning service and note down the **Global device endpoint** and **ID Scope** values.
   ![Device Provisioning Service Global Endpoint and ID Scope](images/how-to-connect-mxchip-iot-devkit/dps-global-endpoint.png)
 
-1. Open **DeKitDPS.ino**. Find and replace `[Global Device Endpoint]` and `[ID Scope]` with the values you just noted down.
+1. Open **DevKitDPS.ino**. Find and replace `[Global Device Endpoint]` and `[ID Scope]` with the values you just noted down.
   ![Device Provisioning Service Endpoint](images/how-to-connect-mxchip-iot-devkit/endpoint.png)
 
 1. Fill the `registrationId` variable in the code. Only alphanumeric, lowercase, and hyphen combination with a maximum of 128 characters is allowed. Also noted down the value.
@@ -105,8 +120,8 @@ The [attestation mechanism](/azure/iot-dps/concepts-device#attestation-mechanism
 1. In the Azure portal, open your Device Provision Service, navigate to Manage enrollments section, and click **Add individual enrollment**.
   ![Add individual enrollment](images/how-to-connect-mxchip-iot-devkit/add-enrollment.png)
 
-1. Click file icon next to **Primary Certificate .pem or .cer file** to upload the `.pem` file generated.
-  ![Upload .pem](images/how-to-connect-mxchip-iot-devkit/upload-pem.png)
+1. Click file icon next to **Primary Certificate .pem or .cer file** to upload the `.pem` file generated. Then click **Save**.
+  ![Upload .pem](images/how-to-connect-mxchip-iot-devkit/save-enrollment.png)
 
 ## Verify the DevKit is registered with Azure IoT Hub
 
@@ -119,24 +134,6 @@ Press the **Reset** button on your DevKit. You should see **DPS Connected!** on 
 1. On successful connection to the hub, you see the device appear in the IoT Hub Device Explorer.
   ![Device registered](./images/how-to-connect-mxchip-iot-devkit/device-registered.png)
 
-## Problems and feedback
+## Finished!
 
-If you encounter problems, refer to the Iot DevKit [FAQs](https://microsoft.github.io/azure-iot-developer-kit/docs/faq/), or reach out to the following channels for support:
-
-* [Gitter.im](https://gitter.im/Microsoft/azure-iot-developer-kit)
-* [Stack Overflow](https://stackoverflow.com/questions/tagged/iot-devkit)
-
-## Next steps
-
-In this tutorial, you learned to enroll a device securely to the Device Provisioning Service by using the Device Identity Composition Engine, so that the device can automatically register with Azure IoT Hub. 
-
-In summary, you learned how to:
-
-> [!div class="checklist"]
-> * Configure the global endpoint of the Device Provisioning service on a device.
-> * Use a unique device secret to generate an X.509 certificate.
-> * Enroll an individual device.
-> * Verify that the device is registered.
-
-Learn how to [Create and provision a simulated device](./quick-create-simulated-device.md).
-
+You have successfully set up autoprovisioning and registered a device with IoT Hub Device Provisioning Service. 

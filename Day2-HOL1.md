@@ -1,4 +1,4 @@
-# Introduction to Azure IoT Hub
+# Introduction to Azure IoT Hub and Connect MXChip
 
 ![IoT Hub](images/IoTHub-Lab/iothub.jpg)
 
@@ -13,10 +13,6 @@ Azure IoT Hub is a fully managed service that enables reliable and secure bidire
 
 ## Create Resource Group
 
-The infrastructure for your application is typically made up of many components – maybe a virtual machine, storage account, and virtual network, or a web app, database, database server, and 3rd party services. 
-
-You do not see these components as separate entities, instead you see them as related and interdependent parts of a single entity. You want to deploy, manage, and monitor them as a group. Azure Resource Manager enables you to work with the resources in your solution as a group. You can deploy, update, or delete all the resources for your solution in a single, coordinated operation. 
-
 Create a resource group to collect and manage all your application resources for this lab
 
 ![Resource Group](images/IoTHub-Lab/01_Create_Resource_Group.png)
@@ -28,7 +24,7 @@ Click on **+ Add** button
 Enter **Resource group name**,  Select **subscription** and **region**. Click on **Review + Create**, and after reviewing, click on **Create**.
 
 
-![Create Submit](images/IoTHub-Lab/03_Create_Resource_Group_Submit.png)
+![Create Resource Group Submit](images/IoTHub-Lab/03_Create_Resource_Group_Submit.png)
 
 ## Create IoThub
 
@@ -42,22 +38,22 @@ In the Name field, enter a unique name for your IoT hub. The name of your IoT hu
 
 Click on **Review + Create**, and after reviewing, click on **Create**.
 
-![Create IoTHub](images/IoTHub-Lab/05_Create_IoTHub_Submit_2.png)
+![Create IoTHub Submit](images/IoTHub-Lab/05_Create_IoTHub_Submit_2.png)
 
 
 ## Register a device
 
 Click on **IoT devices** and **+ Add**.
 
-![Create IoTHub](images/IoTHub-Lab/register-device.png)
+![Add IoTHub Device](images/IoTHub-Lab/register-device.png)
 
 Give your device a descriptive **Device ID** and click **Save**.
 
-![Create IoTHub](images/IoTHub-Lab/register-device2.png)
+![Save IoTHub Device](images/IoTHub-Lab/register-device2.png)
 
 Select your device and copy the connection string. Save the connection string to use later in the lab. 
 
-![Create IoTHub](images/IoTHub-Lab/connection-string.png)
+![Device Connection String](images/IoTHub-Lab/connection-string.png)
 
 
 ## Connect MXChip Device
@@ -73,7 +69,7 @@ Hook up the following hardware to your computer:
 * DevKit board
 * Micro-USB cable
 
-![Required hardware](images/IoTHub-Lab/MxChip_hardware.jpg)
+![Required hardware](images/IoTHub-Lab/MxChip_hardware.png)
 
 To connect the DevKit to your computer, follow these steps:
 
@@ -106,7 +102,7 @@ Now, use another Wi-Fi enabled device (computer or mobile phone) to connect to t
 
 Open **192.168.0.1** in the browser. Select the Wi-Fi that you want the IoT DevKit connect to, type the Wi-Fi password, then paste the device connection string you made note of previously. Then click **Save**. 
 
-![Network info and Connect button](images/IoTHub-Lab/MXChip_wifi-configuration-ui.png)
+![Wi-Fi](images/IoTHub-Lab/MXChip_wifi-configuration-ui.png)
 
 When the connection succeeds, the DevKit reboots in a few seconds. You then see the Wi-Fi name and IP address on the screen.
 
@@ -123,10 +119,10 @@ After Wi-Fi is configured, your credentials will persist on the device for that 
 
 Follow these steps to prepare the development environment for DevKit:
 
-1. Launch VS Code, look for **Arduino** in the extension marketplace and install it. This extension provides enhanced experiences for developing on Arduino platform.
+1. *If the Arduino extension is already installed, you can skip this step.* Launch VS Code, look for **Arduino** in the extension marketplace and install it. This extension provides enhanced experiences for developing on Arduino platform.
     ![Install Arduino](images/IoTHub-Lab/install-arduino.png)
 
-2. Look for **Azure IoT Tools** in the extension marketplace and install it.
+2. *If the Azure IoT Tools extension is already installed, you can skip this step.* Look for **Azure IoT Tools** in the extension marketplace and install it.
     ![Install Azure IoT Tools](images/IoTHub-Lab/install-azure-iot-tools.png)
 
 3. Configure VS Code with Arduino settings.
