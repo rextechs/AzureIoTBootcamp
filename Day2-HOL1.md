@@ -2,29 +2,12 @@
 
 ![IoT Hub](images/IoTHub-Lab/iothub.jpg)
 
-Azure IoT Hub is a fully managed service that enables reliable and secure bidirectional communications between millions of IoT devices and a solution back end. Azure IoT Hub:
+Azure IoT Hub is a fully managed service that enables reliable and secure bidirectional communications between millions of IoT devices and a solution back end.
 
-* Provides multiple device-to-cloud and 
-* cloud-to-device communication options. These options include one-way messaging, file transfer, and request-reply methods.
-* Provides built-in declarative message routing to other Azure services.
-* Provides a queryable store for device metadata and synchronized state information.
-* Enables secure communications and access control using per-device security keys or X.509 certificates.
-* Provides extensive monitoring for device connectivity and device identity management events.
-* Includes device libraries for the most popular languages and platforms.
-
-## IoTHub: Connect, monitor, and manage billions of IoT assets
-
-* **Establish** bi-directional communication with billions of IoT devices
-* **Authenticate** per device for security-enhanced IoT solutions
-* **Register** devices at scale with IoT Hub Device Provisioning Service
-* **Manage** your IoT devices at scale with device management
-* **Extend** the power of the cloud to your edge device
 
 ### In this lab you will
 
 * Learn to Create IoT Hub
-
-* Learn to use Simulator to connect to IoT Hub and send Data
 
 * Learn to setup MXChip, connect to IoT Hub and send data
 
@@ -34,31 +17,22 @@ The infrastructure for your application is typically made up of many components 
 
 You do not see these components as separate entities, instead you see them as related and interdependent parts of a single entity. You want to deploy, manage, and monitor them as a group. Azure Resource Manager enables you to work with the resources in your solution as a group. You can deploy, update, or delete all the resources for your solution in a single, coordinated operation. 
 
-You use a template for deployment and that template can work for different environments such as testing, staging, and production. Resource Manager provides security, auditing, and tagging features to help you manage your resources after deployment. 
-
 Create a resource group to collect and manage all your application resources for this lab
 
 ![Resource Group](images/IoTHub-Lab/01_Create_Resource_Group.png)
-
-
 
 Click on **+ Add** button
 
 ![Add Resource Group](images/IoTHub-Lab/02_Create_Resource_Group_Create.png)
 
-Enter **Resource group name**,  Select **subscription** and **region**
+Enter **Resource group name**,  Select **subscription** and **region**. Click on **Review + Create**, and after reviewing, click on **Create**.
+
 
 ![Create Submit](images/IoTHub-Lab/03_Create_Resource_Group_Submit.png)
 
 ## Create IoThub
 
-Create an IoT Hub to connect your real device or simulator to this IoTHub and start sending data.
-
-Click on **Create a resource** and click on **Internet of Things**
-
-![Create IoTHub](images/IoTHub-Lab/iot.png)
-
-Click on **IoTHub**
+Click on **Create a resource** and click on **Internet of Things**. Then click on **IoTHub**.
 
 ![Create IoTHub](images/IoTHub-Lab/04_Create_IoTHub.png)
 
@@ -66,31 +40,198 @@ Make sure you select the resource group you created in previous step.
 
 In the Name field, enter a unique name for your IoT hub. The name of your IoT hub must be **unique** across all IoT hubs.
 
-In the Tier filed, select **S1 tier**.
-
-You can choose from several tiers depending on how many features you want and how many messages you send through your solution per day. The free tier is intended for testing and evaluation. It allows 500 devices to be connected to the IoT hub and up to 8,000 messages per day. Each Azure subscription can create one IoT Hub in the free tier.
-
-The **S1** tier allows total of 400,000 messages per unit per day.
-
-For details about the other tier options, see [Choosing the right IoT Hub tier](https://azure.microsoft.com/en-us/pricing/details/iot-hub/).
+Click on **Review + Create**, and after reviewing, click on **Create**.
 
 ![Create IoTHub](images/IoTHub-Lab/05_Create_IoTHub_Submit_2.png)
 
-## Connect Device and Send Data to IoThub
 
-This Lab assumes you are using MXChip as the Device
+## Register a device
 
-![MXChip](images/IoTHub-Lab/MxChip.jpg)
+Click on **IoT devices** and **+ Add**.
 
-### Prepare the MXChip by 
+![Create IoTHub](images/IoTHub-Lab/register-device.png)
 
-* updating firmware
-* connecting to Wifi
-* connecting to Azure to select a subscription and IoTHub
-* uploading device code
+Give your device a descriptive **Device ID** and click **Save**.
 
-[Prepare MXChip to Connect to IoTHub](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-arduino-iot-devkit-az3166-get-started)
+![Create IoTHub](images/IoTHub-Lab/register-device2.png)
 
-Once Device Connects to IoTHub, messages flow into IoThub
+Select your device and copy the connection string. Save the connection string to use later in the lab. 
 
-![Data Flow](images/IoTHub-Lab/06_IoTHub_DeviceCreated_Data_Flowing.png)
+![Create IoTHub](images/IoTHub-Lab/connection-string.png)
+
+
+## Connect MXChip Device
+
+![MXChip](images/IoTHub-Lab/MxChip.png)
+
+You can use the [MXChip IoT DevKit](https://microsoft.github.io/azure-iot-developer-kit/) to develop and prototype Internet of Things (IoT) solutions that take advantage of Microsoft Azure services. It includes an Arduino-compatible board with rich peripherals and sensors, an open-source board package, and a growing [projects catalog](https://microsoft.github.io/azure-iot-developer-kit/docs/projects/).
+
+### Prepare your hardware
+
+Hook up the following hardware to your computer:
+
+* DevKit board
+* Micro-USB cable
+
+![Required hardware](images/IoTHub-Lab/MxChip_hardware.jpg)
+
+To connect the DevKit to your computer, follow these steps:
+
+1. Connect the USB end to your computer.
+
+2. Connect the Micro-USB end to the DevKit.
+
+3. The green LED for power confirms the connection.
+
+   ![Hardware connections](images/IoTHub-Lab/MxChip_connect.jpg)
+
+## Configure Wi-Fi
+
+IoT projects rely on internet connectivity. Use the following instructions to configure the DevKit to connect to Wi-Fi.
+
+### Enter AP mode
+
+Hold down button B, push and release the reset button, and then release button B. Your DevKit enters AP mode for configuring Wi-Fi. The screen displays the service set identifier (SSID) of the DevKit and the configuration portal IP address.
+
+![Set AP Mode](images/IoTHub-Lab/set-ap-mode.gif)
+
+
+### Connect to DevKit AP
+
+Now, use another Wi-Fi enabled device (computer or mobile phone) to connect to the DevKit SSID (highlighted in the previous image). Leave the password empty.
+
+![Network info and Connect button](images/IoTHub-Lab/MxChip_connect-ssid.png)
+
+### Configure Wi-Fi for the DevKit
+
+Open **192.168.0.1** in the browser. Select the Wi-Fi that you want the IoT DevKit connect to, type the Wi-Fi password, then paste the device connection string you made note of previously. Then click **Save**. 
+
+![Network info and Connect button](images/IoTHub-Lab/MXChip_wifi-configuration-ui.png)
+
+When the connection succeeds, the DevKit reboots in a few seconds. You then see the Wi-Fi name and IP address on the screen.
+
+> [!NOTE]
+> You will need a 2.4GHz network for IoT DevKit to work. The WiFi module on the IoT DevKit is not compatible with 5GHz network. Check [FAQ](https://microsoft.github.io/azure-iot-developer-kit/docs/faq/#wi-fi-configuration) for more details.
+
+After Wi-Fi is configured, your credentials will persist on the device for that connection, even if the device is unplugged. For example, if you configure the DevKit for Wi-Fi in your home and then take the DevKit to the office, you will need to reconfigure AP mode (starting at the step in the "Enter AP Mode" section) to connect the DevKit to your office Wi-Fi.
+
+## Start using the DevKit
+
+## Prepare the development environment
+
+### Configure Azure IoT Tools
+
+Follow these steps to prepare the development environment for DevKit:
+
+1. Launch VS Code, look for **Arduino** in the extension marketplace and install it. This extension provides enhanced experiences for developing on Arduino platform.
+    ![Install Arduino](images/IoTHub-Lab/install-arduino.png)
+
+2. Look for **Azure IoT Tools** in the extension marketplace and install it.
+    ![Install Azure IoT Tools](images/IoTHub-Lab/install-azure-iot-tools.png)
+
+3. Configure VS Code with Arduino settings.
+
+    In Visual Studio Code, click `F1` to open the command palette. Then click search for and select **"Open Settings (JSON)"** to open the **settings.json** file.
+    ![Install Azure IoT Tools](images/IoTHub-Lab/open-settings.png)
+    
+    Add following lines to configure Arduino depending on your platform: 
+
+    * **Windows**:
+      
+        ```json
+        "arduino.path": "C:\\Program Files (x86)\\Arduino",
+        "arduino.additionalUrls": "https://raw.githubusercontent.com/VSChina/azureiotdevkit_tools/master/package_azureboard_index.json"
+        ```
+
+    * **macOS**:
+
+        ```json
+        "arduino.path": "/Applications",
+        "arduino.additionalUrls": "https://raw.githubusercontent.com/VSChina/azureiotdevkit_tools/master/package_azureboard_index.json"
+        ```
+
+    * **Ubuntu**:
+    
+        Replace the **{username}** placeholder below with your username.
+
+        ```json
+        "arduino.path": "/home/{username}/Downloads/arduino-1.8.8",
+        "arduino.additionalUrls": "https://raw.githubusercontent.com/VSChina/azureiotdevkit_tools/master/package_azureboard_index.json"
+        ```
+
+4. Click `F1` to open the command palette, type and select **Arduino: Board Manager**. Search for **AZ3166** and install the latest version.
+    ![Install DevKit SDK](images/IoTHub-Lab/install-az3166-sdk.png)
+
+
+Now you are all set with preparing and configuring your development environment. Let us build the “Hello World” sample for IoT: sending temperature telemetry data to Azure IoT Hub.
+
+## Build your first project
+
+### Open sample code from sample gallery
+
+1. Make sure your IoT DevKit is **not connected** to your computer. Start VS Code first, and then connect the DevKit to your computer.
+
+2. Click `F1` to open the command palette, type and select **Azure IoT Device Workbench: Open Examples...**. Then select **IoT DevKit** as board.
+
+3. In the IoT Workbench Examples page, find **Get Started** and click **Open Sample**. Then selects the default path to download the sample code.
+    ![Open sample](images/IoTHub-Lab/open-sample.png)
+
+### Select IoT Hub and device
+
+In the new opened project window, click `F1` to open the command palette, type and select **Azure IoT Device Workbench: Provision Azure Services...**. Follow the step by step guide to select your Azure IoT Hub and IoT Hub device.
+
+
+### Configure and compile device code
+
+1. In the bottom-right status bar, check the **MXCHIP AZ3166** is shown as selected board and serial port with **STMicroelectronics** is used.
+    ![Select board and COM](images/IoTHub-Lab/select-com.png)
+
+2. Click `F1` to open the command palette, type and select **Azure IoT Device Workbench: Configure Device Settings...**, then select **Config Device Connection String > Select IoT Hub Device Connection String**.
+
+3. On DevKit, hold down **button A**, push and release the **reset** button, and then release **button A**. Your DevKit enters configuration mode and saves the connection string.
+    ![Connection string](images/IoTHub-Lab/connection-string2.png)
+
+4. Click `F1` again, type and select **Azure IoT Device Workbench: Upload Device Code**. It starts compile and upload the code to DevKit.
+    ![Arduino upload](images/IoTHub-Lab/arduino-upload.png)
+
+The DevKit reboots and starts running the code.
+
+> [!NOTE]
+> If there is any errors or interruptions, you can always recover by running the command again.
+
+## Test the project
+
+### View the telemetry sent to Azure IoT Hub
+
+Click the power plug icon on the status bar to open the Serial Monitor:
+![Serial monitor](images/IoTHub-Lab/serial-monitor.png)
+
+The sample application is running successfully when you see the following results:
+
+* The Serial Monitor displays the message sent to the IoT Hub.
+* The LED on the MXChip IoT DevKit is blinking.
+
+![Serial monitor output](images/IoTHub-Lab/result-serial-output.png)
+
+### View the telemetry received by Azure IoT Hub
+
+You can use [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools) to monitor device-to-cloud (D2C) messages in IoT Hub.
+
+1. Sign in [Azure portal](https://portal.azure.com/), find the IoT Hub you created.
+    ![Azure portal](images/IoTHub-Lab/hostname.png)
+
+1. In the **Shared access policies** pane, click the **iothubowner policy**, and write down the Connection string of your IoT hub.
+    ![Azure IoT Hub connection string](images/IoTHub-Lab/azure-portal-conn-string.png)
+
+1. In VS Code, click `F1`, type and select **Azure IoT Hub: Set IoT Hub Connection String**. Copy the connection string into it.
+    ![Set Azure IoT Hub connection string](images/IoTHub-Lab/set-iothub-connection-string.png)
+
+1. Expand the **AZURE IOT HUB DEVICES** pane on the right, right click on the device name you created and select **Start Monitoring D2C Message**.
+    ![Monitor D2C Message](images/IoTHub-Lab/monitor-d2c.png)
+
+1. In **OUTPUT** pane, you can see the incoming D2C messages to the IoT Hub.
+    ![D2C message](images/IoTHub-Lab/d2c-output.png)
+
+## Finished!
+
+You have successfully connected an MXChip IoT DevKit to your IoT hub, and you have sent the captured sensor data to your IoT hub.
