@@ -48,10 +48,7 @@
 
 **Duration**: 30 minutes
 
-[Capture Device Events and Send Notifications](https://github.com/Azure-Samples/azureiotlabs/blob/master/EventGrid/README.md) -->Rex
-
-
-
+[Capture Device Events and Send Notifications](Day2-HOL4.md) -->Rex
 
 
 ## Day 3
