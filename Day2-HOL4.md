@@ -186,4 +186,4 @@ Test your logic app by creating a new device to trigger an event notification em
   ![add device email](./images/LogicApp-Lab/add-device-email.png)
 
 5. Similarly, if you deleted a device from IoTHub, an event would be generated, which would in turn trigger logic app to send you an email notification. 
-6. 
+   
