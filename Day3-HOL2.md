@@ -10,7 +10,32 @@ In this Hands on Lab, we will create following scenarios
 
 ## Prerequisites
 
+In order to complete this lab, this instruction assumes you are familiar with :
+
+- Basics of Azure IoT Hub
+- Operating and navigate [Azure Portal](http://portal.azure.com)
+- Operating and navigating **Windows 10 UI**
+- Operating and navigating **Visual Studio Code UI**
+- Operating and navigating **Ubuntu 18.04 UI**, Terminal (bash or any console shell), and text editor such as gedit, vi, or nano editor
+
+## Overview of this hands on lab (HOL)
+
+This HOL consists of 9 major steps.  
+
+- [Step 1:](#step-1--azure-iot-hub) Setup the Azure IoT Hub
+- [Step 2:](#step-2--azure-iot-edge-device) Setup the Azure IoT Edge device in the IoT Hub
+- [Step 3:](#step-3--azure-iot-edge-runtime-environment) Connect to the target device (Ubuntu 18.04) Virtual Machine
+- [Step 4:](#step-4--clone-source-code) Clone Sample Source code from Azure Devops
+- [Step 5:](#step-5--azure-container-registry) Setup the Azure Container Registry 
+- [Step 6:](#step-6--modify-sample-code) Modify Sample Source Code
+- [Step 7:](#step-7--build-and-push-container-image) Build and Push IoT Edge module without AI
+- [Step 8:](#step-8--deploy-module) Deploy the container
+- [Step 9:](#step-9--add-ai-inference-code) Add AI inference to your module
+- Step 10: Deploy new module
+
 ## Development Environment (DevEnv)
+
+***< Work in Progress>***
 
 In this lab, laptops / Surface Pro are pre-configured with following software/tools
 
@@ -26,6 +51,8 @@ In this lab, laptops / Surface Pro are pre-configured with following software/to
 - Putty
 
 ## Target Device
+
+***< Work in Progress>***
 
 Hyper-V Virtual Machines are pre-configured with following settings/software/tools
 
@@ -50,6 +77,8 @@ VNC Password : bootcamp
 
 ### Module Functionality
 
+***< Work in Progress>***
+
 The sample code provides three major functionalities.  
 
 - Video Stream  
@@ -67,6 +96,8 @@ The sample code provides three major functionalities.
   The module runs a small web server functionality so you can see the video stream
 
 ### Controlling/Managing the Module  
+
+***< Work in Progress> Add Module Twin Sample***
 
 There are two ways you can manage/controlling the module  
 
@@ -87,9 +118,9 @@ There are two ways you can manage/controlling the module
   > [!TIP]  
   > You can also pre-configure Module Twin `desired` setting in the Deployment Manifest
 
-## Step 1 : Prepare Azure IoT Hub  
+## Step 1 : Azure IoT Hub  
 
-Using the Windows 10 DevEnv, create an IoT Hub if you do not have one.  
+Using the **Windows 10 DevEnv**, create an IoT Hub if you do not have one.  
 
 > [!TIP]  
 > Pick your favorite tool to create a new IoT Hub
@@ -101,12 +132,12 @@ Using the Windows 10 DevEnv, create an IoT Hub if you do not have one.
 |AZ CLI   |[Create an IoT hub using the Azure CLI](articles/iot-hub/iot-hub-create-using-cli.md)         |
 |VSCode   |[Create an IoT hub using the Azure IoT Tools for Visual Studio Code](articles/iot-hub/iot-hub-create-use-iot-toolkit.md)         |
 
-## Step 2 : Prepare Azure IoT Edge Device
+## Step 2 : Azure IoT Edge Device
 
-Using the Windows 10 DevEnv, create an IoT Edge Device in the IoT Hub you just created.  
+Using the **Windows 10 DevEnv**, create an IoT Edge Device in the IoT Hub from [Step 1](#step-1--prepare-azure-iot-hub).  
 
 > [!TIP]  
-> Pick your favorite tool to create a new IoT Hub.
+> Pick your favorite tool to create a new Azure IoT Edge device.
 
 |Tool     |Link     |
 |---------|---------|
@@ -114,9 +145,17 @@ Using the Windows 10 DevEnv, create an IoT Edge Device in the IoT Hub you just c
 |AZ CLI   |[Register a new Azure IoT Edge device with Azure CLI](articles/iot-edge/how-to-register-device-cli.md)         |
 |VSCode   |[Register a new Azure IoT Edge device from Visual Studio Code](articles/iot-edge/how-to-register-device-vscode.md)         |
 
-## Step 3 : Install Azure IoT Edge Runtime Environment
+Please verify you can see the Azure IoT Edge Device in VSCode `Azure IoT Hub Devices` pane in the left bottom corner of VSCode UI.
 
-Install Azure IoT Edge Runtime to the Hyper-V VM.  
+![VSCode](images/IntelligentEdge/VSCode02.png)
+
+## Step 3 : Azure IoT Edge Runtime Environment
+
+Installing the Azure IoT Edge Runtime to the Hyper-V VM is x steps.
+
+1. Connect to Ubuntu console via SSH or VNC (Linux version of Remote Desktop)  
+2. Download and install libraries and the Azure IoT Edge runtime modules  
+3. Configure the Azure IoT Edge runtime to authenticate and connect to the IoT Hub from [Step 1](#step-1--prepare-azure-iot-hub)  
 
 ### Step 3.1 : Connect to Ubuntu VM  
 
@@ -129,9 +168,12 @@ The target Ubuntu installation is pre-configured to accept 2 options:
 > [!TIP]  
 > Feel Free to install your favorite SSH client and/or VNC Client software to the DevEnv. 
 
+> [!NOTE]  
+> Instructors will provide you Host Name and/or IP Address of VMs for your use
+
 #### Option 1 : SSH
 
-1. Start Putty on the DevEnv
+1. Start Putty on **Windows 10 DevEnv**
 1. Enter VM Host Name or IP Address
 
     ![VNCViewer](images/IntelligentEdge/Putty1.png)
@@ -141,63 +183,96 @@ The target Ubuntu installation is pre-configured to accept 2 options:
     ![VNCViewer](images/IntelligentEdge/Putty2.png)
 
 1. Login using following credential  
+
     ```bash
     **login as** : `iotbootcamp`  
     **password** : `bootcamp`  
     ```
+
     ![VNCViewer](images/IntelligentEdge/Putty3.png)
 
 #### Option 2 : VNC
 
-1. Start VNC Client on the DevEnv  
+1. Start VNC Client on **Windows 10 DevEnv**  
   ![VNCViewer](images/IntelligentEdge/VNC1.png)
 
-1. Enter VM Host Name or IP Address
+1. Enter VM Host Name or IP Address  
   ![VNCViewer](images/IntelligentEdge/VNC2.png)
 
 1. Dismiss Security Warning Pop-up  
-  You may want to select `Don't warn me about this again on this computer.` checkbox so you do not have to see this warning again.  
-  ![VNCViewer](images/IntelligentEdge/VNC3.png)
+  You may want to select `Don't warn me about this again on this computer.` checkbox.  
+  With this setting you do not have to see this warning again.  
+   ![VNCViewer](images/IntelligentEdge/VNC3.png)
 
 1. Enter Password `bootcamp` 
-  You may want to select `Remember password` checkbox so you do not need to enter password again
+  You may want to select `Remember password` checkbox so you do not need to enter password again  
   ![VNCViewer](images/IntelligentEdge/VNC4.png)
 
 1. You should see lock screen  
-  Hit `enter` or click with mouse to display login window
+  Hit `enter` or click with mouse to display login window  
   ![VNCViewer](images/IntelligentEdge/VNC5.png)
 
 1. Enter Password `bootcamp`  
   ![VNCViewer](images/IntelligentEdge/VNC6.png)
 
-1. You should see Ubuntu Desktop 
+1. You should see Ubuntu Desktop  
   ![VNCViewer](images/IntelligentEdge/VNC7.png)
 
-1. Hit `ctrl + alt + t` to open **Terminal**
+1. Hit `ctrl + alt + t` to open **Terminal**  
   ![VNCViewer](images/IntelligentEdge/VNC9.png)
 
 > [!TIP]  
 > Once you are connected, VNC Viewer remembers connections.  You can simply double click to connect again.  
 > ![VNCViewer](images/IntelligentEdge/VNC8.png)
 
-
 ### Step 3.2 : Install the Azure IoT Edge runtime
 
-Follow this instruction to install the Azure IoT Edge runtime on the Ubuntu VM
+Please follow the steps describe in [Install the Azure IoT Edge runtime on Linux (x64)](articles/iot-edge/how-to-install-iot-edge-linux.md)
 
-[Install the Azure IoT Edge runtime on Linux (x64)](articles/iot-edge/how-to-install-iot-edge-linux.md)
+### Step 3.3 : Verify connection
+
+Upon successful configuration and connection, the Azure IoT Edge runtime components `$edgeAgent` and `$edgeHub` should show **Connected** status (Green Icons) in VSCode.
+
+![VSCode](images/IntelligentEdge/VSCode03.png)
 
 ## Step 4 : Clone Source Code
 
+Clone the source code for the sample module from Azure Devops repo.  
+You may use `git` command line or `Git Desktop`.
+
+> [!NOTE]  
+> In this instruction, we will use `C:\Repo` folder.
+
+### Step 4.1 : Clone with Git command line
+
+1. On the **Windows 10 DevEnv laptop**, open `Command console` (or CMD) or `Powershell` console.
+1. Create a folder `C:\Repo`
+1. Navigate to `C:\Repo`
+1. Run `git clone` command
+
 ```bash
-
-git clone https://cdsiotbootcamp.visualstudio.com/bootcamp2019/_git/IntelligentEdgeHOL
-
+md C:\Repo
+cd C:\Repo
+git clone https://cdsiotbootcamp.visualstudio.com/bootcamp2019/_git/IntelligentEdgeHOL 
 ```
 
-## Step 5 : Prepare Azure Container Registry
+### Step 4.2 : Clone Source Code
 
-Using the Windows 10 DevEnv, create an instance of Azure Container Registry (ACR).  
+***< Work in Progress> Add screen shots***
+
+Git Desktop provides GUI environment, which may be more convenient.
+
+> [!WARNING]  
+> Github Desktop requires you to login to Github with your Github account.  
+> If you do not have Github account, please use git command line described in the [previous step](#step-41--clone-with-git-command-line)
+
+1. Start Github Desktop on **Windows 10 DevEnv laptop**
+1. Sign in to Github using your Github account
+1. Clone the sample source code from `https://cdsiotbootcamp@dev.azure.com/cdsiotbootcamp/bootcamp2019/_git/IntelligentEdgeHOL`
+
+## Step 5 : Azure Container Registry
+
+On the **Windows 10 DevEnv laptop**, create an instance of Azure Container Registry (ACR).  
 ACR is used to :
 
 - The DevEnv uploads (a.k.a. **Push**) container images  
@@ -216,7 +291,7 @@ ACR is used to :
 |AZ CLI   |[Quickstart: Create a private container registry using the Azure CLI](articles/container-registry/container-registry-get-started-azure-cli.md)       |
 |VSCode   | [Create a private container registry using Azure PowerShell](articles/container-registry/container-registry-get-started-powershell.md)        |
 
-## Step 6 : Modify Sample Code
+## Step 6 : Sample Code
 
 We will configure the sample code with some settings.  
 
@@ -227,24 +302,61 @@ We will configure the sample code with some settings.
 
 ### Step 6.1 : Open Sample Project
 
-1. Start VSCode
-1. From `File` -> `Open Folder`
-1. Select `IntelligentEdgeHOL` folder you cloned the sample code  
+1. Start VSCode On the **Windows 10 DevEnv laptop**, if you have not started yet  
+
+1. From `File` -> `Open Folder`  
+
+1. Select `IntelligentEdgeHOL` folder you cloned the sample code in the [previous step](#step-4--clone-source-code)  
     Example :  `C:\Repo\IntelligentEdgeHOL`
 
     ![VSCode](images/IntelligentEdge/VSCode01.png)
 
 ### Step 6.1 : Login to Azure
 
-This step is required so your can access IoT Hub and the Azure IoT Edge Devices in VSCode extension
+This step is required so your can access IoT Hub and the Azure IoT Edge Devices in VSCode extension.
+
+1. Open `Command Palette` in VSCode  
+  `ctrl + shift + p` or `[View] menu -> command palette`
+1. Type `sign` in command palette.  You should see `Azure : Sign in`  
+  Select `Azure : Sign in`  
+  
+  ![VSCode](images/IntelligentEdge/VSCode04.png)
+
+1. Complete the sign in process using browser
+  Browser should automatically open with Sign in page  
+
+  ![VSCode](images/IntelligentEdge/VSCode05.png)
 
 ### Step 6.2 : Login to ACR
 
 This step is required to push the containers to ACR
 
+1. Open `Terminal` in VSCode  
+  `ctrl + `` or `[View] menu -> Terminal`
+
+  ![VSCode](images/IntelligentEdge/VSCode06.png)
+
 ### Step 6.3 : Edit `.env` file
 
 This step is required for the module deployment.  The deployment manifest contains ACR credential so that the Azure IoT Edge runtime can access ACR to pull container(s)
+Update `.env` file for ACR Login credential
+
+1. Select `.env` file from Explorer pane
+1. Update ACR Login Server, User Name, and Password
+
+  ![VSCode](images/IntelligentEdge/VSCode07.png)
+
+Example :
+
+```bash
+CONTAINER_REGISTRY_URL=bootcampfy19acr.azurecr.io
+CONTAINER_REGISTRY_USERNAME=bootcampfy19acr
+CONTAINER_REGISTRY_PASSWORD=abcdefg1234567890
+```
+
+> [!TIP]  
+> You can get ACR login credential in Azure Portal  
+> ![ACR](images/IntelligentEdge/ACR01.png)
 
 ### Step 6.4 : Specify Video Source
 
@@ -256,6 +368,12 @@ This step is required for the module deployment.  The deployment manifest contai
 > [!TIP]  
 > Choose video that contains objects Yolo pre-trained model can recognize.  
 > Please see [the list](#yolo-pre-trained-model) of objects Yolo re-trained model can recognize.
+
+Example :
+
+```bash
+CONTAINER_VIDEO_SOURCE=https://www.youtube.com/watch?v=abcdEFGH
+```
 
 ## Step 7 : Build and Push Container Image
 
