@@ -6,7 +6,7 @@ Azure IoT Edge and Azure Stream Analytics are integrated so that you can create 
 
 Azure Stream Analytics provides a richly structured query syntax for data analysis both in the cloud and on IoT Edge devices. For more information about Azure Stream Analytics on IoT Edge, see [Azure Stream Analytics documentation](../stream-analytics/stream-analytics-edge.md).
 
-The Stream Analytics module in this lab calculates the average temperature over a rolling 30-second window. When that average reaches 70, the module sends an alert for the device to take action. In this case, that action is to reset the simulated temperature sensor. In a production environment, you might use this functionality to shut off a machine or take preventative measures when the temperature reaches dangerous levels. 
+The Stream Analytics module in this lab calculates the average temperature over a rolling 30-second window. When that average reaches 70, the module sends an alert for the device to take action. In this case, that action is to reset the simulated temperature sensor. In a production environment, you might use this functionality to shut off a machine or take preventative measures when the temperature reaches dangerous levels.
 
 In this lab, you learn how to:
 
@@ -20,10 +20,10 @@ In this lab, you learn how to:
 
 ## Step 1 : Register the IoT Core device as an Azure IoT Edge device
 
-In many occasion, command line is the only interface available to us. In this lab, we are going to use a different method than prior labs, the Command Line Interface (CLI), to create devices.   
+In some occasions, command line is the only interface available. In this lab, we are going to use a different method than prior labs, the Command Line Interface (CLI), to create devices. Since the IoT Core device is a small device with less resources, it is recommended to perform the following steps on your lab development machine. 
 
 
-### 1. Sing in to your Azure account. Run the az login command and follow the link to sign in from your web browser 
+### 1. Sing in to your Azure account. If you hadn't signed in to your account. Use the login command which will open a web browser, and sign in to your account with your credential. 
    ```cli
    az login
    ```
@@ -36,7 +36,6 @@ Use the following command to create a new device identity in your IoT hub:
    az iot hub device-identity create --device-id [device id] --hub-name [hub name] --edge-enabled
    ```
 
-
 This command includes three parameters:
 
 * **device-id**: Provide a descriptive name of your IoT Core device, which is unique to your IoT hub.
@@ -46,6 +45,13 @@ This command includes three parameters:
 * **edge-enabled**: This parameter declares that the device is for use with IoT Edge.
 
    ![az iot hub device-identity create output](images/IotCore-Lab/Create-edge-device.png)
+
+
+Note: If your environment did not have the device-identity extension installed, run the following command
+
+```cli
+   az extension add --name azure-cli-iot-ext
+```
 
 ### 3. View all devices
 
@@ -68,27 +74,27 @@ When you're ready to set up your device, you need the connection string that lin
 
 The value for the `device-id` parameter is case-sensitive. Don't copy the quotation marks around the connection string.
 
-## Step 2: Install IoT Edge on the IoT Core deive
+## Step 2: Install IoT Edge on the IoT Core device 
 
-### 1. Open a Powershell window as an Administrator:
+Note: The Intel Compute Stick is the IoT Core device for this lab.
+
+### 1. Open a shell window 
 
 ### 2. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
 ```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; `
-Deploy-IoTEdge
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
 ```
 
 ### 3. Run the Initialize-IoTEdge command to complete the installation process
 
 ```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; `
-Initialize-IoTEdge
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge
 ```
 
-### 4. Provide the device connection 
+### 4. Provide the device connection string
 
-## Step 3 : Confirm IoT Edge runtime is installed and running on the IoT Core device
+### 5. Confirm IoT Edge runtime is installed and running on the IoT Core device
 
 You can check the status of the IoT Edge service by: 
 
@@ -96,52 +102,7 @@ You can check the status of the IoT Edge service by:
 Get-Service iotedge
 ```
 
-## Step 4 : Deploy Simulated Temperature Sensor from Marketplace to Windows IoT Core device
-
-IoT Edge is used to connect devices and sensors to cloud. In this lab, we're going to use an existing device simulator from Azure Marketplace. 
-
-Azure Marketplace is an online applications and services marketplace where you can browse through a wide range of enterprise applications and solutions that are certified and optimized to run on Azure, including [IoT Edge modules](https://azuremarketplace.microsoft.com/marketplace/apps/category/internet-of-things?page=1&subcategories=iot-edge-modules).
-
-### 1. From Azure portal, navigate to Marketplace or type Marketplace at the Search bar and select Marketplace
-
-### 2. Within Marketplace, select **Get Started**, type in *simulated* at the search bar, then select Simulated Temperature Sensor 
-
-### 3. Click **Create**
-     
-### 4. Fill out the information on the Target Devices for IoT Edge Module
-
-1. Choose your subscription and the IoT Hub to which the target device is attached.
-
-2. Choose **Deploy to a device**.
-
-3. Enter the name of the device or select **Find Device** to browse among the devices registered with the hub and select the one you created earlier, which links to the Windows Server IoT 2019. 
-
-4. Click **Create** to continue the standard process of configuring a deployment manifest, including adding other modules if desired. Details for the new module such as image URI, create options, and desired properties are predefined but can be changed. 
-
-5. Click Next for the following steps, and finally click Submit to deploy the module to the Windows IoT Core device. 
-
-## Step 5 : Confirm Deployment, and Watch Data Being Sent 
-
-The module that you pushed creates sample data that you can use for testing. The simulated temperature sensor module generates environment data that you can use for testing later. The simulated sensor is monitoring both a machine and the environment around the machine. For example, this sensor might be in a server room, on a factory floor, or on a wind turbine. The message includes ambient temperature and humidity, machine temperature and pressure, and a timestamp. The IoT Edge tutorials use the data created by this module as test data for analytics.
-
-Confirm that the module deployed from the cloud is running on your IoT Edge device.
-
-```powershell
-iotedge list
-```
-
-   ![View three modules on your device](./images/WinServer-Lab/iotedge-list-2.png)
-
-View the messages being sent from the temperature sensor module to the cloud.
-
-```powershell
-iotedge logs SimulatedTemperatureSensor -f
-```
-
-   ![View the data from your module](./images/WinServer-Lab/iotedge-logs.png)
-
-
-## Step 4 : Create an Azure Stream Analytics Job
+## Step 3 : Create an Azure Stream Analytics Job
 
 In this section, you create an Azure Stream Analytics job to take data from your IoT hub, query the sent telemetry data from your device, and then forward the results to an Azure Blob storage container. 
 
@@ -149,7 +110,7 @@ In this section, you create an Azure Stream Analytics job to take data from your
 
 When you create an Azure Stream Analytics job to run on an IoT Edge device, it needs to be stored in a way that can be called from the device. You can use an existing Azure storage account, or create a new one now. 
 
-1. In the Azure portal, go to **Create a resource** > **Storage** > **Storage account - blob, file, table, queue**. 
+1. In the Azure portal, go to **Create a resource** > **Storage** > **Storage account**. 
 
 2. Provide the following values to create your storage account:
 
@@ -158,7 +119,7 @@ When you create an Azure Stream Analytics job to run on an IoT Edge device, it n
    | Name | Provide a unique name for your storage account. | 
    | Location | Choose a location close to you. |
    | Subscription | Choose the same subscription as your IoT hub. |
-   | Resource group | We recommend that you use the same resource group for all of the test resources that you create during the IoT Edge quickstarts and tutorials. For example, **IoTEdgeResources**. |
+   | Resource group | We recommend that you use the same resource group for all of the test resources that you create for all the labs.|
 
 3. Keep the default values for the other fields and select **Create**. 
 
@@ -172,7 +133,7 @@ When you create an Azure Stream Analytics job to run on an IoT Edge device, it n
    | ----- | ----- |
    | Job name | Provide a name for your job. For example, **IoTEdgeJob** | 
    | Subscription | Choose the same subscription as your IoT hub. |
-   | Resource group | We recommend that you use the same resource group for all of the test resources that you create during the IoT Edge quickstarts and tutorials. For example, **IoTEdgeResources**. |
+   | Resource group | We recommend that you use the same resource group for all of the test resources that you create for all the labs.|
    | Location | Choose a location close to you. | 
    | Hosting environment | Select **Edge**. |
  
@@ -223,7 +184,7 @@ Using the three elements of input, output, and query, this section creates a job
 
 11. Select **Save**.
 
-## Step 5. Configure IoT Edge settings for your IoT Core device
+## Step 5. Configure Storage for ASA Job
 
 To prepare your Stream Analytics job to be deployed on an IoT Edge device, you need to associate the job with a container in a storage account. When you go to deploy your job, the job definition is exported to the storage container. 
 
@@ -237,13 +198,15 @@ To prepare your Stream Analytics job to be deployed on an IoT Edge device, you n
 
 1. Select **Save**. 
 
+![storage account details](images/IoTCore-Lab/storage-account-details.png)
+
 ## Step 6. Deploy the Azure Stream Analytics job to your IoT Core device
 
 You are now ready to deploy the Azure Stream Analytics job on your IoT Core device. 
 
 In this section, you use the **Set Modules** wizard in the Azure portal to create a *deployment manifest*. A deployment manifest is a JSON file that describes all the modules that will be deployed to a device, the container registries that store the module images, how the modules should be managed, and how the modules can communicate with each other. Your IoT Edge device retrieves its deployment manifest from IoT Hub, then uses the information in it to deploy and configure all of its assigned modules. 
 
-For this tutorial, you deploy two modules. The first is **tempSensor**, which is a module that simulates a temperature and humidity sensor. The second is your Stream Analytics job. The sensor module provides the stream of data that your job query will analyze. 
+In this lab, you deploy two modules. The first is **Temperature Sensor**, which is a module that simulates a temperature and humidity sensor. The second is your Stream Analytics job. The sensor module provides the stream of data that your job query will analyze. 
 
 1. In the Azure portal, in your IoT hub, go to **IoT Edge**, and then open the details page for your IoT Edge device.
 
@@ -262,17 +225,17 @@ For this tutorial, you deploy two modules. The first is **tempSensor**, which is
    1. Select your subscription and the Azure Stream Analytics Edge job that you created. 
    1. Select **Save**.
 
-1. Once your Stream Analytics job is published to the storage container that you created, click on the module name to see how a Stream Analytics module is structured. 
+2. Once your Stream Analytics job is published to the storage container that you created, click on the **Configure** of your ASA module to see how a Stream Analytics module is structured. 
 
    The image URI points to a standard Azure Stream Analytics image. This is the same image used for every job that gets deployed to an IoT Edge device. 
 
    The module twin is configured with a desired property called **ASAJobInfo**. The value of that property points to the job definition in your storage container. This property is how the Stream Analytics image is configured with your specific job information. 
 
-1. Close the module page.
+3. Close the module page.
 
-1. Make a note of the name of your Stream Analytics module because you'll need it in the next step, then select **Next** to continue.
+4. Make a note of the name of your Stream Analytics module because you'll need it in the next step, then select **Next** to continue.
 
-1. Replace the default value in **Routes** with the following code. Update all three instances of _{moduleName}_ with the name of your Azure Stream Analytics module. 
+5. Replace the default value in **Routes** with the following code. Update all three instances of _{moduleName}_ with the name of your Azure Stream Analytics module. 
 
     ```json
     {
@@ -287,15 +250,15 @@ For this tutorial, you deploy two modules. The first is **tempSensor**, which is
 
    The routes that you declare here define the flow of data through the IoT Edge device. The telemetry data from tempSensor are sent to IoT Hub and to the **temperature** input that was configured in the Stream Analytics job. The **alert** output messages are sent to IoT Hub and to the tempSensor module to trigger the reset command. 
 
-1. Select **Next**.
+6. Select **Next**.
 
-1. In the **Review Deployment** step, select **Submit**.
+7. In the **Review Deployment** step, select **Submit**.
 
-1. Return to the device details page, and then select **Refresh**.  
+8. Return to the device details page, and then select **Refresh**.  
 
     You should see the new Stream Analytics module running, along with the IoT Edge agent module and the IoT Edge hub.
 
-    ![tempSensor and ASA module reported by device](images/IoTCore-Lab/module_output2.png)
+    ![tempSensor and ASA module reported by device](images/IoTCore-Lab/module-output2.png)
 
 ## Step 7: View the Data
 
@@ -306,9 +269,9 @@ Now you can go to your IoT Edge device to check out the interaction between the 
    ```cmd/sh
    iotedge list  
    ```
-   <!--
-   ![Docker output](images/IoTCore-Lab/docker_output.png)
-   -->
+   
+   ![Docker output](images/IoTCore-Lab/running-module-list.png)
+  
 2. View all system logs and metrics data. Use the Stream Analytics module name:
 
    ```cmd/sh
@@ -317,5 +280,5 @@ Now you can go to your IoT Edge device to check out the interaction between the 
 
 You should be able to watch the machine's temperature gradually rise until it reaches 70 degrees for 30 seconds. Then the Stream Analytics module triggers a reset, and the machine temperature drops back to 21. 
 
-   ![Reset command output into module logs](images/IoTCore-Lab/docker_log.png)
+   ![Reset command output into module logs](images/IoTCore-Lab/ASA-Alert-Log.png)
 

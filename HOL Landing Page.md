@@ -51,7 +51,6 @@
 
 [Capture Device Events and Send Notifications](Day2-HOL4.md) -->Rex
 
-
 ## Day 3
 
 ### Lab 1 : Connect and Monitor Devices Using IoT Central  

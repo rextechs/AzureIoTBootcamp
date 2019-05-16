@@ -64,7 +64,7 @@ INFO: When you're ready to set up your physical device, you'll need a connection
 
 INFO: you can type RDP from Window's search, then select then Remote Desktop Connection app
 
-### 2. Type in the IP address to your server and click **connect**
+### 2. Type in the hostname or IP address of your server and click **connect**
 
 ### 3. Login to your server
 
@@ -106,7 +106,7 @@ Azure Marketplace is an online applications and services marketplace where you c
 
 ### 1. From Azure portal, navigate to Marketplace or type Marketplace at the Search bar and select Marketplace
 
-### 2. Within Marketplace, select **Get Started**, type in *simulated* at the search bar, then select Simulated Temperature Sensor 
+### 2. Within Marketplace, select **Get Started**, type in *simulated* at the search bar, then select **Simulated Temperature Sensor** 
 
 ### 3. Click **Create**
      
@@ -116,13 +116,13 @@ Azure Marketplace is an online applications and services marketplace where you c
 
 2. Choose **Deploy to a device**.
 
-3. Enter the name of the device or select **Find Device** to browse among the devices registered with the hub and select the one you created earlier, which links to the Windows Server IoT 2019. 
+3. Enter the name of the device or select **Find Device** to browse among the devices registered with your IoTHub and select the device you created earlier, which links to the Windows Server IoT 2019. 
 
 4. Click **Create** to continue the standard process of configuring a deployment manifest, including adding other modules if desired. Details for the new module such as image URI, create options, and desired properties are predefined but can be changed. 
 
-5. Click Next for the following steps, and finally click Submit to deploy the module to the Windows Server. 
+5. Take the default setting for the next few steps, and finally click **Submit** to deploy the temperature simulator to the Windows Server. 
 
-## Step 5 : Confirm Deployment, and Watch Data Being Sent 
+## Step 5 : Confirm Temperature Simulator Module Deployment  
 
 The module that you pushed creates sample data that you can use for testing. The simulated temperature sensor module generates environment data that you can use for testing later. The simulated sensor is monitoring both a machine and the environment around the machine. For example, this sensor might be in a server room, on a factory floor, or on a wind turbine. The message includes ambient temperature and humidity, machine temperature and pressure, and a timestamp. The IoT Edge tutorials use the data created by this module as test data for analytics.
 
