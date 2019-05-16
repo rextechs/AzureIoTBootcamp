@@ -16,11 +16,11 @@ Prepare your device for the IoT Edge runtime installation.
 Install the repository configuration for **Ubuntu 18.04**:
 
 ```bash
-sudo apt-get update
-sudo apt-get install -y curl
-curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > ./microsoft-prod.list
-sudo cp ./microsoft-prod.list /etc/apt/sources.list.d/
-curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo apt-get update && \
+sudo apt-get install -y curl && \
+curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > ./microsoft-prod.list && \
+sudo cp ./microsoft-prod.list /etc/apt/sources.list.d/ && \
+curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
 sudo cp ./microsoft.gpg /etc/apt/trusted.gpg.d/
 
 ```
@@ -30,9 +30,9 @@ sudo cp ./microsoft.gpg /etc/apt/trusted.gpg.d/
 Azure IoT Edge relies on an [OCI-compatible](https://www.opencontainers.org/) container runtime. For production scenarios, we recommended that you use the [Moby-based](https://mobyproject.org/) engine provided below. It is the only container engine officially supported with Azure IoT Edge. Docker CE/EE container images are compatible with the Moby runtime.
 
 ```bash
-sudo apt-get update
-sudo apt-get install moby-engine
-sudo apt-get install moby-cli
+sudo apt-get update && \
+sudo apt-get install -y moby-engine && \
+sudo apt-get install -y moby-cli
 
 ```
 
@@ -43,8 +43,8 @@ The **IoT Edge security daemon** provides and maintains security standards on th
 The installation command also installs the standard version of the **iothsmlib** if not already present.
 
 ```bash
-sudo apt-get update
-sudo apt-get install iotedge
+sudo apt-get update && \
+sudo apt-get install -y iotedge
 
 ```
 
