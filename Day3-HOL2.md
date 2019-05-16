@@ -24,9 +24,9 @@ This HOL consists of 10 major steps and 1 optional step.
 
 - [Step 1:](#step-1--azure-iot-hub) Setup the Azure IoT Hub
 - [Step 2:](#step-2--azure-iot-edge-device) Setup the Azure IoT Edge device in the IoT Hub
-- [Step 3:](#step-3--azure-iot-edge-runtime-environment) Connect to the target device (Ubuntu 18.04) Virtual Machine
-- [Step 4:](#step-4--clone-source-code) Clone Sample Source code from Azure Devops
-- [Step 5:](#step-5--azure-container-registry) Setup the Azure Container Registry 
+- [Step 3:](#step-3--azure-iot-edge-runtime-environment) Connect to the target device (Ubuntu 18.04 Virtual Machine)
+- [Step 4:](#step-4--clone-source-code) Clone Sample Source Code from Azure Devops
+- [Step 5:](#step-5--azure-container-registry) Setup the Azure Container Registry (ACR) 
 - [Step 6:](#step-6--modify-sample-code) Modify Sample Source Code
 - [Step 7:](#step-7--build-and-push-container-image) Build and Push IoT Edge module without AI
 - [Step 8:](#step-8--deploy-module) Deploy the container
@@ -71,6 +71,10 @@ Hyper-V Virtual Machines are pre-configured with following settings/software/too
 - Ubuntu 18.04
 - SSH Server
 - VNC Server
+
+> [!IMPORTANT]  
+>   
+> Instructors will provide Hostname and/or IP Address of Ubuntu VM
 
 ### Ubuntu VM Credential
 
@@ -261,8 +265,6 @@ git clone https://cdsiotbootcamp.visualstudio.com/bootcamp2019/_git/IntelligentE
 
 ### Step 4.2 : Clone Source Code
 
-***< Work in Progress> Add screen shots***
-
 Git Desktop provides GUI environment, which may be more convenient.
 
 > [!WARNING]  
@@ -272,6 +274,8 @@ Git Desktop provides GUI environment, which may be more convenient.
 1. Start Github Desktop on **Windows 10 DevEnv laptop**
 1. Sign in to Github using your Github account
 1. Clone the sample source code from `https://cdsiotbootcamp@dev.azure.com/cdsiotbootcamp/bootcamp2019/_git/IntelligentEdgeHOL`
+
+![GitDesktop](images/IntelligentEdge/GitDesktop.png)
 
 ## Step 5 : Azure Container Registry
 
@@ -294,16 +298,11 @@ ACR is used to :
 |AZ CLI   |[Quickstart: Create a private container registry using the Azure CLI](articles/container-registry/container-registry-get-started-azure-cli.md)       |
 |VSCode   |[Create a private container registry using Azure PowerShell](articles/container-registry/container-registry-get-started-powershell.md)        |
 
-## Step 6 : Sample Code
+## Step 6 : Project Preparation
 
-We will configure the sample code with some settings.  
+Before we compile and build container, several settings have to be saved in the project.  
 
-- Open Sample Code Project
-- ACR connection credential
-- ACR Login
-- Azure Login
-
-### Step 6.1 : Open Sample Project
+### Step 6.1 : Open Sample Code
 
 1. Start VSCode On the **Windows 10 DevEnv laptop**, if you have not started yet  
 
@@ -389,20 +388,9 @@ This step is required to push the containers to ACR from VSCode.
   Example:
   
   ```bash
-  PS C:\repo\bootcamp-labs> az acr credential show --name bootcampfy19acr
-  {
-    "passwords": [
-      {
-        "name": "password",
-        "value": "TXZW03RHU0z1m/wlhVHwLr7qebqJ82Ca"
-      },
-      {
-        "name": "password2",
-        "value": "M8q+HnS029Cd3l4mXKhhk79nYfLxcLDC"
-      }
-    ],
-    "username": "bootcampfy19acr"
-  }
+    PS C:\Repo\IntelligentEdgeHOL> docker login -u myregistry -p ABCDEFG1234567890!)^%ddrd myregistry.azurecr.io
+    WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+    Login Succeeded
   ```
 
 ### Step 6.4 : Edit `.env` file
