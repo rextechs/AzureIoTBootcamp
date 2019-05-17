@@ -1,17 +1,4 @@
-﻿---
-title: Quickstart - Create a private Docker registry in Azure - PowerShell
-description: Quickly learn to create a private Docker container registry in Azure with PowerShell.
-services: container-registry
-author: dlepow
-
-ms.service: container-registry
-ms.topic: quickstart
-ms.date: 01/22/2019
-ms.author: danlep
-ms.custom: "seodec18, mvc"
----
-
-# Quickstart: Create a private container registry using Azure PowerShell
+﻿# Quickstart: Create a private container registry using Azure PowerShell
 
 Azure Container Registry is a managed, private Docker container registry service for building, storing, and serving Docker container images. In this quickstart, you learn how to create an Azure container registry using PowerShell. Then, use Docker commands to push a container image into the registry, and finally pull and run the image from your registry.
 

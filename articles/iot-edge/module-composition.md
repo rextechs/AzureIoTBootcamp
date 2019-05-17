@@ -1,16 +1,3 @@
----
-title: Declare modules and routes with deployment manifests - Azure IoT Edge | Microsoft Docs 
-description: Learn how a deployment manifest declares which modules to deploy, how to deploy them, and how to create message routes between them. 
-author: kgremban
-manager: philmea
-ms.author: kgremban
-ms.date: 03/28/2019
-ms.topic: conceptual
-ms.service: iot-edge
-services: iot-edge
-ms.custom: seodec18
----
-
 # Learn how to deploy modules and establish routes in IoT Edge
 
 Each IoT Edge device runs at least two modules: $edgeAgent and $edgeHub, which are part of the IoT Edge runtime. Additionally, any IoT Edge device can run multiple modules to perform any number of processes. You deploy all these modules to a device at once, so IoT Edge provides a way to declare which modules to install and how to configure them to work together. 
