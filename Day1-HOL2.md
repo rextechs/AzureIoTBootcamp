@@ -67,15 +67,13 @@ You can also select **Get Device Info** from the right-click menu to see all the
 ### 2. Run the **Deploy-IoTEdge** command, which checks whether your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. 
 
 ```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; `
-Deploy-IoTEdge
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
 ```
 
 ### 3 Run the  Initialize-IoTEdge command to initialize the finish the IoT Edge installation
 
 ```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; `
-Initialize-IoTEdge
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge
 ```
 
 ### 4. Provide the device connection string (saved from prior step). 
@@ -158,7 +156,7 @@ IntelIRCameraSensorGroup
 From this list, we will choose the camera to use as input, as pass that into the next call with the --device parameter, along with the model using the --model parameter.
 
 ```
-PS  C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs> dotnet run --model=SqueezeNet.onnx --device=LifeCam
+PS  C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs> dotnet run --model=SqueezeNet.onnx --device=<camera name>
 
 Loading modelfile 'SqueezeNet.onnx' on the 'default' device...
 ...OK 2484 ticks
