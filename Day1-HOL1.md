@@ -1,6 +1,6 @@
 # Windows Server IoT 2019 + Azure IoT Edge (45 Min)
 
-In many use cases, a Windows Server IoT 2019 can be used an IoT edge gateway that connects local devices and sensors to the cloud services and apps. In this lab, we're going to walk you through how to turn a Windows Server IoT 2019 server into an IoT edge gateway. We will use virtual machines for this lab, however, the same steps described in this article can be applied to a Windows Server IoT 2019 on a physical machine.  
+In many use cases, a Windows Server IoT 2019 can be used an IoT edge gateway that connects local devices and sensors to cloud services and apps. In this lab, we're going to walk you through how to turn a Windows Server IoT 2019 server into an IoT edge gateway. We will use virtual machines for this lab, however, the same steps described in this article can be applied to a Windows Server IoT 2019 on a physical machine.  
 
 In this lab you learn how to:
 
@@ -10,10 +10,12 @@ In this lab you learn how to:
 4. Remotely deploy a module (device simulator) to a Windows Server IoT 2019 to send telemetry to IoT Hub.
    Note: We are going to install a "Simulated Temperature Sensor"module from Azure IoT Edge Marketplace. This module generates temperature and humidity data.  
 
+
 ## Prerequisites
-1. IoT Hub
-2. Azure Account. If you don't have an active Azure subscription, create a [free account](https://azure.microsoft.com/free) before you begin.
-3. Windows Server 2019, which can be a physical or virtual machine  
+
+- IoT Hub
+-  Azure Account. If you don't have an active Azure subscription, create a [free account](https://azure.microsoft.com/free) before you begin.
+- Windows Server 2019, which can be a physical or virtual machine  
 
 ## Step 1 : Create an instance of IoT Hub
 
@@ -21,7 +23,8 @@ In this lab you learn how to:
 
 ### 2. Select **All service** -> **Internet of Things** -> **IoT Hub** 
 
-![create-iot-hub](images/WinServer-Lab/Create-IoTHub.png)
+   ![create-iot-hub](images/WinServer-Lab/Create-IoTHub.png)
+
 ### 3: Click **Add** to add a new IotHub instance
     Select a subscription
     Select an existing Resource Group, or create a new one by clicking Create new link
@@ -60,6 +63,16 @@ INFO: When you're ready to set up your physical device, you'll need a connection
 
 ## Step 3: Connect to your Windows Server on a virtual machine.
 
+> [!IMPORTANT]  
+>   
+> Instructors will provide Hostname and/or IP Address of Windows Server 2019 VM
+
+Winsdows Server 2019 VM Credential
+```bash  
+User Name    : iotbootcamp  
+Password     : bootcamp  
+```
+
 ### 1. open a Remote Desktop Connection from your machine
 
 INFO: you can type RDP from Window's search, then select then Remote Desktop Connection app
@@ -75,22 +88,20 @@ INFO: you can type RDP from Window's search, then select then Remote Desktop Con
 ### 2. Run the **Deploy-IoTEdge** command, which checks whether your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. 
 
 ```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; `
-Deploy-IoTEdge
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
 ```
 
 ### 3 Run the  Initialize-IoTEdge command to initialize the finish the IoT Edge installation
 
 ```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; `
-Initialize-IoTEdge
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge
 ```
 
 ### 4. Provide the device connection string (saved from prior step). 
 
 ![IoTEdge-Installation](images/WinServer-Lab/IotEdge-Installation.png)
 
-### 6. Run the Get-Service command to confirm IoT Edge runtime is installed and running
+### 5. Run the Get-Service command to confirm IoT Edge runtime is installed and running
 
 ```powershell
 Get-Service iotedge
