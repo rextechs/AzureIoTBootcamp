@@ -1,7 +1,7 @@
 
 # Eco-system Bootcamp Hands on Labs
 
-![Imported Script](images/ref_architecture.png "Header Image")
+<!-- ![Imported Script](images/ref_architecture.png "Header Image") -->
 
 ## Day 1
 
@@ -65,3 +65,7 @@
 
 [Connect and Monitor Devices Using IoT Central](Day3-HOL2.md)
 
+
+
+# How to Redeem Microsoft Azure Pass
+![Follow Instructions Here](https://www.microsoftazurepass.com/Home/HowTo)

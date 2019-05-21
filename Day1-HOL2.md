@@ -1,4 +1,4 @@
-# Windows 10 IoT + Azure IoT Edge - Advance Lab (90 Min)
+# Windows 10 IoT + Azure IoT Edge - Advance Lab (60 Min)
 
 ## Prerequisites
 
@@ -8,53 +8,54 @@ https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.107-windows-x64-i
 
 ## Key Components
 
-## Step 1 : Register a new Azure IoT Edge device
+## Step 1: Register a new Azure IoT Edge device
 
-## Sign in to access your IoT hub
+
+### Sign in to access your IoT hub
 
 You can use the Azure IoT extensions for Visual Studio Code to perform operations with your IoT hub. For these operations to work, you need to sign in to your Azure account and select the IoT hub that you are working on.
 
 1. In Visual Studio Code, open the **Explorer** view.
 
-1. At the bottom of the Explorer, expand the **Azure IoT Hub Devices** section.
+2. At the bottom of the Explorer, expand the **Azure IoT Hub Devices** section.
 
    ![Expand Azure IoT Hub Devices section](./images/Register-device-vscode/azure-iot-hub-devices.png)
 
-1. Click on the **...** in the **Azure IoT Hub Devices** section header. If you don't see the ellipsis, click on or hover over the header.
+3. Click on the **...** in the **Azure IoT Hub Devices** section header. If you don't see the ellipsis, click on or hover over the header.
 
-1. Choose **Select IoT Hub**.
+4. Choose **Select IoT Hub**.
 
-2. If you are not signed in to your Azure account, follow the prompts and sign in to your Azure account.
+5. If you are not signed in to your Azure account, follow the prompts and sign in to your Azure account.
 
-3. Select your Azure subscription.
+6. Select your Azure subscription.
 
-4. Select your IoT hub.
+7. Select your IoT hub.
 
-## Create a device
+### Create a device
 
 1. In the VS Code Explorer, expand the **Azure IoT Hub Devices** section.
 
-1. Click on the **...** in the **Azure IoT Hub Devices** section header. If you don't see the ellipsis, click on or hover over the header.
+2. Click on the **...** in the **Azure IoT Hub Devices** section header. If you don't see the ellipsis, click on or hover over the header.
 
-1. Select **Create IoT Edge Device**.
+3. Select **Create IoT Edge Device**.
 
-1. In the text box that opens, give your device an ID.
+4. In the text box that opens, give your device an ID.
 
 In the output screen, you see the result of the command. The device info is printed, which includes the **deviceId** that you provided and the **connectionString** that you can use to connect your physical device to your IoT hub.
 
-## View all devices
+### View all devices
 
 All the devices that connect to your IoT hub are listed in the **Azure IoT Hub Devices** section of the Visual Studio Code Explorer. IoT Edge devices are distinguishable from non-Edge devices with a different icon, and the fact that they can be expanded to show the modules deployed to each device.
 
    ![View all IoT Edge devices in your IoT hub](./images/Register-device-vscode/view-devices.png)
 
-## Retrieve the connection string
+### Retrieve the connection string
 
 When you're ready to set up your device, you need the connection string that links your physical device with its identity in the IoT hub.
 
 1. Right-click on the ID of your device in the **Azure IoT Hub Devices** section.
 
-1. Select **Copy Device Connection String**.
+2. Select **Copy Device Connection String**.
 
    The connection string is copied to your clipboard.
 
@@ -64,11 +65,13 @@ You can also select **Get Device Info** from the right-click menu to see all the
 
 ### 1. Open a Powershell window as an Administrator
 
-### 2. Run the **Deploy-IoTEdge** command, which checks whether your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. 
+### 2. Run the **Deploy-IoTEdge** command,
+ This command checks whether your Windows machine is on a supported version, turns on the containers feature, and then downloads the Moby runtime and the IoT Edge runtime. 
 
 ```powershell
 . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
 ```
+Click Yes to the following pop-up questions. The machine will be restarted. After it's restarted, open a powershell window and run the command to finish the installation. 
 
 ### 3 Run the  Initialize-IoTEdge command to initialize the finish the IoT Edge installation
 
@@ -76,11 +79,13 @@ You can also select **Get Device Info** from the right-click menu to see all the
 . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge
 ```
 
-### 4. Provide the device connection string (saved from prior step). 
+### 4. Link to an IoT Edge device in IoTHub 
+
+Provide the device connection string (saved from prior step). 
 
 ![IoTEdge-Installation](images/WinServer-Lab/IotEdge-Installation.png)
 
-### 6. Run the Get-Service command to confirm IoT Edge runtime is installed and running
+### 5. Run the Get-Service command to confirm IoT Edge runtime is installed and running
 
 ```powershell
 Get-Service iotedge
@@ -89,21 +94,31 @@ Get-Service iotedge
 ![edge-running](images/WinServer-Lab/EdgeRunning.png)
 
 
-### 7 : Confirm IoT Edge runtime is installed and running
+### 6 : Confirm IoT Edge runtime is installed and running
 
-You can check the status of the IoT Edge service by: 
+You can check the Windows service is running: 
 
 ```powershell
 Get-Service iotedge
 ```
 
-## Step 3 : Download the sample file from repo
+To list all modules running in IoT Edge 
+```powershell
+iotedge list
+```
 
-[Squeeze Net Object Detection Sample](./SqueezeNetObjectDetectionSample.zip)
+## Step 3 : Download the IoT Edge sample from repo, 
+
+[IoT Edge Samples](https://github.com/Azure/iotedge)
+```powershell 
+git clone https://github.com/Azure/iotedge
+```
 
 ## Step 4 : Build Sample 
 
-Please make sure you have dotnet installed on your machine already. 
+### 1. Check .Net installation 
+
+Make sure you have dotnet installed on your machine already. 
 
 Run the following command to check
 
@@ -111,236 +126,284 @@ Run the following command to check
 dotnet --version
 ```
 
-If not, download and install dotnet 2.2 from: https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.107-windows-x64-installer
+If not it's not installed, download and install dotnet 2.2 from: https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.107-windows-x64-installer
 
-1.Set the WINDOW_WINMD environment variable
+### 2. Navigate to the SimulatedTemperatureSentor directory of the downloaded repo
 
-To get access to Windows.AI.MachineLearning and various other Windows classes an assembly reference needs to be added for Windows.winmd
+```powershell
+PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> dir
 
-The file path for the Windows.winmd file may be: 
+    Directory: C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor
 
-```C:\Program Files (x86)\Windows Kits\10\UnionMetadata\[version]\Windows.winmd```
-
-1. Unzip the downloaded file.
-2. Open a PowerShell window and change directory to where the files are unzipped 
-3. Build and publish the sample using dotnet command line:
+Mode                LastWriteTime         Length Name                                                                                                                           
+----                -------------         ------ ----                                                                                                                           
+d-----        5/20/2019   8:03 PM                bin                                                                                                                            
+d-----        5/20/2019   8:01 PM                config                                                                                                                         
+d-----        5/20/2019   8:01 PM                docker                                                                                                                         
+d-----        5/20/2019   8:04 PM                obj                                                                                                                            
+d-----        5/20/2019   8:01 PM                src                                                                                                                            
+-a----        5/20/2019   8:01 PM           2958 SimulatedTemperatureSensor.csproj                                                                                              
 
 ```
-PS  C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs> dotnet publish -r win-x64
 
-Microsoft (R) Build Engine version 15.8.169+g1ccb72aefa for .NET Core
+### 3. Build Temperature Simulator:
+
+```powershell
+PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> dotnet publish -r win-x64
+Microsoft (R) Build Engine version 16.0.450+ga8dc7f1d34 for .NET Core
 Copyright (C) Microsoft Corporation. All rights reserved.
 
-  Restore completed in 34.7 ms for C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs\SqueezeNetObjectDetection.csproj.
-  SqueezeNetObjectDetection -> C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs\bin\Debug\netcoreapp2.1\win-x64\SqueezeNetObjectDetection.dll
-  SqueezeNetObjectDetection -> C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs\bin\Debug\netcoreapp2.1\win-x64\publish\
-```
+  Restore completed in 655.09 ms for C:\repo\iotedge\edge-util\src\Microsoft.Azure.Devices.Edge.Util\Microsoft.Azure.Devices.Edge.Util.csproj.
+  Restore completed in 809.77 ms for C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor\SimulatedTemperatureSensor.csproj.
+  Restore completed in 817.74 ms for C:\repo\iotedge\edge-modules\ModuleLib\Microsoft.Azure.Devices.Edge.ModuleUtil.csproj.
+  Microsoft.Azure.Devices.Edge.Util -> C:\repo\iotedge\edge-util\src\Microsoft.Azure.Devices.Edge.Util\bin\Debug\netstandard2.0\Microsoft.Azure.Devices.Edge.Util.dll
+  Microsoft.Azure.Devices.Edge.ModuleUtil -> C:\repo\iotedge\edge-modules\ModuleLib\bin\Debug\netcoreapp2.1\Microsoft.Azure.Devices.Edge.ModuleUtil.dll
+  SimulatedTemperatureSensor -> C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor\bin\Debug\netcoreapp2.1\win-x64\SimulatedTemperatureSensor.dll
+  SimulatedTemperatureSensor -> C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor\bin\Debug\netcoreapp2.1\win-x64\publish\
 
-## Step 5: Test the sample
-
-As a first initial step, you can run the sample natively on your development machine to ensure it's working.
-
-First, run the app with the "--list" parameter to show the cameras on your PC:
-
-```
-PS  C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs> dotnet run --list
-
-Found 5 Cameras
-Microsoft Camera Rear
-Microsoft IR Camera Front
-Microsoft Camera Front
-icrosoftr LifeCam Studio(TM)
-IntelIRCameraSensorGroup
-```
-
-From this list, we will choose the camera to use as input, as pass that into the next call with the --device parameter, along with the model using the --model parameter.
+PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> 
 
 ```
-PS  C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs> dotnet run --model=SqueezeNet.onnx --device=<camera name>
 
-Loading modelfile 'SqueezeNet.onnx' on the 'default' device...
-...OK 2484 ticks
-Retrieving image from camera...
-...OK 828 ticks
-Running the model...
-...OK 938 ticks
-12/28/2018 12:13:05 PM Sending: {"results":[{"label":"coffee mug","confidence":0.960289478302002},{"label":"cup","confidence":0.035979188978672028},{"label":"water jug","confidence":6.35452670394443E-05}]}
-```
 
-Here we can see that the sample is successfully running on the development machine, found the camera, and recognized that the camera was probably
-looking at a coffee mug. (It was.)
+## Step 5 : Create Azure Container Registry
 
-## Step 8 : Create Azure Container Registry
+ A container repository is used to store container. In this lab, we're using the container registry to store the AI modules built from last steps. With the containers stored in Azure Container Registry, you can deploy the modules to the machines and devices where you want to run the moudule.
 
-In order to deploy modules to your device, you will need access to a container repository.
-
-Select **Create a resource** > **Containers** > **Container Registry**.
+1. Select **Create a resource** > **Containers** > **Container Registry**.
 
 **Registry name** enter a registry name
 **Resource group** select the resource group used from prior lab 
 
 use the default values for the other fields
  
-Select **Create** to deploy the ACR instance.
+2. Select **Create** to deploy.
 
 ![Creating a container registry in the Azure portal](images/IoTEnt-Lab/create-acr.png)
 
+3. When the **Deployment succeeded** message appears, select the container registry in the portal. 
 
-When the **Deployment succeeded** message appears, select the container registry in the portal. 
+4. Select **Access keys** and **Enable** Admin user 
 
-Select **Access keys** and **Enable** Admin user 
-
-Take note of the value of the **Login server**, and copy one of the passwords. You'll need these values in the following steps.
+5. Take note of the value of the **Login server**, and copy one of the passwords. You'll need these values in the following steps.
 
 ![login server info](images/IoTEnt-Lab/acr-login-info.png)
 
-## Step 6: Containerize the sample app
+## Step 6: Containerize the Temperature Simulator app
 
-Build the container on the device. For the remainder of this sample, we will use the environment variable $Container
-to refer to the address of our container.
+In order for an app to be run as an edge module, the app needs to be containerize first. In the section we're going to walk through the steps to containerize an app. 
+
+### 1. Set up Docker Environment 
+
+1. Set the environment variables **WINDOW_WINMD**  and **DOCKER_HOST**
+
+To get access to Windows.AI.MachineLearning and various other Windows classes an assembly reference needs to be added for Windows.winmd
+
+The file path for the Windows.winmd file may be: 
+
+```powershell
+setx /m WINDOWS_WINMD "C:\Program Files (x86)\Windows Kits\10\UnionMetadata\[version]\Windows.winmd"
+
+setx /m  DOCKER_HOST npipe:////./pipe/iotedge_moby_engine
+```
+
+### 2. Close Powershell and Open a new Powershell window for the environment variables to take effect
+
+### 3. Create docker image for the Temperature Simulator app
+
+```powershell 
+PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> docker build .\bin\Debug\netcoreapp2.1\win-x64\publish -t tempsim -f .\docker\windows\amd64\Dockerfile
+Sending build context to Docker daemon  77.43MB
+
+Step 1/6 : ARG base_tag=2.1.10-nanoserver-1809
+Step 2/6 : FROM mcr.microsoft.com/dotnet/core/runtime:${base_tag}
+2.1.10-nanoserver-1809: Pulling from dotnet/core/runtime
+9319e23c8670: Pulling fs layer
+9932599cb91b: Pulling fs layer
+4350fcc14134: Pulling fs layer
+af993f0b5292: Pulling fs layer
+29f6e54ef3cd: Pulling fs layer
+2a38bc60ae92: Pulling fs layer
+af993f0b5292: Waiting
+29f6e54ef3cd: Waiting
+2a38bc60ae92: Waiting
+4350fcc14134: Verifying Checksum
+4350fcc14134: Download complete
+af993f0b5292: Download complete
+29f6e54ef3cd: Verifying Checksum
+29f6e54ef3cd: Download complete
+2a38bc60ae92: Verifying Checksum
+2a38bc60ae92: Download complete
+9319e23c8670: Verifying Checksum
+9319e23c8670: Download complete
+9932599cb91b: Verifying Checksum
+9932599cb91b: Download complete
+9319e23c8670: Pull complete
+9932599cb91b: Pull complete
+4350fcc14134: Pull complete
+af993f0b5292: Pull complete
+29f6e54ef3cd: Pull complete
+2a38bc60ae92: Pull complete
+Digest: sha256:5595baf37235ee2ac885cc2427cc9dcb6c60fe75870066a02552267772b5cbe9
+Status: Downloaded newer image for mcr.microsoft.com/dotnet/core/runtime:2.1.10-nanoserver-1809
+ ---> d6a221ed7eed
+Step 3/6 : ARG EXE_DIR=.
+ ---> Running in 9377693346a0
+Removing intermediate container 9377693346a0
+ ---> bd944d2fd66e
+Step 4/6 : WORKDIR /app
+ ---> Running in 48aa038a3592
+Removing intermediate container 48aa038a3592
+ ---> 9903409dc8ab
+Step 5/6 : COPY $EXE_DIR/ ./
+ ---> 82053db9eaa3
+Step 6/6 : CMD ["dotnet", "SimulatedTemperatureSensor.dll"]
+ ---> Running in 94918456057a
+Removing intermediate container 94918456057a
+ ---> 4aad993849a8
+Successfully built 4aad993849a8
+Successfully tagged tempsim:latest
+```
+
+## Step 7: Push the Docker container to Azure Container Registry
 
 ### 1. Login to your Azure Container Registry
 
 ```
-PS C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs> docker login {ACR_NAME}.azurecr.io
+PS C:\repo\Samples\EdgeModules\Temperature SimulatorObjectDetection\cs> docker login {ACR_NAME}.azurecr.io
 Username: {ACR_NAME}
 Password:
 Login Succeeded
 ```
+### 2. Push the Docker image to AZure Container Registry
 
-### 2. Create docker image for the object detection app
+```powershell 
 
-Switch docker container: click the up arrow on the low right corner of the your screen -> right click on the docker icon -> select Switch to Windows Containers... 
+PS C:\IOT-AI-Sample\iotedge\edge-modules\SimulatedTemperatureSensor> docker tag tempsim {ACR_NAME}.azurecr.io/tempsim 
 
-it takes a minute or two, once the switch is done, you will docker sub menu something like the following
-
-![switch container](images/IotEnt-Lab/switch-container.png)
-
-
-```
-PS C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs> docker build .\bin\Debug\netcoreapp2.2\win-x64\publish\ -t {ACR_NAME}.azurecr.io/squeezenet
-
-Sending build context to Docker daemon  84.56MB
-Step 1/5 : FROM mcr.microsoft.com/windows:1809
-1809: Pulling from windows
-e7f2973ed2dd: Pull complete
-a199e0ac5ac4: Pull complete
-Digest: sha256:72bc5e6160d46116f3a31a452ada2b7592b3ca1e25e75fb2419ccf125c141798
-Status: Downloaded newer image for mcr.microsoft.com/windows:1809
- ---> a03d8585d5d3
-Step 2/5 : ARG EXE_DIR=.
- ---> Running in b5d9d49d9149
-Removing intermediate container b5d9d49d9149
- ---> e0df5f439765
-Step 3/5 : WORKDIR /app
- ---> Running in 14934127fa07
-Removing intermediate container 14934127fa07
- ---> ca73548a239d
-Step 4/5 : COPY $EXE_DIR/ ./
- ---> aeea90a5a119
-Step 5/5 : CMD [ "SqueezeNetObjectDetection.exe", "-mSqueezeNet.onnx", "-dLifeCam", "-ef" ]
- ---> Running in f94a8f3bd485
-Removing intermediate container f94a8f3bd485
- ---> f0e554508d5a
-Successfully built f0e554508d5a
-Successfully tagged RLACR.azureacr.io/squeezenet:1.0.0-x64
-PS C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs>
-PS C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs>
-```
-
-## Step 7: Run the object detection app in the container
-
-One more test to ensure that the app is able to see the camera through the container.
+PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> docker push {ACR_NAME}.azurecr.io/tempsim
+The push refers to repository [{ACR_NAME}.azurecr.io/tempsim]
+df1fb756da5d: Preparing
+b73311fbd316: Preparing
+a406b6d40c15: Preparing
+96853e0dc821: Preparing
+146252efae6c: Preparing
+6eaf1cf63dfc: Preparing
+a2bb3d322957: Preparing
+761ff3ef5aab: Preparing
+5c3e3ab9e119: Preparing
+273db4b66a2d: Preparing
+a2bb3d322957: Waiting
+761ff3ef5aab: Waiting
+5c3e3ab9e119: Waiting
+273db4b66a2d: Waiting
+6eaf1cf63dfc: Waiting
+df1fb756da5d: Pushed
+a406b6d40c15: Pushed
+96853e0dc821: Pushed
+146252efae6c: Pushed
+6eaf1cf63dfc: Pushed
+273db4b66a2d: Skipped foreign layer
+761ff3ef5aab: Pushed
+a2bb3d322957: Pushed
+b73311fbd316: Pushed
+5c3e3ab9e119: Pushed
+latest: digest: sha256:d323fe3ae869d39802ba1c3c0f76f7ed0e40d1d7f7b2041a12e5faf5391bbcf0 size: 2507
 
 ```
+## Step 8: Deploy module to IoT Edge 
 
-PS C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs> docker run --isolation process --device "/class/E5323777-F976-4f5b-9B55-B94699C46E44" $Container SqueezeNetObjectDetection.exe --list
+You are now ready to deploy the Simulated Temperature module on your device. 
 
+In this section, you use the **Set Modules** wizard in the Azure portal to create a *deployment manifest*. A deployment manifest is a JSON file that describes all the modules that will be deployed to a device, the container registries that store the module images, how the modules should be managed, and how the modules can communicate with each other. Your IoT Edge device retrieves its deployment manifest from IoT Hub, then uses the information in it to deploy and configure all of its assigned modules. 
+
+
+### 1. In the Azure portal, in your IoT hub, go to **IoT Edge**, and then open the details page for your IoT Edge device.
+
+### 2. Select **Set modules**. 
+
+  For the Container Registry Settings: 
+  - Name: ACR_NAME
+  - Address: {ACR_NAME}.azurecr.io
+  - Username: RLACR
+  - Password: {Your ACR Password} 
+
+Note: ACR Credential can be obtained from your the Azure Container Registry created earlier under Access Keys  
+
+  - Click **Add** and select **IoT Edge Module**.
+  - Type a name for your module, type **tempsim**.
+  - For the image URI, enter **{ACR_NAME}.azurecr.io/tempsim**. 
+  - Leave the other settings unchanged and select **Save**.
+
+
+## Step 9: Confirm the Temperature Simulator module has been deployed
+
+To the view logs of the Temperature Simulator module
+```powershell
+PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> iotedge list 
+NAME             STATUS           DESCRIPTION      CONFIG
+tempsim          running          Up 4 seconds     {ACR_NAME}.azurecr.io/tempsim:latest
+edgeHub          running          Up 7 seconds     mcr.microsoft.com/azureiotedge-hub:1.0
+edgeAgent        running          Up 30 seconds    mcr.microsoft.com/azureiotedge-agent:1.0
+
+PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> docker ps 
+CONTAINER ID        IMAGE                                      COMMAND                  CREATED             STATUS              PORTS                                            
+                      NAMES
+073ff6d9054c        {ACR_NAME}.azurecr.io/tempsim:latest            "dotnet SimulatedTem…"   24 seconds ago      Up 21 seconds                                                      
+                        tempsim
+6f6c95187c0d        mcr.microsoft.com/azureiotedge-hub:1.0     "dotnet Microsoft.Az…"   27 seconds ago      Up 25 seconds       0.0.0.0:443->443/tcp, 0.0.0.0:5671->5671/tcp, 0
+.0.0.0:8883->8883/tcp   edgeHub
+b411b4fd6545        mcr.microsoft.com/azureiotedge-agent:1.0   "dotnet Microsoft.Az…"   49 seconds ago      Up 47 seconds                                                      
+                        edgeAgent
+
+PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> docker logs -f 073ff6d9054c
+SimulatedTemperatureSensor Main() started.
+Initializing simulated temperature sensor to send 500 messages, at an interval of 5 seconds.
+To change this, set the environment variable MessageCount to the number of messages that should be sent (set it to -1 to send unlimited messages).
+Information: Trying to initialize module client using transport type [Amqp_Tcp_Only].
+Information: Successfully initialized module client of transport type [Amqp_Tcp_Only].
+	5/20/2019 11:30:21 PM> Sending message: 1, Body: [{"machine":{"temperature":21.274294573824989,"pressure":1.0312487489167708},"ambient":{"temperature":21.378854756652775,"humid
+ity":24},"timeCreated":"2019-05-21T03:30:21.1985626Z"}]
+	5/20/2019 11:30:26 PM> Sending message: 2, Body: [{"machine":{"temperature":22.294024133726033,"pressure":1.1474204709308138},"ambient":{"temperature":21.308749485671868,"humid
+ity":24},"timeCreated":"2019-05-21T03:30:26.5174959Z"}]
+	5/20/2019 11:30:31 PM> Sending message: 3, Body: [{"machine":{"temperature":23.386484531982095,"pressure":1.2718779846561881},"ambient":{"temperature":21.310748661780146,"humid
+ity":24},"timeCreated":"2019-05-21T03:30:31.5789414Z"}]
+	5/20/2019 11:30:36 PM> Sending message: 4, Body: [{"machine":{"temperature":24.455627536613321,"pressure":1.3936790864496187},"ambient":{"temperature":21.1007648103874,"humidit
+y":26},"timeCreated":"2019-05-21T03:30:36.6253374Z"}]
+	5/20/2019 11:30:41 PM> Sending message: 5, Body: [{"machine":{"temperature":24.497181632438295,"pressure":1.398413097366388},"ambient":{"temperature":21.38086750166531,"humidit
+y":25},"timeCreated":"2019-05-21T03:30:41.670711Z"}]
+	5/20/2019 11:30:46 PM> Sending message: 6, Body: [{"machine":{"temperature":25.177558963968213,"pressure":1.4759244389330877},"ambient":{"temperature":21.482150605871411,"humid
+ity":24},"timeCreated":"2019-05-21T03:30:46.7204458Z"}]
+	5/20/2019 11:30:51 PM> Sending message: 7, Body: [{"machine":{"temperature":26.419179711569651,"pressure":1.6173749038497069},"ambient":{"temperature":21.21718055369201,"humidi
+ty":26},"timeCreated":"2019-05-21T03:30:51.758521Z"}]
+	5/20/2019 11:30:56 PM> Sending message: 8, Body: [{"machine":{"temperature":26.369376188316092,"pressure":1.6117010847448712},"ambient":{"temperature":20.70980702769468,"humidi
+ty":26},"timeCreated":"2019-05-21T03:30:56.7880787Z"}]
+	5/20/2019 11:31:01 PM> Sending message: 9, Body: [{"machine":{"temperature":27.292824384776328,"pressure":1.7169040438352778},"ambient":{"temperature":20.693972364624017,"humid
+ity":24},"timeCreated":"2019-05-21T03:31:01.8156538Z"}]
+	5/20/2019 11:31:06 PM> Sending message: 10, Body: [{"machine":{"temperature":27.068939254651283,"pressure":1.6913981429349563},"ambient":{"temperature":21.011728836927436,"humi
+dity":24},"timeCreated":"2019-05-21T03:31:06.853721Z"}]
+	5/20/2019 11:31:11 PM> Sending message: 11, Body: [{"machine":{"temperature":27.895958205054495,"pressure":1.7856154917150691},"ambient":{"temperature":20.768641533455177,"humi
+dity":24},"timeCreated":"2019-05-21T03:31:11.8958425Z"}]
+	5/20/2019 11:31:16 PM> Sending message: 12, Body: [{"machine":{"temperature":27.755147254446126,"pressure":1.7695737378482927},"ambient":{"temperature":20.679328254041881,"humi
+dity":24},"timeCreated":"2019-05-21T03:31:16.9333408Z"}]
+	5/20/2019 11:31:21 PM> Sending message: 13, Body: [{"machine":{"temperature":28.754603445066422,"pressure":1.8834358355138963},"ambient":{"temperature":20.626531820337537,"humi
+dity":25},"timeCreated":"2019-05-21T03:31:21.9891981Z"}]
+	5/20/2019 11:31:27 PM> Sending message: 14, Body: [{"machine":{"temperature":29.430797181525641,"pressure":1.9604705649839338},"ambient":{"temperature":21.413920916576831,"humi
+dity":26},"timeCreated":"2019-05-21T03:31:27.0190657Z"}]
+	5/20/2019 11:31:32 PM> Sending message: 15, Body: [{"machine":{"temperature":30.258231397954855,"pressure":2.0547352225518187},"ambient":{"temperature":21.101294913143523,"humi
+dity":25},"timeCreated":"2019-05-21T03:31:32.0568575Z"}]
+	5/20/2019 11:31:37 PM> Sending message: 16, Body: [{"machine":{"temperature":31.028983515933614,"pressure":2.1425424258658547},"ambient":{"temperature":20.988973313704587,"humi
+dity":26},"timeCreated":"2019-05-21T03:31:37.0984276Z"}]
+
+PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> 
 ```
 
-Note: The class ID is for the Microsoft LifeCam Cinema Cameras. 
+### Step 10: Stop IOT Edge 
 
-## Step 8: Push the container to Azure Container Registry
+To  stop IoT Edge, you can run the command below: 
 
-Now that we are sure the app is working correctly within the container, we will push it to our repository.
-
+```powershell
+Stop-Service iotedge
 ```
 
-c:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs>docker tag f0e554508d5a rlacr.azurecr.io/squeezenet
-
-c:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs>docker push rlacr.azurecr.io/squeezenet
-The push refers to repository [rlacr.azurecr.io/squeezenet]
-35d1c3903b3e: Pushed
-b57f5f3fca07: Pushed
-d5c14195a7b2: Pushed
-60f1f6925582: Pushed
-36fea90a67a6: Skipped foreign layer
-bf16baf8d810: Skipped foreign layer
-latest: digest: sha256:cb8921b98a999e2fbba4029b9fc1c266b42cce9b60eb3e4d8fb290595e2ab5ab size: 1783
-
-```
-
-## Step 9: Edit the deployment.json file
-
-open deployment.win-x64.json 
-
-```
-
-C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs>code deployment.win-x64.json
-
-```
-
-Fill in values to your container registry. Make sure the {ACR_IMAGE} name is the exact same image name as pushed to ACR last step. 
-
-```
-    "$edgeAgent": {
-      "properties.desired": {
-        "runtime": {
-          "settings": {
-            "registryCredentials": {
-              "{ACR_NAME}": {
-                "username": "{ACR_USER}",
-                "password": "{ACR_PASSWORD}",
-                "address": "{ACR_NAME}.azurecr.io"
-              }
-            }
-          }
-        }
-...
-        "modules": {
-            "squeezenet": {
-            "settings": {
-              "image": "{ACR_IMAGE}",
-              "createOptions": "{\"HostConfig\":{\"Devices\":[{\"CgroupPermissions\":\"\",\"PathInContainer\":\"\",\"PathOnHost\":\"class/E5323777-F976-4f5b-9B55-B94699C46E44\"},{\"CgroupPermissions\":\"\",\"PathInContainer\":\"\",\"PathOnHost\":\"class/5B45201D-F2F2-4F3B-85BB-30FF1F953599\"}],\"Isolation\":\"Process\"}}"
-            }
-          }
-```
-
-## Step 10: Deploy edge modules to device
-
-For production systems, after an edge module is developed and tested, it will be deployed edge device(s), which would be different machines than the development machine. In this lab, the edge device and the development machine is same, so we'll be deploying this module to the lab machine which also serves as an IoT Edge.
-
-1. In the Visual Studio Code explorer view, expand the **Azure IoT Hub Devices** section.
-
-2. Right-click on the IoT Edge device that you want to configure with the deployment manifest.
-
-3. Select **Create Deployment for Single Device**.
-
-4. Navigate to the deployment manifest JSON file (i.e C:\IoT-AI-Sample\Samples\EdgeModules\SqueezeNetObjectDetection\cs>code deployment.win-x64.json), and click **Select Edge Deployment Manifest**.
-
-The results of your deployment are printed in the VS Code output. Successful deployments are applied within a few minutes if the target device is running and connected to the internet.
-
-## Step 11: Confirm the SqueezeNet module has been deployed
-
-From Azure portal, navigate to **IoTHub** -> your IoTHub  
-Select **IoT Edge** ->  you edge device 
-
-Notice that the squeezenet module has been added to the edge device
-
-![squeezenet on port](images/IoTEnt-Lab/squeezenet-running-portal.png)
-
-You can also check the module running on your local machine from CLI
-
-![squeezenet on cli](images/IoTEnt-Lab/squeezenet-running-cli.png)
-
-Note: the deployment may take a couple of minutes.
+Done! 

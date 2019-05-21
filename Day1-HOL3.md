@@ -14,16 +14,21 @@ In this lab, you learn how to:
 * Connect Azure Stream Analytics job with other IoT Edge modules.
 * Deploy the Azure Stream Analytics job to an Azure IoT Core device.
 
+Windows IoT Core device is a small device with lesser resources, so we'll be doing most the steps on your lab development machine, then deploy the module to the IoT Core device.
+
 ## Prerequisites
 - An instance of IoT Hub from the previous HOL
-- IoT Core device: Windows 10 IoT Core on Intel Compute Stick PC
+- IoT Core device, for instance an Intel Compute Stick PC. 
 
 ## Step 1 : Register the IoT Core device as an Azure IoT Edge device
 
-In some occasions, command line is the only interface available. In this lab, we are going to use a different method than prior labs, the Command Line Interface (CLI), to create devices. Since the IoT Core device is a small device with less resources, it is recommended to perform the following steps on your lab development machine. 
+In some occasions, command line is the only interface available. In this lab, we are going to use the Azure Command Line Interface (CLI)to create devices.    
 
 
-### 1. Sing in to your Azure account. If you hadn't signed in to your account. Use the login command which will open a web browser, and sign in to your account with your credential. 
+### 1. Sing in to your Azure account.
+
+If you hadn't signed in to your account. Use the login command which will open a web browser, and sign in to your account with your credential. 
+
    ```cli
    az login
    ```
@@ -38,11 +43,11 @@ Use the following command to create a new device identity in your IoT hub:
 
 This command includes three parameters:
 
-* **device-id**: Provide a descriptive name of your IoT Core device, which is unique to your IoT hub.
+ - **device-id**: Provide a descriptive name of your IoT Core device, which is unique to your IoT hub.
 
-* **hub-name**: Provide the name of your IoT hub.
+ - **hub-name**: Provide the name of your IoT hub.
 
-* **edge-enabled**: This parameter declares that the device is for use with IoT Edge.
+ - **edge-enabled**: This parameter declares that the device is for use with IoT Edge.
 
    ![az iot hub device-identity create output](images/IotCore-Lab/Create-edge-device.png)
 
