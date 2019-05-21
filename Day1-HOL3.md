@@ -104,7 +104,7 @@ Need to re-connect to IoT Core, since the prior session was disconnected because
 
 ```powershell
 
-[192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aks.ms/iotedge} | Invoke-Expression; Initialize-IoTEdge
+[192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge
 
 ```
 
