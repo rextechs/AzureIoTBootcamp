@@ -88,7 +88,12 @@ Note: The Intel Compute Stick is the IoT Core device for this lab.
 
 ### 2. Remote powershell into your IoT Core device 
 
-```
+- Download and install IoT Core Dashboard from: https://docs.microsoft.com/en-us/windows/iot-core/connect-your-device/iotdashboard
+- Launch IoT Core Dashboad, Right click on the device and select **Launch Powershell**
+
+![IoT Core Dashboard](images/IoTCore-Lab/IoTCoreDashboard.png)
+
+<!-- ```
 PS C:\repo>  net start WinRM
 The requested service has already been started.
 
@@ -102,7 +107,7 @@ authenticated. The client might send credential information to these computers. 
 this list?
 [Y] Yes  [N] No  [S] Suspend  [?] Help (default is "Y"): Y
 PS C:\repo> Enter-PSSession -ComputerName 192.168.0.81 -Credential 192.168.0.81\Administrator
-```
+``` -->
 
 
 ### 3. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
@@ -119,7 +124,6 @@ Need to re-connect to IoT Core, since the prior session was disconnected because
 
 ```powershell
 
-PS C:\repo>  Enter-PSSession -ComputerName 192.168.0.81 -Credential 192.168.0.81\Administrator
 [192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aks.ms/iotedge} | Invoke-Expression; Initialize-IoTEdge
 
 ```

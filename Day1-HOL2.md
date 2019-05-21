@@ -10,7 +10,6 @@ https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.107-windows-x64-i
 
 ## Step 1: Register a new Azure IoT Edge device
 
-
 ### Sign in to access your IoT hub
 
 You can use the Azure IoT extensions for Visual Studio Code to perform operations with your IoT hub. For these operations to work, you need to sign in to your Azure account and select the IoT hub that you are working on.
@@ -93,14 +92,6 @@ Get-Service iotedge
 
 ![edge-running](images/WinServer-Lab/EdgeRunning.png)
 
-### 6 : Confirm IoT Edge runtime is installed and running
-
-You can check the Windows service is running: 
-
-```powershell
-Get-Service iotedge
-```
-
 To list all modules running in IoT Edge  
 
 ```powershell
@@ -138,10 +129,8 @@ PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> dir
 
 Mode                LastWriteTime         Length Name                                                                                                                           
 ----                -------------         ------ ----                                                                                                                           
-d-----        5/20/2019   8:03 PM                bin                                                                                                                            
 d-----        5/20/2019   8:01 PM                config                                                                                                                         
 d-----        5/20/2019   8:01 PM                docker                                                                                                                         
-d-----        5/20/2019   8:04 PM                obj                                                                                                                            
 d-----        5/20/2019   8:01 PM                src                                                                                                                            
 -a----        5/20/2019   8:01 PM           2958 SimulatedTemperatureSensor.csproj                                                                                              
 
