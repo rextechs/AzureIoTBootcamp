@@ -3,8 +3,9 @@
 
 <!-- ![Imported Script](images/ref_architecture.png "Header Image") -->
 
-# How to Redeem Microsoft Azure Pass
-![Follow Instructions Here](https://www.microsoftazurepass.com/Home/HowTo)
+## How to Redeem Microsoft Azure Pass
+
+### [Follow Instructions Here](https://www.microsoftazurepass.com/Home/HowTo)
 
 
 ## Day 1
@@ -17,7 +18,7 @@
 
 ### Lab 2: Windows + Azure IoT Edge - Advanced Lab
 
-**Duration**: 60-90 minutes
+**Duration**: 60 minutes
 
 [Windows + Azure IoT Edge -Advanced Lab](Day1-HOL2.md)
 

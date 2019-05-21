@@ -17,15 +17,16 @@ In this lab, you learn how to:
 Windows IoT Core device is a small device with lesser resources, so we'll be doing most the steps on your lab development machine, then deploy the module to the IoT Core device.
 
 ## Prerequisites
-
 - An instance of IoT Hub from the previous HOL
-- IoT Core device, for instance an Intel Compute Stick PC.
+- IoT Core device, for instance an Intel Compute Stick PC. 
 
 ## Step 1 : Register the IoT Core device as an Azure IoT Edge device
 
-In some occasions, command line is the only interface available. In this lab, we are going to use the Azure Command Line Interface (CLI)to create devices.  
+Command line interface (CLI) is the only interface available in some occasions, so in this lab, we are going to use the Azure Command Line Interface (CLI)to create devices.    
 
-### 1. Sing in to your Azure account  
+Note: you will need to  enable command line before you can use it on IoT. The admin password is: bootcamp
+
+### 1. Sing in to your Azure account.
 
 If you hadn't signed in to your account. Use the login command which will open a web browser, and sign in to your account with your credential. 
 
@@ -43,13 +44,14 @@ Use the following command to create a new device identity in your IoT hub:
 
 This command includes three parameters:
 
- - **device-id**: Provide a descriptive name of your IoT Core device, which is unique to your IoT hub.  
-  
- - **hub-name**: Provide the name of your IoT hub.  
-  
- - **edge-enabled**: This parameter declares that the device is for use with IoT Edge.  
+ - **device-id**: Provide a descriptive name of your IoT Core device, which is unique to your IoT hub.
+
+ - **hub-name**: Provide the name of your IoT hub.
+
+ - **edge-enabled**: This parameter declares that the device is for use with IoT Edge.
 
    ![az iot hub device-identity create output](images/IotCore-Lab/Create-edge-device.png)
+
 
 Note: If your environment did not have the device-identity extension installed, run the following command
 
@@ -78,33 +80,47 @@ When you're ready to set up your device, you need the connection string that lin
 
 The value for the `device-id` parameter is case-sensitive. Don't copy the quotation marks around the connection string.
 
-## Step 2: Install IoT Edge on the IoT Core device
+## Step 2: Install IoT Edge on the IoT Core device 
 
 Note: The Intel Compute Stick is the IoT Core device for this lab.
 
-### 1. Open a Remote Powershell
+### 1. Open a powershell window as Administrator
 
-1. Start `IoT Core Dashboard` on your desktop
-1. Select your device (Please find IP Address)
-1. `Right Click` on the device, select `Launch Powershell` 
+### 2. Remote powershell into your IoT Core device 
 
-![IoTCoreDashboard](images/IoTCore-Lab/IoTCoreDashboard.png)
+```
+PS C:\repo> Set-Item WSMan:\localhost\Client\TrustedHosts -Value 192.168.0.81
 
-### 2. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the Moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
-
-```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge -ContainerOs Windows
+WinRM Security Configuration.
+This command modifies the TrustedHosts list for the WinRM client. The computers in the TrustedHosts list might not be
+authenticated. The client might send credential information to these computers. Are you sure that you want to modify
+this list?
+[Y] Yes  [N] No  [S] Suspend  [?] Help (default is "Y"): Y
+PS C:\repo> Enter-PSSession -ComputerName 192.168.0.81 -Credential 192.168.0.81\Administrator
 ```
 
-### 3. Run the Initialize-IoTEdge command to complete the installation process
+
+### 3. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
 ```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge -ContainerOs Windows
+[192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
 ```
 
-### 4. Provide the device connection string
+Note: The stick PC will be restarted as part of the installation. 
 
-### 5. Confirm IoT Edge runtime is installed and running on the IoT Core device
+### 4. Run the Initialize-IoTEdge command to complete the installation process. 
+
+Need to re-connect to IoT Core, since the prior session was disconnected because of the restart
+
+```powershell
+
+PS C:\repo>  Enter-PSSession -ComputerName 192.168.0.81 -Credential 192.168.0.81\Administrator
+[192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aks.ms/iotedge} | Invoke-Expression; Initialize-IoTEdge
+
+```
+### 5. Provide the device connection string
+
+### 6. Confirm IoT Edge runtime is installed and running on the IoT Core device
 
 You can check the status of the IoT Edge service by: 
 
@@ -118,7 +134,7 @@ In this section, you create an Azure Stream Analytics job to take data from your
 
 ### 1. Create a storage account
 
-When you create an Azure Stream Analytics job to run on an IoT Edge device, it needs to be stored in a way that can be called from the device. You can use an existing Azure storage account, or create a new one now.  
+When you create an Azure Stream Analytics job to run on an IoT Edge device, it needs to be stored in a way that can be called from the device. You can use an existing Azure storage account, or create a new one now. 
 
 1. In the Azure portal, go to **Create a resource** > **Storage** > **Storage account**. 
 
@@ -131,7 +147,7 @@ When you create an Azure Stream Analytics job to run on an IoT Edge device, it n
    | Subscription | Choose the same subscription as your IoT hub. |
    | Resource group | We recommend that you use the same resource group for all of the test resources that you create for all the labs.|
 
-3. Keep the default values for the other fields and select **Create**.  
+3. Keep the default values for the other fields and select **Create**. 
 
 ### 2. Create a new Azure Stream Analytics job
 
@@ -141,17 +157,17 @@ When you create an Azure Stream Analytics job to run on an IoT Edge device, it n
 
    | Field | Value |
    | ----- | ----- |
-   | Job name | Provide a name for your job. For example, **IoTEdgeJob** |
+   | Job name | Provide a name for your job. For example, **IoTEdgeJob** | 
    | Subscription | Choose the same subscription as your IoT hub. |
    | Resource group | We recommend that you use the same resource group for all of the test resources that you create for all the labs.|
-   | Location | Choose a location close to you. |
+   | Location | Choose a location close to you. | 
    | Hosting environment | Select **Edge**. |
  
 3. Select **Create**.
 
 ## Step 4. Configure the Azure Stream Analytics job
 
-Once your Stream Analytics job is created in the Azure portal, you can configure it with an input, an output, and a query to run on the data that passes through.  
+Once your Stream Analytics job is created in the Azure portal, you can configure it with an input, an output, and a query to run on the data that passes through. 
 
 Using the three elements of input, output, and query, this section creates a job that receives temperature data from the IoT Edge device. It analyzes that data in a rolling 30-second window. If the average temperature in that window goes over 70 degrees, then an alert is sent to the IoT Edge device. You'll specify exactly where the data comes from and goes in the next section when you deploy the job.  
 
@@ -161,25 +177,25 @@ Using the three elements of input, output, and query, this section creates a job
 
    ![Azure Stream Analytics add input](images/IoTCore-Lab/asa_input.png)
 
-1. Choose **Edge Hub** from the drop-down list.
+2. Choose **Edge Hub** from the drop-down list.
 
-1. In the **New input** pane, enter **temperature** as the input alias.  
+3. In the **New input** pane, enter **temperature** as the input alias. 
 
-1. Keep the default values for the other fields, and select **Save**.
+4. Keep the default values for the other fields, and select **Save**.
 
-1. Under **Job Topology**, open **Outputs** then select **Add**.
+5. Under **Job Topology**, open **Outputs** then select **Add**.
 
    ![Azure Stream Analytics add output](images/IoTCore-Lab/asa_output.png)
 
-1. Choose **Edge Hub** from the drop-down list.
+6. Choose **Edge Hub** from the drop-down list.
 
-1. In the **New output** pane, enter **alert** as the output alias. 
+7. In the **New output** pane, enter **alert** as the output alias. 
 
-1. Keep the default values for the other fields, and select **Save**.
+8. Keep the default values for the other fields, and select **Save**.
 
-1. Under **Job Topology**, select **Query**.
+9. Under **Job Topology**, select **Query**.
 
-1. Replace the default text with the following query. The SQL code sends a reset command to the alert output if the average machine temperature in a 30-second window reaches 70 degrees. The reset command has been pre-programmed into the sensor as an action that can be taken. 
+10. Replace the default text with the following query. The SQL code sends a reset command to the alert output if the average machine temperature in a 30-second window reaches 70 degrees. The reset command has been pre-programmed into the sensor as an action that can be taken. 
 
     ```sql
     SELECT  
@@ -192,7 +208,7 @@ Using the three elements of input, output, and query, this section creates a job
     HAVING Avg(machine.temperature) > 70
     ```
 
-1. Select **Save**.
+11. Select **Save**.
 
 ## Step 5. Configure Storage for ASA Job
 
