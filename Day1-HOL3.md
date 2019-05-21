@@ -83,16 +83,14 @@ The value for the `device-id` parameter is case-sensitive. Don't copy the quotat
 
 Note: The Intel Compute Stick is the IoT Core device for this lab.
 
-### 1. Open a powershell window as Administrator
-
-### 2. Remote powershell into your IoT Core device 
+### 1. Remote powershell into your IoT Core device 
 
 - Download and install IoT Core Dashboard from: https://docs.microsoft.com/en-us/windows/iot-core/connect-your-device/iotdashboard
 - Launch IoT Core Dashboad, Right click on the device and select **Launch Powershell**
 
 ![IoT Core Dashboard](images/IoTCore-Lab/IoTCoreDashboard.png)
 
-### 3. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
+### 2. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
 ```powershell
 [192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
@@ -100,7 +98,7 @@ Note: The Intel Compute Stick is the IoT Core device for this lab.
 
 Note: The stick PC will be restarted as part of the installation. 
 
-### 4. Run the Initialize-IoTEdge command to complete the installation process. 
+### 3. Run the Initialize-IoTEdge command to complete the installation process. 
 
 Need to re-connect to IoT Core, since the prior session was disconnected because of the restart
 
@@ -109,9 +107,10 @@ Need to re-connect to IoT Core, since the prior session was disconnected because
 [192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aks.ms/iotedge} | Invoke-Expression; Initialize-IoTEdge
 
 ```
-### 5. Provide the device connection string
 
-### 6. Confirm IoT Edge runtime is installed and running on the IoT Core device
+### 4. Provide the device connection string
+
+### 5. Confirm IoT Edge runtime is installed and running on the IoT Core device
 
 You can check the status of the IoT Edge service by: 
 
