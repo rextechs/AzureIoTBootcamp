@@ -15,7 +15,6 @@ In this lab, you learn how to:
 * Deploy the Azure Stream Analytics job to an Azure IoT Core device.
 
 ## Prerequisites
-
 - An instance of IoT Hub from the previous HOL
 - IoT Core device: Windows 10 IoT Core on Intel Compute Stick PC
 
@@ -23,8 +22,8 @@ In this lab, you learn how to:
 
 In some occasions, command line is the only interface available. In this lab, we are going to use a different method than prior labs, the Command Line Interface (CLI), to create devices. Since the IoT Core device is a small device with less resources, it is recommended to perform the following steps on your lab development machine. 
 
-### 1. Sing in to your Azure account. If you hadn't signed in to your account. Use the login command which will open a web browser, and sign in to your account with your credential. 
 
+### 1. Sing in to your Azure account. If you hadn't signed in to your account. Use the login command which will open a web browser, and sign in to your account with your credential. 
    ```cli
    az login
    ```
@@ -84,13 +83,13 @@ Note: The Intel Compute Stick is the IoT Core device for this lab.
 ### 2. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
 ```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge -ContainerOs Windows
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
 ```
 
 ### 3. Run the Initialize-IoTEdge command to complete the installation process
 
 ```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge -ContainerOs Windows
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge
 ```
 
 ### 4. Provide the device connection string
