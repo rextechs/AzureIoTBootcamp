@@ -81,22 +81,29 @@ The value for the `device-id` parameter is case-sensitive. Don't copy the quotat
 
 ## Step 2: Install IoT Edge on the IoT Core device 
 
-Note: The Intel Compute Stick is the IoT Core device for this lab.
+> [!NOTE]  
+> The Intel Compute Stick is the IoT Core device for this lab.
 
-1. Open a powershell window as Administrator
+1. Start IoT Core Dashboard
+1. Select your device  
+  Locate your device by IP Address
+1. Select your device, right click on it, then select `Launch IoT Remote Client`  
 
-1. Remote powershell into your IoT Core device 
+    ![IoTCoreDashboard](images/IoTCore-Lab/IoTCoreDashboard.png)
 
-    ```ps
-    PS C:\repo> Set-Item WSMan:\localhost\Client\TrustedHosts -Value 192.168.0.81
-    
-    WinRM Security Configuration.
-    This command modifies the TrustedHosts list for the WinRM client. The computers in the TrustedHosts list might not be
-    authenticated. The client might send credential information to these computers. Are you sure that you want to modify
-    this list?
-    [Y] Yes  [N] No  [S] Suspend  [?] Help (default is "Y"): Y
-    PS C:\repo> Enter-PSSession -ComputerName 192.168.0.81 -Credential 192.168.0.81\Administrator
-    ```
+1. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
+
+```powershell
+[192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
+```
+
+Note: The stick PC will be restarted as part of the installation. 
+
+1. Run the Initialize-IoTEdge command to complete the installation process. 
+
+Need to re-connect to IoT Core, since the prior session was disconnected because of the restart
+
+```powershell
 
 1. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the Moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
