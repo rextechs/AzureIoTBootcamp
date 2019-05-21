@@ -17,20 +17,19 @@ In this lab, you learn how to:
 Windows IoT Core device is a small device with lesser resources, so we'll be doing most the steps on your lab development machine, then deploy the module to the IoT Core device.
 
 ## Prerequisites
+
 - An instance of IoT Hub from the previous HOL
 - IoT Core device, for instance an Intel Compute Stick PC. 
 
-## Step 1 : Register the IoT Core device as an Azure IoT Edge device
+## Step 1 : Register the IoT Core device as an Azure IoT Edge device (On your DevEnv)
 
-Command line interface (CLI) is the only interface available in some occasions, so in this lab, we are going to use the Azure Command Line Interface (CLI)to create devices.    
-
-Note: you will need to  enable command line before you can use it on IoT. The admin password is: bootcamp
+Command line interface (CLI) is the only interface available in some occasions, so in this lab, we are going to use the Azure Command Line Interface (AZ CLI) to create devices.
 
 ### 1. Sing in to your Azure account.
 
 If you hadn't signed in to your account. Use the login command which will open a web browser, and sign in to your account with your credential. 
 
-   ```cli
+   ```bash
    az login
    ```
 
@@ -38,7 +37,7 @@ If you hadn't signed in to your account. Use the login command which will open a
 
 Use the following command to create a new device identity in your IoT hub:
 
-   ```cli
+   ```bash
    az iot hub device-identity create --device-id [device id] --hub-name [hub name] --edge-enabled
    ```
 
@@ -55,7 +54,7 @@ This command includes three parameters:
 
 Note: If your environment did not have the device-identity extension installed, run the following command
 
-```cli
+```bash
    az extension add --name azure-cli-iot-ext
 ```
 
@@ -63,7 +62,7 @@ Note: If your environment did not have the device-identity extension installed, 
 
 Use the following command to view all devices in your IoT hub:
 
-   ```cli
+   ```bash
    az iot hub device-identity list --hub-name [hub name]
 
    ```
@@ -74,7 +73,7 @@ Any device that is registered as an IoT Edge device will have the property **cap
 
 When you're ready to set up your device, you need the connection string that links your physical device with its identity in the IoT hub. Use the following command to return the connection string for a single device:
 
-   ```cli
+   ```bash
    az iot hub device-identity show-connection-string --device-id [device id] --hub-name [hub name]
    ```
 
@@ -92,23 +91,6 @@ Note: The Intel Compute Stick is the IoT Core device for this lab.
 - Launch IoT Core Dashboad, Right click on the device and select **Launch Powershell**
 
 ![IoT Core Dashboard](images/IoTCore-Lab/IoTCoreDashboard.png)
-
-<!-- ```
-PS C:\repo>  net start WinRM
-The requested service has already been started.
-
-More help is available by typing NET HELPMSG 2182.
-
-PS C:\repo> Set-Item WSMan:\localhost\Client\TrustedHosts -Value 192.168.0.81
-
-WinRM Security Configuration.
-This command modifies the TrustedHosts list for the WinRM client. The computers in the TrustedHosts list might not be
-authenticated. The client might send credential information to these computers. Are you sure that you want to modify
-this list?
-[Y] Yes  [N] No  [S] Suspend  [?] Help (default is "Y"): Y
-PS C:\repo> Enter-PSSession -ComputerName 192.168.0.81 -Credential 192.168.0.81\Administrator
-``` -->
-
 
 ### 3. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
@@ -137,7 +119,7 @@ You can check the status of the IoT Edge service by:
 Get-Service iotedge
 ```
 
-## Step 3 : Create an Azure Stream Analytics Job
+## Step 3 : Create an Azure Stream Analytics Job 
 
 In this section, you create an Azure Stream Analytics job to take data from your IoT hub, query the sent telemetry data from your device, and then forward the results to an Azure Blob storage container. 
 
