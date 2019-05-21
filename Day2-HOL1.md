@@ -38,7 +38,6 @@ Click on **Review + Create**, and after reviewing, click on **Create**.
 
 ![Create IoTHub Submit](images/IoTHub-Lab/05_Create_IoTHub_Submit_2.png)
 
-
 ## Register a device
 
 Click on **IoT devices** and **+ Add**.
@@ -52,7 +51,6 @@ Give your device a descriptive **Device ID** and click **Save**.
 Select your device and copy the connection string. Save the connection string to use later in the lab. 
 
 ![Device Connection String](images/IoTHub-Lab/connection-string.png)
-
 
 ## Connect MXChip Device
 
@@ -88,7 +86,6 @@ IoT projects rely on internet connectivity. Use the following instructions to co
 Hold down button B, push and release the reset button, and then release button B. Your DevKit enters AP mode for configuring Wi-Fi. The screen displays the service set identifier (SSID) of the DevKit and the configuration portal IP address.
 
 ![Set AP Mode](images/IoTHub-Lab/set-ap-mode.gif)
-
 
 ### Connect to DevKit AP
 
