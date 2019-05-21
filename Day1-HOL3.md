@@ -89,6 +89,11 @@ Note: The Intel Compute Stick is the IoT Core device for this lab.
 ### 2. Remote powershell into your IoT Core device 
 
 ```
+PS C:\repo>  net start WinRM
+The requested service has already been started.
+
+More help is available by typing NET HELPMSG 2182.
+
 PS C:\repo> Set-Item WSMan:\localhost\Client\TrustedHosts -Value 192.168.0.81
 
 WinRM Security Configuration.
