@@ -93,7 +93,7 @@ Note: The Intel Compute Stick is the IoT Core device for this lab.
 ### 2. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
 ```powershell
-[192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
+[192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge -ContainerOs Windows
 ```
 
 Note: The stick PC will be restarted as part of the installation. 
@@ -104,7 +104,7 @@ Need to re-connect to IoT Core, since the prior session was disconnected because
 
 ```powershell
 
-[192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge
+[192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge -ContainerOs Windows
 
 ```
 
