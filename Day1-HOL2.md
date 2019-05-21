@@ -161,7 +161,7 @@ PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor>
 
 ## Step 5 : Create Azure Container Registry
 
- A container repository is used to store container. In this lab, we're using the container registry to store the AI modules built from last steps. With the containers stored in Azure Container Registry, you can deploy the modules to the machines and devices where you want to run the moudule.
+ A container repository is used to store container. In this lab, we're using the container registry to store the AI modules built from last steps. With the containers stored in Azure Container Registry, you can deploy the modules to the machines and devices where you want to run the module.
 
 1. Select **Create a resource** > **Containers** > **Container Registry**  
   **Registry name** enter a registry name  
@@ -169,6 +169,9 @@ PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor>
   use the default values for the other fields
 
 1. Select **Create** to deploy.
+
+    Example : 
+    ACR Name : rlacr
 
     ![Creating a container registry in the Azure portal](images/IoTEnt-Lab/create-acr.png)
 
@@ -178,8 +181,12 @@ PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor>
 
 1. Take note of the value of the **Login server**, and copy one of the passwords. You'll need these values in the following steps.
 
+    Example :  
+    ACR Name : rlacr
+    Login Server : rlacr.azurecr.io  
+
     ![login server info](images/IoTEnt-Lab/acr-login-info.png)
-    
+
 ## Step 6: Containerize the Temperature Simulator app
 
 In order for an app to be run as an edge module, the app needs to be containerize first. In the section we're going to walk through the steps to containerize an app. 
@@ -202,8 +209,10 @@ setx /m  DOCKER_HOST npipe:////./pipe/iotedge_moby_engine
 
 ### 3. Create docker image for the Temperature Simulator app
 
+Example of creating container calle `tempsim`
+
 ```powershell 
-PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> docker build .\bin\Debug\netcoreapp2.1\win-x64\publish -t tempsim -f .\docker\windows\amd64\Dockerfile
+docker build .\bin\Debug\netcoreapp2.1\win-x64\publish -t tempsim -f .\docker\windows\amd64\Dockerfile
 Sending build context to Docker daemon  77.43MB
 
 Step 1/6 : ARG base_tag=2.1.10-nanoserver-1809
@@ -245,34 +254,40 @@ Successfully tagged tempsim:latest
 ### 1. Login to your Azure Container Registry
 
 ```ps
-PS C:\repo\Samples\EdgeModules\SimulatedTemperatureSensor> docker login {ACR_NAME}.azurecr.io
-Username: {ACR_NAME}
-Password:
-Login Succeeded
+docker login <Your ACR Login Server> -u <Your ACR User Name> -p <Your ACR Password> 
 ```
 
-### 2. Push the Docker image to AZure Container Registry
+Example:  
+
+```ps
+docker login rlacr.azurecr.io -u rlacr -p 7098eradioaud8f7aerua
+```
+
+### 2. Push the Docker image to Azure Container Registry
+
+1. Add `tag` to the container
 
 ```powershell
+docker tag <Tag Value> <Your ACR Login Server>/<Your Module Name> 
+```
 
-PS C:\IOT-AI-Sample\iotedge\edge-modules\SimulatedTemperatureSensor> docker tag tempsim {ACR_NAME}.azurecr.io/tempsim 
+Example :  
 
-PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> docker push {ACR_NAME}.azurecr.io/tempsim
-The push refers to repository [{ACR_NAME}.azurecr.io/tempsim]
-df1fb756da5d: Preparing
-b73311fbd316: Preparing
-a406b6d40c15: Preparing
-96853e0dc821: Preparing
-   :
-146252efae6c: Pushed
-6eaf1cf63dfc: Pushed
-273db4b66a2d: Skipped foreign layer
-761ff3ef5aab: Pushed
-a2bb3d322957: Pushed
-b73311fbd316: Pushed
-5c3e3ab9e119: Pushed
-latest: digest: sha256:d323fe3ae869d39802ba1c3c0f76f7ed0e40d1d7f7b2041a12e5faf5391bbcf0 size: 2507
+```ps
+docker tag tempsim rlacr.azurecr.io/tempsim
+```
 
+2. Push to ACR
+
+```ps
+docker push <Your ACR Login Server>/<Your Module Name>
+
+```
+
+Example :
+
+```ps
+docker push rlacr.azurecr.io/tempsim
 ```
 
 ## Step 8: Deploy module to IoT Edge 
@@ -286,10 +301,14 @@ In this section, you use the **Set Modules** wizard in the Azure portal to creat
 ### 2. Select **Set modules**
 
 For the Container Registry Settings:  
-- Name: ACR_NAME
-- Address: {ACR_NAME}.azurecr.io
-- Username: RLACR
-- Password: {Your ACR Password} 
+- Name: <Your ACR Name>
+- Address: <Your ACR Login Server>
+- Username: <Your ACR User Name>
+- Password: <Your ACR Password> 
+
+Example :
+
+# !!!!! Need ScreenShot
 
 > [!NOTE]  
 > ACR Credential can be obtained from your the Azure Container Registry created earlier under Access Keys  
@@ -301,16 +320,22 @@ For the Container Registry Settings:
 
 ## Step 9: Confirm the Temperature Simulator module has been deployed
 
-To the view logs of the Temperature Simulator module
+To the view logs of the Temperature Simulator module with `iotedge list` command
 
 ```powershell
-PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> iotedge list 
+iotedge list
+
 NAME             STATUS           DESCRIPTION      CONFIG
 tempsim          running          Up 4 seconds     {ACR_NAME}.azurecr.io/tempsim:latest
 edgeHub          running          Up 7 seconds     mcr.microsoft.com/azureiotedge-hub:1.0
 edgeAgent        running          Up 30 seconds    mcr.microsoft.com/azureiotedge-agent:1.0
+```
 
-PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> docker ps 
+Or with `docker ps` command
+
+```ps
+docker ps 
+
 CONTAINER ID        IMAGE                                      COMMAND                  CREATED             STATUS              PORTS                                            
                       NAMES
 073ff6d9054c        {ACR_NAME}.azurecr.io/tempsim:latest            "dotnet SimulatedTem…"   24 seconds ago      Up 21 seconds                                                      
@@ -319,9 +344,18 @@ CONTAINER ID        IMAGE                                      COMMAND          
 .0.0.0:8883->8883/tcp   edgeHub
 b411b4fd6545        mcr.microsoft.com/azureiotedge-agent:1.0   "dotnet Microsoft.Az…"   49 seconds ago      Up 47 seconds                                                      
                         edgeAgent
+```
 
-PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> docker logs -f tempsim  
+To see log from module
 
+```ps
+docker logs -f <Your Module Name>
+```
+
+Example:
+
+```ps
+docker logs -f tempsim
 SimulatedTemperatureSensor Main() started.
 Initializing simulated temperature sensor to send 500 messages, at an interval of 5 seconds.  
     :  
@@ -335,7 +369,6 @@ ity":24},"timeCreated":"2019-05-21T03:30:26.5174959Z"}]
 	5/20/2019 11:31:37 PM> Sending message: 16, Body: [{"machine":{"temperature":31.028983515933614,"pressure":2.1425424258658547},"ambient":{"temperature":20.988973313704587,"humi
 dity":26},"timeCreated":"2019-05-21T03:31:37.0984276Z"}]
 
-PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> 
 ```
 
 ### Step 10: Stop IOT Edge 
