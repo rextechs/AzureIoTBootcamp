@@ -1,12 +1,15 @@
 
 # Eco-system Bootcamp Hands on Labs
 
+<<<<<<< HEAD
 <!-- ![Imported Script](images/ref_architecture.png "Header Image") -->
 
 # How to Redeem Microsoft Azure Pass
 ![Follow Instructions Here](https://www.microsoftazurepass.com/Home/HowTo)
 
 
+=======
+>>>>>>> 13c59f1f91eab1ff955c41aba69b12aa029deca4
 ## Day 1
 
 ### Lab 1: Windows + Azure IoT Edge - Basic Lab
@@ -14,7 +17,6 @@
 **Duration**: 60 minutes
 
 [Windows + Azure IoT Edge -Basic Lab](Day1-HOL1.md)  
-
 
 ### Lab 2: Windows + Azure IoT Edge - Advanced Lab
 
@@ -35,7 +37,6 @@
 **Duration**: 60 minutes
 
 [Connect to Azure IoT Hub using MXChip](Day2-HOL1.md) 
-
 
 ### Lab 2 : Device Provisioning Service 
 
@@ -69,4 +70,10 @@
 
 [Connect and Monitor Devices Using IoT Central](Day3-HOL2.md)
 
+<<<<<<< HEAD
 
+=======
+# How to Redeem Microsoft Azure Pass
+
+![Follow Instructions Here](https://www.microsoftazurepass.com/Home/HowTo)
+>>>>>>> 13c59f1f91eab1ff955c41aba69b12aa029deca4

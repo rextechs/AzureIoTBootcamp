@@ -69,14 +69,14 @@ You can also select **Get Device Info** from the right-click menu to see all the
  This command checks whether your Windows machine is on a supported version, turns on the containers feature, and then downloads the Moby runtime and the IoT Edge runtime. 
 
 ```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge -ContainerOs Windows
 ```
 Click Yes to the following pop-up questions. The machine will be restarted. After it's restarted, open a powershell window and run the command to finish the installation. 
 
 ### 3 Run the  Initialize-IoTEdge command to initialize the finish the IoT Edge installation
 
 ```powershell
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge -ContainerOs Windows
 ```
 
 ### 4. Link to an IoT Edge device in IoTHub 
@@ -93,7 +93,6 @@ Get-Service iotedge
 
 ![edge-running](images/WinServer-Lab/EdgeRunning.png)
 
-
 ### 6 : Confirm IoT Edge runtime is installed and running
 
 You can check the Windows service is running: 
@@ -102,21 +101,23 @@ You can check the Windows service is running:
 Get-Service iotedge
 ```
 
-To list all modules running in IoT Edge 
+To list all modules running in IoT Edge  
+
 ```powershell
 iotedge list
 ```
 
-## Step 3 : Download the IoT Edge sample from repo, 
+## Step 3 : Download the IoT Edge sample from repo
 
 [IoT Edge Samples](https://github.com/Azure/iotedge)
-```powershell 
+
+```powershell  
 git clone https://github.com/Azure/iotedge
 ```
 
-## Step 4 : Build Sample 
+## Step 4 : Build Sample
 
-### 1. Check .Net installation 
+### 1. Check .Net installation
 
 Make sure you have dotnet installed on your machine already. 
 
@@ -165,37 +166,34 @@ PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor>
 
 ```
 
-
 ## Step 5 : Create Azure Container Registry
 
  A container repository is used to store container. In this lab, we're using the container registry to store the AI modules built from last steps. With the containers stored in Azure Container Registry, you can deploy the modules to the machines and devices where you want to run the moudule.
 
-1. Select **Create a resource** > **Containers** > **Container Registry**.
+1. Select **Create a resource** > **Containers** > **Container Registry**  
+  **Registry name** enter a registry name  
+  **Resource group** select the resource group used from prior lab 
+  use the default values for the other fields
 
-**Registry name** enter a registry name
-**Resource group** select the resource group used from prior lab 
+1. Select **Create** to deploy.
 
-use the default values for the other fields
- 
-2. Select **Create** to deploy.
+    ![Creating a container registry in the Azure portal](images/IoTEnt-Lab/create-acr.png)
 
-![Creating a container registry in the Azure portal](images/IoTEnt-Lab/create-acr.png)
+1. When the **Deployment succeeded** message appears, select the container registry in the portal. 
 
-3. When the **Deployment succeeded** message appears, select the container registry in the portal. 
+1. Select **Access keys** and **Enable** Admin user 
 
-4. Select **Access keys** and **Enable** Admin user 
+1. Take note of the value of the **Login server**, and copy one of the passwords. You'll need these values in the following steps.
 
-5. Take note of the value of the **Login server**, and copy one of the passwords. You'll need these values in the following steps.
-
-![login server info](images/IoTEnt-Lab/acr-login-info.png)
-
+    ![login server info](images/IoTEnt-Lab/acr-login-info.png)
+    
 ## Step 6: Containerize the Temperature Simulator app
 
 In order for an app to be run as an edge module, the app needs to be containerize first. In the section we're going to walk through the steps to containerize an app. 
 
 ### 1. Set up Docker Environment 
 
-1. Set the environment variables **WINDOW_WINMD**  and **DOCKER_HOST**
+Set the environment variables **WINDOW_WINMD**  and **DOCKER_HOST**
 
 To get access to Windows.AI.MachineLearning and various other Windows classes an assembly reference needs to be added for Windows.winmd
 
@@ -223,23 +221,7 @@ Step 2/6 : FROM mcr.microsoft.com/dotnet/core/runtime:${base_tag}
 4350fcc14134: Pulling fs layer
 af993f0b5292: Pulling fs layer
 29f6e54ef3cd: Pulling fs layer
-2a38bc60ae92: Pulling fs layer
-af993f0b5292: Waiting
-29f6e54ef3cd: Waiting
-2a38bc60ae92: Waiting
-4350fcc14134: Verifying Checksum
-4350fcc14134: Download complete
-af993f0b5292: Download complete
-29f6e54ef3cd: Verifying Checksum
-29f6e54ef3cd: Download complete
-2a38bc60ae92: Verifying Checksum
-2a38bc60ae92: Download complete
-9319e23c8670: Verifying Checksum
-9319e23c8670: Download complete
-9932599cb91b: Verifying Checksum
-9932599cb91b: Download complete
-9319e23c8670: Pull complete
-9932599cb91b: Pull complete
+  :
 4350fcc14134: Pull complete
 af993f0b5292: Pull complete
 29f6e54ef3cd: Pull complete
@@ -269,15 +251,16 @@ Successfully tagged tempsim:latest
 
 ### 1. Login to your Azure Container Registry
 
-```
+```ps
 PS C:\repo\Samples\EdgeModules\Temperature SimulatorObjectDetection\cs> docker login {ACR_NAME}.azurecr.io
 Username: {ACR_NAME}
 Password:
 Login Succeeded
 ```
+
 ### 2. Push the Docker image to AZure Container Registry
 
-```powershell 
+```powershell
 
 PS C:\IOT-AI-Sample\iotedge\edge-modules\SimulatedTemperatureSensor> docker tag tempsim {ACR_NAME}.azurecr.io/tempsim 
 
@@ -287,20 +270,7 @@ df1fb756da5d: Preparing
 b73311fbd316: Preparing
 a406b6d40c15: Preparing
 96853e0dc821: Preparing
-146252efae6c: Preparing
-6eaf1cf63dfc: Preparing
-a2bb3d322957: Preparing
-761ff3ef5aab: Preparing
-5c3e3ab9e119: Preparing
-273db4b66a2d: Preparing
-a2bb3d322957: Waiting
-761ff3ef5aab: Waiting
-5c3e3ab9e119: Waiting
-273db4b66a2d: Waiting
-6eaf1cf63dfc: Waiting
-df1fb756da5d: Pushed
-a406b6d40c15: Pushed
-96853e0dc821: Pushed
+   :
 146252efae6c: Pushed
 6eaf1cf63dfc: Pushed
 273db4b66a2d: Skipped foreign layer
@@ -311,34 +281,35 @@ b73311fbd316: Pushed
 latest: digest: sha256:d323fe3ae869d39802ba1c3c0f76f7ed0e40d1d7f7b2041a12e5faf5391bbcf0 size: 2507
 
 ```
+
 ## Step 8: Deploy module to IoT Edge 
 
 You are now ready to deploy the Simulated Temperature module on your device. 
 
 In this section, you use the **Set Modules** wizard in the Azure portal to create a *deployment manifest*. A deployment manifest is a JSON file that describes all the modules that will be deployed to a device, the container registries that store the module images, how the modules should be managed, and how the modules can communicate with each other. Your IoT Edge device retrieves its deployment manifest from IoT Hub, then uses the information in it to deploy and configure all of its assigned modules. 
 
-
 ### 1. In the Azure portal, in your IoT hub, go to **IoT Edge**, and then open the details page for your IoT Edge device.
 
-### 2. Select **Set modules**. 
+### 2. Select **Set modules**
 
-  For the Container Registry Settings: 
-  - Name: ACR_NAME
-  - Address: {ACR_NAME}.azurecr.io
-  - Username: RLACR
-  - Password: {Your ACR Password} 
+For the Container Registry Settings:  
+- Name: ACR_NAME
+- Address: {ACR_NAME}.azurecr.io
+- Username: RLACR
+- Password: {Your ACR Password} 
 
-Note: ACR Credential can be obtained from your the Azure Container Registry created earlier under Access Keys  
+> [!NOTE]  
+> ACR Credential can be obtained from your the Azure Container Registry created earlier under Access Keys  
 
-  - Click **Add** and select **IoT Edge Module**.
-  - Type a name for your module, type **tempsim**.
-  - For the image URI, enter **{ACR_NAME}.azurecr.io/tempsim**. 
-  - Leave the other settings unchanged and select **Save**.
-
+- Click **Add** and select **IoT Edge Module**
+- Type a name for your module, type **tempsim**
+- For the image URI, enter **{ACR_NAME}.azurecr.io/tempsim** 
+- Leave the other settings unchanged and select **Save**
 
 ## Step 9: Confirm the Temperature Simulator module has been deployed
 
 To the view logs of the Temperature Simulator module
+
 ```powershell
 PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> iotedge list 
 NAME             STATUS           DESCRIPTION      CONFIG
@@ -366,32 +337,8 @@ Information: Successfully initialized module client of transport type [Amqp_Tcp_
 ity":24},"timeCreated":"2019-05-21T03:30:21.1985626Z"}]
 	5/20/2019 11:30:26 PM> Sending message: 2, Body: [{"machine":{"temperature":22.294024133726033,"pressure":1.1474204709308138},"ambient":{"temperature":21.308749485671868,"humid
 ity":24},"timeCreated":"2019-05-21T03:30:26.5174959Z"}]
-	5/20/2019 11:30:31 PM> Sending message: 3, Body: [{"machine":{"temperature":23.386484531982095,"pressure":1.2718779846561881},"ambient":{"temperature":21.310748661780146,"humid
-ity":24},"timeCreated":"2019-05-21T03:30:31.5789414Z"}]
-	5/20/2019 11:30:36 PM> Sending message: 4, Body: [{"machine":{"temperature":24.455627536613321,"pressure":1.3936790864496187},"ambient":{"temperature":21.1007648103874,"humidit
-y":26},"timeCreated":"2019-05-21T03:30:36.6253374Z"}]
-	5/20/2019 11:30:41 PM> Sending message: 5, Body: [{"machine":{"temperature":24.497181632438295,"pressure":1.398413097366388},"ambient":{"temperature":21.38086750166531,"humidit
-y":25},"timeCreated":"2019-05-21T03:30:41.670711Z"}]
-	5/20/2019 11:30:46 PM> Sending message: 6, Body: [{"machine":{"temperature":25.177558963968213,"pressure":1.4759244389330877},"ambient":{"temperature":21.482150605871411,"humid
-ity":24},"timeCreated":"2019-05-21T03:30:46.7204458Z"}]
-	5/20/2019 11:30:51 PM> Sending message: 7, Body: [{"machine":{"temperature":26.419179711569651,"pressure":1.6173749038497069},"ambient":{"temperature":21.21718055369201,"humidi
-ty":26},"timeCreated":"2019-05-21T03:30:51.758521Z"}]
-	5/20/2019 11:30:56 PM> Sending message: 8, Body: [{"machine":{"temperature":26.369376188316092,"pressure":1.6117010847448712},"ambient":{"temperature":20.70980702769468,"humidi
-ty":26},"timeCreated":"2019-05-21T03:30:56.7880787Z"}]
-	5/20/2019 11:31:01 PM> Sending message: 9, Body: [{"machine":{"temperature":27.292824384776328,"pressure":1.7169040438352778},"ambient":{"temperature":20.693972364624017,"humid
-ity":24},"timeCreated":"2019-05-21T03:31:01.8156538Z"}]
-	5/20/2019 11:31:06 PM> Sending message: 10, Body: [{"machine":{"temperature":27.068939254651283,"pressure":1.6913981429349563},"ambient":{"temperature":21.011728836927436,"humi
-dity":24},"timeCreated":"2019-05-21T03:31:06.853721Z"}]
-	5/20/2019 11:31:11 PM> Sending message: 11, Body: [{"machine":{"temperature":27.895958205054495,"pressure":1.7856154917150691},"ambient":{"temperature":20.768641533455177,"humi
-dity":24},"timeCreated":"2019-05-21T03:31:11.8958425Z"}]
-	5/20/2019 11:31:16 PM> Sending message: 12, Body: [{"machine":{"temperature":27.755147254446126,"pressure":1.7695737378482927},"ambient":{"temperature":20.679328254041881,"humi
-dity":24},"timeCreated":"2019-05-21T03:31:16.9333408Z"}]
-	5/20/2019 11:31:21 PM> Sending message: 13, Body: [{"machine":{"temperature":28.754603445066422,"pressure":1.8834358355138963},"ambient":{"temperature":20.626531820337537,"humi
-dity":25},"timeCreated":"2019-05-21T03:31:21.9891981Z"}]
-	5/20/2019 11:31:27 PM> Sending message: 14, Body: [{"machine":{"temperature":29.430797181525641,"pressure":1.9604705649839338},"ambient":{"temperature":21.413920916576831,"humi
-dity":26},"timeCreated":"2019-05-21T03:31:27.0190657Z"}]
-	5/20/2019 11:31:32 PM> Sending message: 15, Body: [{"machine":{"temperature":30.258231397954855,"pressure":2.0547352225518187},"ambient":{"temperature":21.101294913143523,"humi
-dity":25},"timeCreated":"2019-05-21T03:31:32.0568575Z"}]
+    :  
+    :  
 	5/20/2019 11:31:37 PM> Sending message: 16, Body: [{"machine":{"temperature":31.028983515933614,"pressure":2.1425424258658547},"ambient":{"temperature":20.988973313704587,"humi
 dity":26},"timeCreated":"2019-05-21T03:31:37.0984276Z"}]
 
@@ -405,5 +352,3 @@ To  stop IoT Edge, you can run the command below:
 ```powershell
 Stop-Service iotedge
 ```
-
-Done! 

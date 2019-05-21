@@ -4,8 +4,7 @@
 
 Azure IoT Hub is a fully managed service that enables reliable and secure bidirectional communications between millions of IoT devices and a solution back end.
 
-
-### In this lab you will
+## In this lab you will
 
 * Learn to Create IoT Hub
 
@@ -22,7 +21,6 @@ Click on **+ Add** button
 ![Add Resource Group](images/IoTHub-Lab/02_Create_Resource_Group_Create.png)
 
 Enter **Resource group name**,  Select **subscription** and **region**. Click on **Review + Create**, and after reviewing, click on **Create**.
-
 
 ![Create Resource Group Submit](images/IoTHub-Lab/03_Create_Resource_Group_Submit.png)
 
