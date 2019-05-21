@@ -327,12 +327,12 @@ CONTAINER ID        IMAGE                                      COMMAND          
 b411b4fd6545        mcr.microsoft.com/azureiotedge-agent:1.0   "dotnet Microsoft.Az…"   49 seconds ago      Up 47 seconds                                                      
                         edgeAgent
 
-PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> docker logs -f 073ff6d9054c
+PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> docker logs -f tempsim  
+
 SimulatedTemperatureSensor Main() started.
-Initializing simulated temperature sensor to send 500 messages, at an interval of 5 seconds.
-To change this, set the environment variable MessageCount to the number of messages that should be sent (set it to -1 to send unlimited messages).
-Information: Trying to initialize module client using transport type [Amqp_Tcp_Only].
-Information: Successfully initialized module client of transport type [Amqp_Tcp_Only].
+Initializing simulated temperature sensor to send 500 messages, at an interval of 5 seconds.  
+    :  
+    :
 	5/20/2019 11:30:21 PM> Sending message: 1, Body: [{"machine":{"temperature":21.274294573824989,"pressure":1.0312487489167708},"ambient":{"temperature":21.378854756652775,"humid
 ity":24},"timeCreated":"2019-05-21T03:30:21.1985626Z"}]
 	5/20/2019 11:30:26 PM> Sending message: 2, Body: [{"machine":{"temperature":22.294024133726033,"pressure":1.1474204709308138},"ambient":{"temperature":21.308749485671868,"humid
