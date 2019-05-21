@@ -25,7 +25,7 @@ Windows IoT Core device is a small device with lesser resources, so we'll be doi
 
 Command line interface (CLI) is the only interface available in some occasions, so in this lab, we are going to use the Azure Command Line Interface (AZ CLI) to create devices.
 
-### 1. Sing in to your Azure account.
+### 1. Sign in to your Azure account.
 
 If you hadn't signed in to your account. Use the login command which will open a web browser, and sign in to your account with your credential. 
 
