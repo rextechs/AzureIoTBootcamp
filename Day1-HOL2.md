@@ -338,6 +338,7 @@ ity":24},"timeCreated":"2019-05-21T03:30:21.1985626Z"}]
 	5/20/2019 11:30:26 PM> Sending message: 2, Body: [{"machine":{"temperature":22.294024133726033,"pressure":1.1474204709308138},"ambient":{"temperature":21.308749485671868,"humid
 ity":24},"timeCreated":"2019-05-21T03:30:26.5174959Z"}]
     :  
+    :  
 	5/20/2019 11:31:37 PM> Sending message: 16, Body: [{"machine":{"temperature":31.028983515933614,"pressure":2.1425424258658547},"ambient":{"temperature":20.988973313704587,"humi
 dity":26},"timeCreated":"2019-05-21T03:31:37.0984276Z"}]
 
