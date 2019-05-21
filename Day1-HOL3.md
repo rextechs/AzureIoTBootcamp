@@ -70,7 +70,7 @@ Command line interface (CLI) is the only interface available in some occasions, 
 1. Retrieve the connection string
 
     When you're ready to set up your device, you need the connection string that links your physical device with its identity in the IoT hub. Use the following command to return the connection string for a single device:
-    
+
     ```bash
     az iot hub device-identity show-connection-string --device-id [device id] --hub-name [hub name]
     ```
@@ -99,9 +99,9 @@ Command line interface (CLI) is the only interface available in some occasions, 
     > The stick PC will be restarted as part of the installation. 
 
 1. Run the Initialize-IoTEdge command to complete the installation process. 
-    
+
     Need to re-connect to IoT Core, since the prior session was disconnected because of the restart
-    
+
 1. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the Moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
     ```powershell
@@ -114,7 +114,7 @@ Command line interface (CLI) is the only interface available in some occasions, 
 1. Run the Initialize-IoTEdge command to complete the installation process
 
     Need to re-connect to IoT Core, since the prior session was disconnected because of the restart
-    
+
     ```powershell
     [192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aks.ms/iotedge} | Invoke-Expression; Initialize-IoTEdge  -ContainerOs Windows
     ```
@@ -128,8 +128,7 @@ Command line interface (CLI) is the only interface available in some occasions, 
    ```
    Get-Service iotedge
    ```
-    
-       
+
 ## Step 3 : Create Azure Storage Account
 
 When you create an Azure Stream Analytics job to run on an IoT Edge device, it needs to be stored in a way that can be called from the device. You can use an existing Azure storage account, or create a new one now. 
