@@ -23,9 +23,7 @@ Windows IoT Core device is a small device with lesser resources, so we'll be doi
 
 ## Step 1 : Register the IoT Core device as an Azure IoT Edge device
 
-Command line interface (CLI) is the only interface available in some occasions, so in this lab, we are going to use the Azure Command Line Interface (CLI)to create devices.    
-
-Note: you will need to  enable command line before you can use it on IoT. The admin password is: bootcamp
+Command line interface (CLI) is the only interface available in some occasions, so in this lab, we are going to use the Azure Command Line Interface (CLI)to create devices.
 
 1. Sing in to your Azure account.
 
@@ -71,13 +69,13 @@ Note: you will need to  enable command line before you can use it on IoT. The ad
 
 1. Retrieve the connection string
 
-When you're ready to set up your device, you need the connection string that links your physical device with its identity in the IoT hub. Use the following command to return the connection string for a single device:
+    When you're ready to set up your device, you need the connection string that links your physical device with its identity in the IoT hub. Use the following command to return the connection string for a single device:
+    
+    ```bash
+    az iot hub device-identity show-connection-string --device-id [device id] --hub-name [hub name]
+    ```
 
-```bash
-az iot hub device-identity show-connection-string --device-id [device id] --hub-name [hub name]
-```
-
-The value for the `device-id` parameter is case-sensitive. Don't copy the quotation marks around the connection string.
+    The value for the `device-id` parameter is case-sensitive. Don't copy the quotation marks around the connection string.
 
 ## Step 2: Install IoT Edge on the IoT Core device 
 
@@ -93,18 +91,17 @@ The value for the `device-id` parameter is case-sensitive. Don't copy the quotat
 
 1. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
-```powershell
-[192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
-```
+    ```powershell
+    [192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
+    ```
 
-Note: The stick PC will be restarted as part of the installation. 
+    > [!NOTE]  
+    > The stick PC will be restarted as part of the installation. 
 
 1. Run the Initialize-IoTEdge command to complete the installation process. 
-
-Need to re-connect to IoT Core, since the prior session was disconnected because of the restart
-
-```powershell
-
+    
+    Need to re-connect to IoT Core, since the prior session was disconnected because of the restart
+    
 1. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the Moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
     ```powershell
@@ -198,7 +195,7 @@ Using the three elements of input, output, and query, this section creates a job
 
 1. Under **Job Topology**, select **Query**
 
-### 11. Replace the default text with the following query. The SQL code sends a reset command to the alert output if the average machine temperature in a 30-second window reaches 70 degrees. The reset command has been pre-programmed into the sensor as an action that can be taken
+1. Replace the default text with the following query. The SQL code sends a reset command to the alert output if the average machine temperature in a 30-second window reaches 70 degrees. The reset command has been pre-programmed into the sensor as an action that can be taken
 
     ```sql
     SELECT  
@@ -229,7 +226,7 @@ To prepare your Stream Analytics job to be deployed on an IoT Edge device, you n
 
     ![storage account details](images/IoTCore-Lab/storage-account-details.png)
 
-## Step 6. Deploy the Azure Stream Analytics job to your IoT Core device
+## Step 7. Deploy the Azure Stream Analytics job to your IoT Core device
 
 You are now ready to deploy the Azure Stream Analytics job on your IoT Core device. 
 
