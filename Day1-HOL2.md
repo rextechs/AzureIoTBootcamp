@@ -102,7 +102,11 @@ iotedge list
 
 [IoT Edge Samples](https://github.com/Azure/iotedge)
 
+Example : Clone to C:\Repo
+
 ```powershell  
+md c:\Repo
+cd C:\Repo
 git clone https://github.com/Azure/iotedge
 ```
 
