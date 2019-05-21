@@ -17,15 +17,15 @@ In this lab, you learn how to:
 Windows IoT Core device is a small device with lesser resources, so we'll be doing most the steps on your lab development machine, then deploy the module to the IoT Core device.
 
 ## Prerequisites
+
 - An instance of IoT Hub from the previous HOL
-- IoT Core device, for instance an Intel Compute Stick PC. 
+- IoT Core device, for instance an Intel Compute Stick PC.
 
 ## Step 1 : Register the IoT Core device as an Azure IoT Edge device
 
-In some occasions, command line is the only interface available. In this lab, we are going to use the Azure Command Line Interface (CLI)to create devices.    
+In some occasions, command line is the only interface available. In this lab, we are going to use the Azure Command Line Interface (CLI)to create devices.  
 
-
-### 1. Sing in to your Azure account.
+### 1. Sing in to your Azure account  
 
 If you hadn't signed in to your account. Use the login command which will open a web browser, and sign in to your account with your credential. 
 
@@ -43,14 +43,13 @@ Use the following command to create a new device identity in your IoT hub:
 
 This command includes three parameters:
 
- - **device-id**: Provide a descriptive name of your IoT Core device, which is unique to your IoT hub.
-
- - **hub-name**: Provide the name of your IoT hub.
-
- - **edge-enabled**: This parameter declares that the device is for use with IoT Edge.
+ - **device-id**: Provide a descriptive name of your IoT Core device, which is unique to your IoT hub.  
+  
+ - **hub-name**: Provide the name of your IoT hub.  
+  
+ - **edge-enabled**: This parameter declares that the device is for use with IoT Edge.  
 
    ![az iot hub device-identity create output](images/IotCore-Lab/Create-edge-device.png)
-
 
 Note: If your environment did not have the device-identity extension installed, run the following command
 
@@ -85,9 +84,11 @@ Note: The Intel Compute Stick is the IoT Core device for this lab.
 
 ### 1. Open a Remote Powershell
 
-Start `IoT Core Dashboard` on your desktop.
+1. Start `IoT Core Dashboard` on your desktop
+1. Select your device (Please find IP Address)
+1. `Right Click` on the device, select `Launch Powershell` 
 
-
+![IoTCoreDashboard](images/IoTCore-Lab/IoTCoreDashboard.png)
 
 ### 2. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the Moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
