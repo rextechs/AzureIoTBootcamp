@@ -189,7 +189,7 @@ use the default values for the other fields
 
 ![login server info](images/IoTEnt-Lab/acr-login-info.png)
 
-## Step 6: Containerize the SqueezeNet app
+## Step 6: Containerize the Temperature Simulator app
 
 In order for an app to be run as an edge module, the app needs to be containerize first. In the section we're going to walk through the steps to containerize an app. 
 
@@ -207,7 +207,7 @@ setx /m WINDOWS_WINMD "C:\Program Files (x86)\Windows Kits\10\UnionMetadata\[ver
 setx /m  DOCKER_HOST npipe:////./pipe/iotedge_moby_engine
 ```
 
-### 2. Close Powershell and Open a new Powershell window for the enviroment variables to take effect
+### 2. Close Powershell and Open a new Powershell window for the environment variables to take effect
 
 ### 3. Create docker image for the Temperature Simulator app
 
@@ -270,7 +270,7 @@ Successfully tagged tempsim:latest
 ### 1. Login to your Azure Container Registry
 
 ```
-PS C:\repo\Samples\EdgeModules\SqueezeNetObjectDetection\cs> docker login {ACR_NAME}.azurecr.io
+PS C:\repo\Samples\EdgeModules\Temperature SimulatorObjectDetection\cs> docker login {ACR_NAME}.azurecr.io
 Username: {ACR_NAME}
 Password:
 Login Succeeded
@@ -338,7 +338,7 @@ Note: ACR Credential can be obtained from your the Azure Container Registry crea
 
 ## Step 9: Confirm the Temperature Simulator module has been deployed
 
-To the view logs of the squeezenet module
+To the view logs of the Temperature Simulator module
 ```powershell
 PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> iotedge list 
 NAME             STATUS           DESCRIPTION      CONFIG

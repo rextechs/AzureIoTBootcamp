@@ -65,3 +65,7 @@
 
 [Connect and Monitor Devices Using IoT Central](Day3-HOL2.md)
 
+
+
+# How to Redeem Microsoft Azure Pass
+![Follow Instructions Here](https://www.microsoftazurepass.com/Home/HowTo)
