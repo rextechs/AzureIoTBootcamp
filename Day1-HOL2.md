@@ -245,7 +245,7 @@ Successfully tagged tempsim:latest
 ### 1. Login to your Azure Container Registry
 
 ```ps
-PS C:\repo\Samples\EdgeModules\Temperature SimulatorObjectDetection\cs> docker login {ACR_NAME}.azurecr.io
+PS C:\repo\Samples\EdgeModules\SimulatedTemperatureSensor> docker login {ACR_NAME}.azurecr.io
 Username: {ACR_NAME}
 Password:
 Login Succeeded
