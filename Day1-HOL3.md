@@ -79,13 +79,17 @@ When you're ready to set up your device, you need the connection string that lin
 
 The value for the `device-id` parameter is case-sensitive. Don't copy the quotation marks around the connection string.
 
-## Step 2: Install IoT Edge on the IoT Core device 
+## Step 2: Install IoT Edge on the IoT Core device
 
 Note: The Intel Compute Stick is the IoT Core device for this lab.
 
-### 1. Open a shell window 
+### 1. Open a Remote Powershell
 
-### 2. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
+Start `IoT Core Dashboard` on your desktop.
+
+
+
+### 2. The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the Moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
 ```powershell
 . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge -ContainerOs Windows
@@ -113,7 +117,7 @@ In this section, you create an Azure Stream Analytics job to take data from your
 
 ### 1. Create a storage account
 
-When you create an Azure Stream Analytics job to run on an IoT Edge device, it needs to be stored in a way that can be called from the device. You can use an existing Azure storage account, or create a new one now. 
+When you create an Azure Stream Analytics job to run on an IoT Edge device, it needs to be stored in a way that can be called from the device. You can use an existing Azure storage account, or create a new one now.  
 
 1. In the Azure portal, go to **Create a resource** > **Storage** > **Storage account**. 
 
@@ -126,7 +130,7 @@ When you create an Azure Stream Analytics job to run on an IoT Edge device, it n
    | Subscription | Choose the same subscription as your IoT hub. |
    | Resource group | We recommend that you use the same resource group for all of the test resources that you create for all the labs.|
 
-3. Keep the default values for the other fields and select **Create**. 
+3. Keep the default values for the other fields and select **Create**.  
 
 ### 2. Create a new Azure Stream Analytics job
 
@@ -136,17 +140,17 @@ When you create an Azure Stream Analytics job to run on an IoT Edge device, it n
 
    | Field | Value |
    | ----- | ----- |
-   | Job name | Provide a name for your job. For example, **IoTEdgeJob** | 
+   | Job name | Provide a name for your job. For example, **IoTEdgeJob** |
    | Subscription | Choose the same subscription as your IoT hub. |
    | Resource group | We recommend that you use the same resource group for all of the test resources that you create for all the labs.|
-   | Location | Choose a location close to you. | 
+   | Location | Choose a location close to you. |
    | Hosting environment | Select **Edge**. |
  
 3. Select **Create**.
 
 ## Step 4. Configure the Azure Stream Analytics job
 
-Once your Stream Analytics job is created in the Azure portal, you can configure it with an input, an output, and a query to run on the data that passes through. 
+Once your Stream Analytics job is created in the Azure portal, you can configure it with an input, an output, and a query to run on the data that passes through.  
 
 Using the three elements of input, output, and query, this section creates a job that receives temperature data from the IoT Edge device. It analyzes that data in a rolling 30-second window. If the average temperature in that window goes over 70 degrees, then an alert is sent to the IoT Edge device. You'll specify exactly where the data comes from and goes in the next section when you deploy the job.  
 
@@ -156,25 +160,25 @@ Using the three elements of input, output, and query, this section creates a job
 
    ![Azure Stream Analytics add input](images/IoTCore-Lab/asa_input.png)
 
-2. Choose **Edge Hub** from the drop-down list.
+1. Choose **Edge Hub** from the drop-down list.
 
-3. In the **New input** pane, enter **temperature** as the input alias. 
+1. In the **New input** pane, enter **temperature** as the input alias.  
 
-4. Keep the default values for the other fields, and select **Save**.
+1. Keep the default values for the other fields, and select **Save**.
 
-5. Under **Job Topology**, open **Outputs** then select **Add**.
+1. Under **Job Topology**, open **Outputs** then select **Add**.
 
    ![Azure Stream Analytics add output](images/IoTCore-Lab/asa_output.png)
 
-6. Choose **Edge Hub** from the drop-down list.
+1. Choose **Edge Hub** from the drop-down list.
 
-7. In the **New output** pane, enter **alert** as the output alias. 
+1. In the **New output** pane, enter **alert** as the output alias. 
 
-8. Keep the default values for the other fields, and select **Save**.
+1. Keep the default values for the other fields, and select **Save**.
 
-9. Under **Job Topology**, select **Query**.
+1. Under **Job Topology**, select **Query**.
 
-10. Replace the default text with the following query. The SQL code sends a reset command to the alert output if the average machine temperature in a 30-second window reaches 70 degrees. The reset command has been pre-programmed into the sensor as an action that can be taken. 
+1. Replace the default text with the following query. The SQL code sends a reset command to the alert output if the average machine temperature in a 30-second window reaches 70 degrees. The reset command has been pre-programmed into the sensor as an action that can be taken. 
 
     ```sql
     SELECT  
@@ -187,7 +191,7 @@ Using the three elements of input, output, and query, this section creates a job
     HAVING Avg(machine.temperature) > 70
     ```
 
-11. Select **Save**.
+1. Select **Save**.
 
 ## Step 5. Configure Storage for ASA Job
 
