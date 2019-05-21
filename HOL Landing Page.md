@@ -1,7 +1,7 @@
 
 # Eco-system Bootcamp Hands on Labs
 
-![Imported Script](images/ref_architecture.png "Header Image")
+<!-- ![Imported Script](images/ref_architecture.png "Header Image") -->
 
 ## Day 1
 
