@@ -3,6 +3,10 @@
 
 <!-- ![Imported Script](images/ref_architecture.png "Header Image") -->
 
+# How to Redeem Microsoft Azure Pass
+![Follow Instructions Here](https://www.microsoftazurepass.com/Home/HowTo)
+
+
 ## Day 1
 
 ### Lab 1: Windows + Azure IoT Edge - Basic Lab
@@ -66,6 +70,3 @@
 [Connect and Monitor Devices Using IoT Central](Day3-HOL2.md)
 
 
-
-# How to Redeem Microsoft Azure Pass
-![Follow Instructions Here](https://www.microsoftazurepass.com/Home/HowTo)
