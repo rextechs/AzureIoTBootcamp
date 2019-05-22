@@ -93,7 +93,7 @@ Locate a storage device mounted to your PC.  The volume name is `AZ3166`
 
 ![DevKit Drive](images/DevKitDrive.PNG)
 
-Download [FW ver 1.6.2]("MxChip/devkit-firmware-1.6.2.bin"), and save or copy/paste the BIN file to `AZ3166` drive.
+Download [the latest firmware](https://cdsiotbootcamp.visualstudio.com/bootcamp2019/_git/bootcamp-labs?path=%2FMxChip%2Fdevkit-firmware-1.6.2.bin&version=GBmaster), and save or copy/paste the BIN file to `AZ3166` drive.
 
 The DevKit will automatically reboot to complete FW update process.
 
