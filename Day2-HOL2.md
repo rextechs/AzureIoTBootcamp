@@ -1,139 +1,91 @@
-# Device Provisioning Service
+# Visualize Time Series Data with Azure Time Series Insights
 
-In this lab, you learn how to:
+![Time Series Insights](images/TSI-Lab/timeseriesinsights.jpg)
 
-* Configure the global endpoint of the Device Provisioning service on a device.
-* Use a unique device secret (UDS) to generate an X.509 certificate.
-* Enroll an individual device.
-* Verify that the device is registered.
+In this lab you will learn how to
 
-## Create a new instance for the IoT Hub Device Provisioning Service
+* set up a Time Series Insights environment
+* explore and analyze time series data of your IoT solutions or connected things
+Click on **Create a Resource** and click on **Internet of Things**
 
-1. Click the **Create a resource** button found on the upper left-hand corner of the Azure portal.
+![Create Time Series Insights](images/TSI-Lab/01_Create_Time_Series_Insights.png)
 
-2. *Search the Marketplace* for the **Device provisioning service**. Select **IoT Hub Device Provisioning Service** and click the **Create** button. 
+Click on **Time Series Insights**
 
-3. Provide the following information for your new Device Provisioning service instance and click **Create**.
+![Create Time Series Insights](images/TSI-Lab/tsi.png)
 
-    * **Name:** Provide a unique name for your new Device Provisioning service instance. If the name you enter is available, a green check mark appears.
-    * **Subscription:** Choose the subscription that you want to use to create this Device Provisioning service instance.
-    * **Resource group:** Choose the same resource group that contains the Iot hub you created above.
-    * **Location:** Select the closest location to your devices.
+Select the resource group you previously created, and fill in the other parameters. Then click **Next: Event Source**.
 
-      ![Enter basic information about your Device Provisioning service instance in the portal blade](./images/IoTHub-Lab/create-dps.png)  
+![Create Time Series Insights Basics](images/TSI-Lab/create-tsi-basics.png)
 
-4. Click the notification button to monitor the creation of the resource instance. Once the service is successfully deployed, click **Pin to dashboard**, and then **Go to resource**.
+Click **New** to add an IoT Hub Consumer Group with a descriptive name, for example **"timeseriesinsightsevents"**. Then click **Review + create**. After reviewing, click **Create**.
 
-    ![Monitor the deployment notification](./images/IoTHub-Lab/pin-to-dashboard.png)
+![Create Time Series Insights Event Source](images/TSI-Lab/create-tsi-eventsource.png)
 
-## Link the IoT hub and your Device Provisioning service
+### Setup Time Series Insights
 
-In this section, you will add a configuration to the Device Provisioning service instance. This configuration sets the IoT hub for which devices will be provisioned.
+Go To Time Series Insights, Click on Go To Environment which will take you to Time Series Insights Explorer
 
-1. Click the **All resources** button from the left-hand menu of the Azure portal. Select the Device Provisioning service instance that you created in the preceding section.  
+![Go To Environment](images/TSI-Lab/go-to-environment.png)
 
-2. On the Device Provisioning Service summary blade, select **Linked IoT hubs**. Click the **+ Add** button seen at the top. 
+If you get a Data Access Policy Error execute the following steps.
 
-3. On the **Add link to IoT hub** page, provide the following information to link your new Device Provisioning service instance to an IoT hub. Then click  **Save**. 
+Go To Data Access Policies
 
-    * **Subscription:** Select the subscription containing the IoT hub that you want to link with your new Device Provisioning service instance.
-    * **Iot hub:** Select the IoT hub to link with your new Device Provisioning service instance.
-    * **Access Policy:** Select **iothubowner** as the credentials for establishing the link with the IoT hub.  
+![Select Data Access Policy](images/TSI-Lab/15_data_access_policy.png)
 
-      ![Link the hub name to link to the Device Provisioning service instance in the portal blade](./images/IoTHub-Lab/link-iot-hub-to-dps-portal.png)  
+Click on Add Button
 
-3. Now you should see the selected hub under the **Linked IoT hubs** blade. You might need to click **Refresh** to show **Linked IoT hubs**.
+![Add User and Role](images/TSI-Lab/17_add_user_role.png)
 
-## Open sample project
+Select Contributor Role
 
-1. Make sure your IoT DevKit is **not connected** to your computer. Start VS Code first, and then connect the DevKit to your computer.
+![Select Contributor Role](images/TSI-Lab/18_select_controbutor_role.png)
 
-1. Click `F1` to open the command palette, type and select **Azure IoT Device Workbench: Open Examples...**. Then select **IoT DevKit** as board.
+Select User
 
-1. In the IoT Workbench Examples page, find **Device Registration with DPS** and click **Open Sample**. Then selects the default path to download the sample code.
-    ![Open sample](images/how-to-connect-mxchip-iot-devkit/open-sample.png)
+![Select User](images/TSI-Lab/19_select_user.png)
 
-## Save a Unique Device Secret on device security storage
+### Time Series Insights Explorer
 
-Auto-provisioning can be configured on a device based on the device's [attestation mechanism](concepts-security.md#attestation-mechanism). The MXChip IoT DevKit uses the [Device Identity Composition Engine](https://trustedcomputinggroup.org/wp-content/uploads/Foundational-Trust-for-IOT-and-Resource-Constrained-Devices.pdf) from the [Trusted Computing Group](https://trustedcomputinggroup.org). A **Unique Device Secret** (UDS) saved in an STSAFE security chip ([STSAFE-A100](https://microsoft.github.io/azure-iot-developer-kit/docs/understand-security-chip/)) on the DevKit is used to generate the device's unique [X.509 certificate](concepts-security.md#x509-certificates). The certificate is used later for the enrollment process in the Device Provisioning service, and during registration at runtime.
+Go To Time Series Insights Explorer
 
-A typical UDS is a 64-character string, as seen in the following sample:
+Select humidity. You will see data flowing from your MXChip device. 
 
-```
-19e25a259d0c2be03a02d416c05c48ccd0cc7d1743458aae1cb488b074993eae
-```
+![Visualize Data](images/TSI-Lab/tsi-humidity.png)
 
-To save a UDS on the DevKit:
+Right Click to Explore events. You can download events in CSV and JSON format by clicking on **CSV or JSON** buttons
 
-1. In VS Code, click on the status bar to select the COM port for the DevKit.
-  ![Select COM Port](images/how-to-connect-mxchip-iot-devkit/select-com.png)
+![Visualize Data](images/TSI-Lab/tsi-explore-events.png)
 
-1. On DevKit, hold down **button A**, push and release the **reset** button, and then release **button A**. Your DevKit enters configuration mode.
+Create a perspective by clicking on the image shown below
 
-1. Click `F1` to open the command palette, type and select **Azure IoT Device Workbench: Configure Device Settings... > Config Unique Device String (UDS)**.
-  ![Configure UDS](images/how-to-connect-mxchip-iot-devkit/config-uds.png)
+![Visualize Data](images/TSI-Lab/perspective.png)
 
-1. Note down the generated UDS string. You will need it to generate the X.509 certificate. Then press `Enter`.
-  ![Copy UDS](images/how-to-connect-mxchip-iot-devkit/copy-uds.png)
+Click **+** to add a new query
 
-1. Confirm from the notification that UDS has been configured on the STSAFE successfully.
-  ![Configure UDS Success](images/how-to-connect-mxchip-iot-devkit/config-uds-success.png)
+![Visualize Data](images/TSI-Lab/10_visual10.png)
 
-> [!NOTE]
-> Alternatively, you can configure UDS via serial port by using utilities such as Putty. Follow [Use configuration mode](https://microsoft.github.io/azure-iot-developer-kit/docs/use-configuration-mode/) to do so.
+Create a chart by selecting a timeframe with drag feature
 
-## Update the Global Device Endpoint and ID Scope
+![Visualize Data](images/TSI-Lab/12_Visual12.png)
 
-In device code, you need to specify the [Device provisioning endpoint](/azure/iot-dps/concepts-service#device-provisioning-endpoint) and ID scope to ensure the tenant isolation.
+This time set the **Measure** to **Temperature**. Click on perspective image.
 
-1. In the Azure portal, select the **Overview** pane of your Device Provisioning service and note down the **Global device endpoint** and **ID Scope** values.
-  ![Device Provisioning Service Global Endpoint and ID Scope](images/how-to-connect-mxchip-iot-devkit/dps-global-endpoint.png)
+![Visualize Data](images/TSI-Lab/add-query.png)
 
-1. Open **DevKitDPS.ino**. Find and replace `[Global Device Endpoint]` and `[ID Scope]` with the values you just noted down.
-  ![Device Provisioning Service Endpoint](images/how-to-connect-mxchip-iot-devkit/endpoint.png)
+Click on Heatmap and save as another chart.
 
-1. Fill the `registrationId` variable in the code. Only alphanumeric, lowercase, and hyphen combination with a maximum of 128 characters is allowed. Also noted down the value.
-  ![Registration ID](images/how-to-connect-mxchip-iot-devkit/registration-id.png)
+![Visualize Data](images/TSI-Lab/heatmap.png)
 
-1. Click `F1`, type and select **Azure IoT Device Workbench: Upload Device Code**. It starts compiling and uploading the code to DevKit.
-  ![Device Upload](images/how-to-connect-mxchip-iot-devkit/device-upload.png)
+Perspective with 4 different charts and custom Title
 
-## Generate X.509 certificate
+![Visualize Data](images/TSI-Lab/4-charts.png)
 
-The [attestation mechanism](/azure/iot-dps/concepts-device#attestation-mechanism) used by this sample is X.509 certificate. You need to use a utility to generate it.
+View data in a table. If you have multiple devices, they will appear as separate rows in the table as below.
 
-> [!NOTE]
-> The X.509 certificate generator only supports Windows now.
-
-1. In VS Code, click `F1`, type and select **Open New Terminal** to open terminal window.
-
-1. Run `dps_cert_gen.exe` in `tool` folder.
-
-1. Specify the compiled binary file location as `..\.build\DevKitDPS`. Then paste the **UDS** and **registrationId** you just noted down. 
-  ![Generate X.509](images/how-to-connect-mxchip-iot-devkit/gen-x509.png)
-
-1. A `.pem` X.509 certificate generates in the same folder.
-  ![X.509 file](images/how-to-connect-mxchip-iot-devkit/pem-file.png)
-
-## Create a device enrollment entry
-
-1. In the Azure portal, open your Device Provision Service, navigate to Manage enrollments section, and click **Add individual enrollment**.
-  ![Add individual enrollment](images/how-to-connect-mxchip-iot-devkit/add-enrollment.png)
-
-1. Click file icon next to **Primary Certificate .pem or .cer file** to upload the `.pem` file generated. Then click **Save**.
-  ![Upload .pem](images/how-to-connect-mxchip-iot-devkit/save-enrollment.png)
-
-## Verify the DevKit is registered with Azure IoT Hub
-
-Press the **Reset** button on your DevKit. You should see **DPS Connected!** on DevKit screen. After the device reboots, the following actions take place:
-
-1. The device sends a registration request to your Device Provisioning service.
-1. The Device Provisioning service sends back a registration challenge to which your device responds.
-1. On successful registration, the Device Provisioning service sends the IoT Hub URI, device ID, and the encrypted key back to the device.
-1. The IoT Hub client application on the device connects to your hub.
-1. On successful connection to the hub, you see the device appear in the IoT Hub Device Explorer.
-  ![Device registered](./images/how-to-connect-mxchip-iot-devkit/device-registered.png)
+![Visualize Data](images/TSI-Lab/table.png)
 
 ## Finished!
 
-You have successfully set up autoprovisioning and registered a device with IoT Hub Device Provisioning Service. 
+You have successfully set up Azure Time Series Insights and analyzed your device's time series data.

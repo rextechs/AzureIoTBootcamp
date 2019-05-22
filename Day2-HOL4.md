@@ -1,189 +1,139 @@
+# Device Provisioning Service
 
-# Capture Device Events and Send Notifications
+In this lab, you learn how to:
 
-Azure Event Grid enables you to react to events in IoT Hub by triggering actions in your downstream business applications.
+* Configure the global endpoint of the Device Provisioning service on a device.
+* Use a unique device secret (UDS) to generate an X.509 certificate.
+* Enroll an individual device.
+* Verify that the device is registered.
 
-This article walks through a sample configuration that uses IoT Hub and Event grid. By the end, you will have an Azure logic app set up to send a notification email every time a device is added to your IoT hub. 
+## Create a new instance for the IoT Hub Device Provisioning Service
 
-## Prerequisites
+1. Click the **Create a resource** button found on the upper left-hand corner of the Azure portal.
 
-* An email account from any email provider that is supported by Azure Logic Apps, like Office 365 Outlook, Outlook.com, or Gmail. This email account is used to send the event notifications. For a complete list of supported Logic App connectors, see the [Connectors overview](https://docs.microsoft.com/connectors/)
-* An active Azure account. If you don't have one, you can [create a free account](https://azure.microsoft.com/pricing/free-trial/).
-* An IoT Hub in Azure. If you haven't created one yet, please refer to Day 2 Lab 1, or [Get started with IoT Hub](../iot-hub/iot-hub-csharp-csharp-getstarted.md) to create one. 
+2. *Search the Marketplace* for the **Device provisioning service**. Select **IoT Hub Device Provisioning Service** and click the **Create** button. 
 
-## Create a logic app
+3. Provide the following information for your new Device Provisioning service instance and click **Create**.
 
-First, create a logic app and add an Event grid trigger that monitors the resource group for your virtual machine. 
+    * **Name:** Provide a unique name for your new Device Provisioning service instance. If the name you enter is available, a green check mark appears.
+    * **Subscription:** Choose the subscription that you want to use to create this Device Provisioning service instance.
+    * **Resource group:** Choose the same resource group that contains the Iot hub you created above.
+    * **Location:** Select the closest location to your devices.
 
-### Create a logic app resource
+      ![Enter basic information about your Device Provisioning service instance in the portal blade](./images/IoTHub-Lab/create-dps.png)  
 
-1. In the [Azure portal](https://portal.azure.com), select **Create a resource** > **Integration** > **Logic App**.
+4. Click the notification button to monitor the creation of the resource instance. Once the service is successfully deployed, click **Pin to dashboard**, and then **Go to resource**.
 
-   ![Select logic app](./images/LogicApp-Lab/select-logic-app.png)
+    ![Monitor the deployment notification](./images/IoTHub-Lab/pin-to-dashboard.png)
 
-2. Click Add to create a new Logic App  
-3. Give your logic app a name that's unique in your subscription, then select the same subscription, resource group, and location as your IoT hub. 
-4. Select **Create**.
-   
-   ![create logic app](./images/LogicApp-Lab/create-logicapp.png)
+## Link the IoT hub and your Device Provisioning service
 
-5. Once the resource is created, navigate to your logic app. 
-  Hint: Use the Search box on the top to help locate your resource. For instance you can type your LogicApp name in the Serach box.
+In this section, you will add a configuration to the Device Provisioning service instance. This configuration sets the IoT hub for which devices will be provisioned.
 
-6. The Logic Apps Designer shows you templates for common patterns so you can get started faster. In the Logic App Designer under **Templates**, choose **Blank Logic App** so that you can build your logic app from scratch.
+1. Click the **All resources** button from the left-hand menu of the Azure portal. Select the Device Provisioning service instance that you created in the preceding section.  
 
-   ![select blank template](./images/LogicApp-Lab/select-blank-template.png)
+2. On the Device Provisioning Service summary blade, select **Linked IoT hubs**. Click the **+ Add** button seen at the top. 
 
-### Select a trigger
+3. On the **Add link to IoT hub** page, provide the following information to link your new Device Provisioning service instance to an IoT hub. Then click  **Save**. 
 
-A trigger is a specific event that starts your logic app. For this tutorial, the trigger that sets off the workflow is receiving a request over HTTP.  
+    * **Subscription:** Select the subscription containing the IoT hub that you want to link with your new Device Provisioning service instance.
+    * **Iot hub:** Select the IoT hub to link with your new Device Provisioning service instance.
+    * **Access Policy:** Select **iothubowner** as the credentials for establishing the link with the IoT hub.  
 
-1. In the connectors and triggers search bar, type **HTTP**.
-2. Select **Request - When an HTTP request is received** as the trigger. 
+      ![Link the hub name to link to the Device Provisioning service instance in the portal blade](./images/IoTHub-Lab/link-iot-hub-to-dps-portal.png)  
 
-   ![Select HTTP request trigger](./images/LogicApp-Lab/http-request-trigger.png)
+3. Now you should see the selected hub under the **Linked IoT hubs** blade. You might need to click **Refresh** to show **Linked IoT hubs**.
 
-3. Select **Use sample payload to generate schema**. 
+## Open sample project
 
-   ![Select HTTP request trigger](./images/LogicApp-Lab/sample-payload.png)
+1. Make sure your IoT DevKit is **not connected** to your computer. Start VS Code first, and then connect the DevKit to your computer.
 
-4. Paste the following sample JSON code into the text box, then select **Done**:
+1. Click `F1` to open the command palette, type and select **Azure IoT Device Workbench: Open Examples...**. Then select **IoT DevKit** as board.
 
-   ```json
-   [{
-     "id": "56afc886-767b-d359-d59e-0da7877166b2",
-     "topic": "/SUBSCRIPTIONS/<subscription ID>/RESOURCEGROUPS/<resource group name>/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/<hub name>",
-     "subject": "devices/LogicAppTestDevice",
-     "eventType": "Microsoft.Devices.DeviceCreated",
-     "eventTime": "2018-01-02T19:17:44.4383997Z",
-     "data": {
-       "twin": {
-         "deviceId": "LogicAppTestDevice",
-         "etag": "AAAAAAAAAAE=",
-         "deviceEtag": "null",
-         "status": "enabled",
-         "statusUpdateTime": "0001-01-01T00:00:00",
-         "connectionState": "Disconnected",
-         "lastActivityTime": "0001-01-01T00:00:00",
-         "cloudToDeviceMessageCount": 0,
-         "authenticationType": "sas",
-         "x509Thumbprint": {
-           "primaryThumbprint": null,
-           "secondaryThumbprint": null
-         },
-         "version": 2,
-         "properties": {
-           "desired": {
-             "$metadata": {
-               "$lastUpdated": "2018-01-02T19:17:44.4383997Z"
-             },
-             "$version": 1
-           },
-           "reported": {
-             "$metadata": {
-               "$lastUpdated": "2018-01-02T19:17:44.4383997Z"
-             },
-             "$version": 1
-           }
-         }
-       },
-       "hubName": "egtesthub1",
-       "deviceId": "LogicAppTestDevice"
-     },
-     "dataVersion": "1",
-     "metadataVersion": "1"
-   }]
-   ```
+1. In the IoT Workbench Examples page, find **Device Registration with DPS** and click **Open Sample**. Then selects the default path to download the sample code.
+    ![Open sample](images/how-to-connect-mxchip-iot-devkit/open-sample.png)
 
-5. You may receive a pop-up notification that says, **Remember to include a Content-Type header set to application/json in your request.** You can just click Got It, and move on to the next step. 
+## Save a Unique Device Secret on device security storage
 
-### Create an action
+Auto-provisioning can be configured on a device based on the device's [attestation mechanism](concepts-security.md#attestation-mechanism). The MXChip IoT DevKit uses the [Device Identity Composition Engine](https://trustedcomputinggroup.org/wp-content/uploads/Foundational-Trust-for-IOT-and-Resource-Constrained-Devices.pdf) from the [Trusted Computing Group](https://trustedcomputinggroup.org). A **Unique Device Secret** (UDS) saved in an STSAFE security chip ([STSAFE-A100](https://microsoft.github.io/azure-iot-developer-kit/docs/understand-security-chip/)) on the DevKit is used to generate the device's unique [X.509 certificate](concepts-security.md#x509-certificates). The certificate is used later for the enrollment process in the Device Provisioning service, and during registration at runtime.
 
-Actions are any steps that occur after the trigger starts the logic app workflow. For this tutorial, the action is to send an email notification from your email provider. 
+A typical UDS is a 64-character string, as seen in the following sample:
 
-1. Select **New step**. This will open a window to **Choose an action**.
+```
+19e25a259d0c2be03a02d416c05c48ccd0cc7d1743458aae1cb488b074993eae
+```
 
-2. Search for **Email**.
+To save a UDS on the DevKit:
 
-3. Based on your email provider, find and select the matching connector. This tutorial uses **Office 365 Outlook**. The steps for other email providers are similar. 
+1. In VS Code, click on the status bar to select the COM port for the DevKit.
+  ![Select COM Port](images/how-to-connect-mxchip-iot-devkit/select-com.png)
 
-   ![Select email provider connector](./images/LogicApp-Lab/o365-outlook.png)
+1. On DevKit, hold down **button A**, push and release the **reset** button, and then release **button A**. Your DevKit enters configuration mode.
 
-4. Scroll down the list of Actions, and select the **Send an email** action.
-   
-  ![Send an email](./images/LogicApp-Lab/send-an-email.png)
+1. Click `F1` to open the command palette, type and select **Azure IoT Device Workbench: Configure Device Settings... > Config Unique Device String (UDS)**.
+  ![Configure UDS](images/how-to-connect-mxchip-iot-devkit/config-uds.png)
 
-5. If prompted, sign in to your email account. 
+1. Note down the generated UDS string. You will need it to generate the X.509 certificate. Then press `Enter`.
+  ![Copy UDS](images/how-to-connect-mxchip-iot-devkit/copy-uds.png)
 
-6. Build your email template. 
-   * **To**: Enter the email address to receive the notification emails. For this tutorial, use an email account that you can access for testing. 
-  
-   Note: If you need a test email account, please feel free to create one at http://outlook.com
-  
-   * **Subject** and **Body**: Write the text for your email. 
-    
-   * Notice the selection tool on the right hand side, which provides a list of dynamic content (generated from sample event data) that can be included into to your email.  
+1. Confirm from the notification that UDS has been configured on the STSAFE successfully.
+  ![Configure UDS Success](images/how-to-connect-mxchip-iot-devkit/config-uds-success.png)
 
-   Your email template may look like this example:
+> [!NOTE]
+> Alternatively, you can configure UDS via serial port by using utilities such as Putty. Follow [Use configuration mode](https://microsoft.github.io/azure-iot-developer-kit/docs/use-configuration-mode/) to do so.
 
-   ![Fill out email information](./images/LogicApp-Lab/email-content.png)
+## Update the Global Device Endpoint and ID Scope
 
-7. Save your logic app. 
+In device code, you need to specify the [Device provisioning endpoint](/azure/iot-dps/concepts-service#device-provisioning-endpoint) and ID scope to ensure the tenant isolation.
 
-### Copy the HTTP URL
+1. In the Azure portal, select the **Overview** pane of your Device Provisioning service and note down the **Global device endpoint** and **ID Scope** values.
+  ![Device Provisioning Service Global Endpoint and ID Scope](images/how-to-connect-mxchip-iot-devkit/dps-global-endpoint.png)
 
-Before you leave the Logic Apps Designer, copy the URL that your logic apps is listening to for a trigger. You use this URL to configure Event Grid. 
+1. Open **DevKitDPS.ino**. Find and replace `[Global Device Endpoint]` and `[ID Scope]` with the values you just noted down.
+  ![Device Provisioning Service Endpoint](images/how-to-connect-mxchip-iot-devkit/endpoint.png)
 
-1. Expand the **When a HTTP request is received** trigger configuration box by clicking on it. 
-2. Copy the value of **HTTP POST URL** by selecting the copy button next to it. 
+1. Fill the `registrationId` variable in the code. Only alphanumeric, lowercase, and hyphen combination with a maximum of 128 characters is allowed. Also noted down the value.
+  ![Registration ID](images/how-to-connect-mxchip-iot-devkit/registration-id.png)
 
-   ![Copy the HTTP POST URL](./images/LogicApp-Lab/copy-url.png)
+1. Click `F1`, type and select **Azure IoT Device Workbench: Upload Device Code**. It starts compiling and uploading the code to DevKit.
+  ![Device Upload](images/how-to-connect-mxchip-iot-devkit/device-upload.png)
 
-3. Save this URL so that you can refer to it in the next section. 
+## Generate X.509 certificate
 
-## Configure subscription for IoT Hub events
+The [attestation mechanism](/azure/iot-dps/concepts-device#attestation-mechanism) used by this sample is X.509 certificate. You need to use a utility to generate it.
 
-In this section, you configure your IoT Hub to publish events as they occur. 
+> [!NOTE]
+> The X.509 certificate generator only supports Windows now.
 
-1. In the Azure portal, navigate to your IoT hub. 
-2. Select **Events**.
+1. In VS Code, click `F1`, type and select **Open New Terminal** to open terminal window.
 
-   ![Open the Event Grid details](./images/LogicApp-Lab/event-grid.png)
+1. Run `dps_cert_gen.exe` in `tool` folder.
 
-3. Select **Event subscription**. 
+1. Specify the compiled binary file location as `..\.build\DevKitDPS`. Then paste the **UDS** and **registrationId** you just noted down. 
+  ![Generate X.509](images/how-to-connect-mxchip-iot-devkit/gen-x509.png)
 
-   ![Create new event subscription](./images/LogicApp-Lab/event-subscription.png)
+1. A `.pem` X.509 certificate generates in the same folder.
+  ![X.509 file](images/how-to-connect-mxchip-iot-devkit/pem-file.png)
 
-4. Create the event subscription with the following values: 
-   * **Event Type**: Uncheck Subscribe to all event types and select **Device Created** from the menu.
+## Create a device enrollment entry
 
-    ![select event type](./images/LogicApp-Lab/select-event-type.png)
-   * **Endpoint Details**: Select Endpoint Type as **Web Hook** and click on select endpoint and paste the URL that you copied from your logic app and confirm selection.
+1. In the Azure portal, open your Device Provision Service, navigate to Manage enrollments section, and click **Add individual enrollment**.
+  ![Add individual enrollment](images/how-to-connect-mxchip-iot-devkit/add-enrollment.png)
 
-     ![select endpoint url](./images/LogicApp-Lab/endpoint-url.png)
+1. Click file icon next to **Primary Certificate .pem or .cer file** to upload the `.pem` file generated. Then click **Save**.
+  ![Upload .pem](images/how-to-connect-mxchip-iot-devkit/save-enrollment.png)
 
-   * **Event Subscription Details**: Provide a descriptive name and select **Event Grid Schema**
+## Verify the DevKit is registered with Azure IoT Hub
 
-   When you're done, the form should look like the following example: 
+Press the **Reset** button on your DevKit. You should see **DPS Connected!** on DevKit screen. After the device reboots, the following actions take place:
 
-    ![Sample event subscription form](./images/LogicApp-Lab/subscription-form.png)
+1. The device sends a registration request to your Device Provisioning service.
+1. The Device Provisioning service sends back a registration challenge to which your device responds.
+1. On successful registration, the Device Provisioning service sends the IoT Hub URI, device ID, and the encrypted key back to the device.
+1. The IoT Hub client application on the device connects to your hub.
+1. On successful connection to the hub, you see the device appear in the IoT Hub Device Explorer.
+  ![Device registered](./images/how-to-connect-mxchip-iot-devkit/device-registered.png)
 
-5. You could save the event subscription here, and receive notifications for every device that is created and deleted in your IoT hub. 
-6. Select **Create** to save the event subscription.
+## Finished!
 
-## Create a new device
-
-Test your logic app by creating a new device to trigger an event notification email. 
-
-1. From your IoT hub, select **IoT Devices**, then select **Add**.
- 
-   ![add IoT Device](./images/LogicApp-Lab/add-IoT-Device.png)
-2. For **Device ID**, enter `TestDevice123`. Use the default values for the other fields. 
-3. Select **Save**.
-
-4. Check your email. You should receive an email trigger by logic app.
-
-  ![add device email](./images/LogicApp-Lab/add-device-email.png)
-
-5. Similarly, if you deleted a device from IoTHub, an event would be generated, which would in turn trigger logic app to send you an email notification. 
-   
+You have successfully set up autoprovisioning and registered a device with IoT Hub Device Provisioning Service. 
