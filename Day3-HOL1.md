@@ -16,6 +16,11 @@ There are three main sections in this hands-on lab.
 
 To complete the steps in this hands-on lab you need a DevKit device. To purchase a DevKit device, visit [MXChip IoT DevKit](https://microsoft.github.io/azure-iot-developer-kit/).
 
+## Update Firmware
+
+Please update to [Azure IoT Central firmware.](https://github.com/Azure/iot-central-firmware/releases/tag/mxchip-v2.1.1)
+
+
 # Creating an Azure IoT Central application
 
 As a _builder_, you use the Azure IoT Central UI to define your Microsoft Azure IoT Central application. This quickstart shows you how to create an Azure IoT Central application that contains a sample _device template_ and simulated _devices_.
