@@ -68,3 +68,6 @@
 
 [Connect and Monitor Devices Using IoT Central](Day3-HOL2.md)
 
+
+### Tools and Software for Dev Environment Setup
+[Tools and Software for Dev Environment Setup](Dev-Env-Setup.md)
