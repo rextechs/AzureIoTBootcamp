@@ -22,6 +22,10 @@ Click on **+ Add** button
 
 Enter **Resource group name**,  Select **subscription** and **region**. Click on **Review + Create**, and after reviewing, click on **Create**.
 
+> [!NOTE]  
+> Resource Group Name : Use name of your choice.  E.g. BootCampFy19  
+> Region : Use one nearest for you.  E.g. West US
+
 ![Create Resource Group Submit](images/IoTHub-Lab/03_Create_Resource_Group_Submit.png)
 
 ## Create IoThub
@@ -32,7 +36,10 @@ Click on **Create a resource** and click on **Internet of Things**. Then click o
 
 Make sure you select the resource group you created in previous step. 
 
-In the Name field, enter a unique name for your IoT hub. The name of your IoT hub must be **unique** across all IoT hubs.
+In the Name field, enter a unique name for your IoT hub. 
+
+> [!NOTE]  
+> IoT Hub Name : The name of your IoT hub must be **unique** across all IoT hubs.
 
 Click on **Review + Create**, and after reviewing, click on **Create**.
 
@@ -45,6 +52,9 @@ Click on **IoT devices** and **+ Add**.
 ![Add IoTHub Device](images/IoTHub-Lab/register-device.png)
 
 Give your device a descriptive **Device ID** and click **Save**.
+
+> [!NOTE]  
+> Device ID : Give a name of your choice.  E.g. mxchip
 
 ![Save IoTHub Device](images/IoTHub-Lab/register-device2.png)
 
@@ -65,7 +75,7 @@ Hook up the following hardware to your computer:
 * DevKit board
 * Micro-USB cable
 
-![Required hardware](images/IoTHub-Lab/MxChip_hardware.png)
+  ![Required hardware](images/IoTHub-Lab/MxChip_hardware.png)
 
 To connect the DevKit to your computer, follow these steps:
 
@@ -77,13 +87,25 @@ To connect the DevKit to your computer, follow these steps:
 
    ![Hardware connections](images/IoTHub-Lab/MxChip_connect.jpg)
 
+## Updating MxChip Firmware
+
+Locate a storage device mounted to your PC.  The volume name is `AZ3166`
+
+![DevKit Drive](images/DevKitDrive.PNG)
+
+Download [FW ver 1.6.2]("MxChip/devkit-firmware-1.6.2.bin"), and save or copy/paste the BIN file to `AZ3166` drive.
+
+The DevKit will automatically reboot to complete FW update process.
+
 ## Configure Wi-Fi
 
 IoT projects rely on internet connectivity. Use the following instructions to configure the DevKit to connect to Wi-Fi.
 
 ### Enter AP mode
 
-Hold down button B, push and release the reset button, and then release button B. Your DevKit enters AP mode for configuring Wi-Fi. The screen displays the service set identifier (SSID) of the DevKit and the configuration portal IP address.
+Hold down button B, push and release the reset button, and then release button B.   
+
+Your DevKit enters AP mode for configuring Wi-Fi. The screen displays the service set identifier (SSID) of the DevKit and the configuration portal IP address.
 
 ![Set AP Mode](images/IoTHub-Lab/set-ap-mode.gif)
 
@@ -98,6 +120,11 @@ Now, use another Wi-Fi enabled device (computer or mobile phone) to connect to t
 Open **192.168.0.1** in the browser. Select the Wi-Fi that you want the IoT DevKit connect to, type the Wi-Fi password, then paste the device connection string you made note of previously. Then click **Save**. 
 
 ![Wi-Fi](images/IoTHub-Lab/MXChip_wifi-configuration-ui.png)
+
+> [!NOTE]  
+> Bootcamp SSID  
+> SSID : BootCampAP  
+> Password : Password!1
 
 When the connection succeeds, the DevKit reboots in a few seconds. You then see the Wi-Fi name and IP address on the screen.
 
@@ -116,6 +143,9 @@ Follow these steps to prepare the development environment for DevKit:
 
 1. *If the Arduino extension is already installed, you can skip this step.* Launch VS Code, look for **Arduino** in the extension marketplace and install it. This extension provides enhanced experiences for developing on Arduino platform.
     ![Install Arduino](images/IoTHub-Lab/install-arduino.png)
+
+    > [!NOTE]  
+    > Arduino IDE and VSCode Extension is already installed
 
 2. *If the Azure IoT Tools extension is already installed, you can skip this step.* Look for **Azure IoT Tools** in the extension marketplace and install it.
     ![Install Azure IoT Tools](images/IoTHub-Lab/install-azure-iot-tools.png)
@@ -152,7 +182,6 @@ Follow these steps to prepare the development environment for DevKit:
 
 4. Click `F1` to open the command palette, type and select **Arduino: Board Manager**. Search for **AZ3166** and install the latest version.
     ![Install DevKit SDK](images/IoTHub-Lab/install-az3166-sdk.png)
-
 
 Now you are all set with preparing and configuring your development environment. Let us build the “Hello World” sample for IoT: sending temperature telemetry data to Azure IoT Hub.
 
