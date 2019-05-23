@@ -277,6 +277,15 @@ Git Desktop provides GUI environment, which may be more convenient.
 
 ![GitDesktop](images/IntelligentEdge/GitDesktop.png)
 
+### Step 4.3 : Uninstall Moby and install Docker for Windows
+
+Run this in `Admin Powershell` console
+
+```ps
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
+choco install -y docker-desktop
+```
+
 ## Step 5 : Azure Container Registry
 
 On the **Windows 10 DevEnv laptop**, create an instance of Azure Container Registry (ACR).  
