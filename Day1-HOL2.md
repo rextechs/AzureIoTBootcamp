@@ -6,49 +6,51 @@
 - Dot Net Core 2.2
 https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.107-windows-x64-installer
 
-## Key Components
-
 ## Step 1: Register a new Azure IoT Edge device
 
-### Sign in to access your IoT hub
+In this lab, we will walk you through how to use Visual Studio Code Azure IoT Extension instead of Azure Portal Web site.
 
-You can use the Azure IoT extensions for Visual Studio Code to perform operations with your IoT hub. For these operations to work, you need to sign in to your Azure account and select the IoT hub that you are working on.
+### Step 1.1 : Sign in to Azure Account
+
+Using the Azure IoT extensions for Visual Studio Code to perform operations with your IoT hub. For these operations to work, you need to sign in to your Azure account and select the IoT hub that you are working on.
 
 1. In Visual Studio Code, open the **Explorer** view.
 
-2. At the bottom of the Explorer, expand the **Azure IoT Hub Devices** section.
+1. At the bottom of the Explorer, expand the **Azure IoT Hub Devices** section.
 
    ![Expand Azure IoT Hub Devices section](./images/Register-device-vscode/azure-iot-hub-devices.png)
 
-3. Click on the **...** in the **Azure IoT Hub Devices** section header. If you don't see the ellipsis, click on or hover over the header.
+1. Click on the **...** in the **Azure IoT Hub Devices** section header. If you don't see the ellipsis, click on or hover over the header.
 
-4. Choose **Select IoT Hub**.
+### Step 1.2 : Select IoT Hub
 
-5. If you are not signed in to your Azure account, follow the prompts and sign in to your Azure account.
+1. Choose **Select IoT Hub**.
 
-6. Select your Azure subscription.
+1. If you are not signed in to your Azure account, follow the prompts and sign in to your Azure account.
 
-7. Select your IoT hub.
+1. Select your Azure subscription.
 
-### Create a device
+1. Select your IoT hub.
+
+## Step 2 : Create a device
 
 1. In the VS Code Explorer, expand the **Azure IoT Hub Devices** section.
 
-2. Click on the **...** in the **Azure IoT Hub Devices** section header. If you don't see the ellipsis, click on or hover over the header.
+1. Click on the **...** in the **Azure IoT Hub Devices** section header. If you don't see the ellipsis, click on or hover over the header.
 
-3. Select **Create IoT Edge Device**.
+1. Select **Create IoT Edge Device**.
 
-4. In the text box that opens, give your device an ID.
+1. In the text box that opens, give your device an ID.
 
 In the output screen, you see the result of the command. The device info is printed, which includes the **deviceId** that you provided and the **connectionString** that you can use to connect your physical device to your IoT hub.
 
-### View all devices
+## Step 3 : View all devices
 
 All the devices that connect to your IoT hub are listed in the **Azure IoT Hub Devices** section of the Visual Studio Code Explorer. IoT Edge devices are distinguishable from non-Edge devices with a different icon, and the fact that they can be expanded to show the modules deployed to each device.
 
    ![View all IoT Edge devices in your IoT hub](./images/Register-device-vscode/view-devices.png)
 
-### Retrieve the connection string
+## Step 4 : Retrieve the connection string
 
 When you're ready to set up your device, you need the connection string that links your physical device with its identity in the IoT hub.
 
@@ -60,31 +62,35 @@ When you're ready to set up your device, you need the connection string that lin
 
 You can also select **Get Device Info** from the right-click menu to see all the device info, including the connection string, in the output window.
 
-## Step 2: Install IoT Edge on Windows Enterprise
+## Step 5 : Install IoT Edge on Windows Enterprise
 
-### 1. Open a Powershell window as an Administrator
+### Step 5.1 : Open a Powershell window as an Administrator
 
-### 2. Run the **Deploy-IoTEdge** command,
- This command checks whether your Windows machine is on a supported version, turns on the containers feature, and then downloads the Moby runtime and the IoT Edge runtime. 
+### Step 5.2 : Run the **Deploy-IoTEdge** command  
+
+This command checks whether your Windows machine is on a supported version, turns on the containers feature, and then downloads the Moby runtime and the IoT Edge runtime. 
 
 ```powershell
 . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge -ContainerOs Windows
 ```
+
 Click Yes to the following pop-up questions. The machine will be restarted. After it's restarted, open a powershell window and run the command to finish the installation. 
 
-### 3 Run the  Initialize-IoTEdge command to initialize the finish the IoT Edge installation
+### Step 5.3 : Run the  Initialize-IoTEdge command to initialize the finish the IoT Edge installation
 
 ```powershell
 . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge -ContainerOs Windows
 ```
 
-### 4. Link to an IoT Edge device in IoTHub 
+### Step 5.4 : Provide Connection String
 
-Provide the device connection string (saved from prior step). 
+Provide the device connection string (saved from prior step)
 
 ![IoTEdge-Installation](images/WinServer-Lab/IotEdge-Installation.png)
 
-### 5. Run the Get-Service command to confirm IoT Edge runtime is installed and running
+### Step 5.5 : Verify the connection
+
+Run the Get-Service command to confirm IoT Edge runtime is installed and the Azure IoT Edge Runtime ($edgeAgent) is running
 
 ```powershell
 Get-Service iotedge
@@ -98,7 +104,7 @@ To list all modules running in IoT Edge
 iotedge list
 ```
 
-## Step 3 : Download the IoT Edge sample from repo
+## Step 6 : Download the IoT Edge sample from repo
 
 [IoT Edge Samples](https://github.com/Azure/iotedge)
 
@@ -110,9 +116,9 @@ cd C:\Repo
 git clone https://github.com/Azure/iotedge
 ```
 
-## Step 4 : Build Sample
+## Step 7 : Build Sample
 
-### 1. Check .Net installation
+### Step 7.1 : Check .Net installation
 
 Make sure you have dotnet installed on your machine already. 
 
@@ -124,7 +130,7 @@ dotnet --version
 
 If not it's not installed, download and install dotnet 2.2 from: https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.107-windows-x64-installer
 
-### 2. Navigate to the SimulatedTemperatureSentor directory of the downloaded repo
+### Step 7.2 : Navigate to the SimulatedTemperatureSentor directory of the downloaded repo
 
 ```powershell
 PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> dir
@@ -140,7 +146,17 @@ d-----        5/20/2019   8:01 PM                src
 
 ```
 
-### 3. Build Temperature Simulator:
+### Step 7.3 : Build Temperature Simulator
+
+Run `dotnet` command to build the Simulated Temperature Sensor module
+
+Command to run :
+
+```ps
+dotnet publish -r win-x64
+```
+
+Example Output : 
 
 ```powershell
 PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> dotnet publish -r win-x64
@@ -159,11 +175,11 @@ PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor>
 
 ```
 
-## Step 5 : Create Azure Container Registry
+## Step 8 : Create Azure Container Registry
 
  A container repository is used to store container. In this lab, we're using the container registry to store the AI modules built from last steps. With the containers stored in Azure Container Registry, you can deploy the modules to the machines and devices where you want to run the module.
 
-1. Select **Create a resource** > **Containers** > **Container Registry**  
+### Step 8.1 : Select **Create a resource** > **Containers** > **Container Registry**  
   **Registry name** enter a registry name  
   **Resource group** select the resource group used from prior lab 
   use the default values for the other fields
@@ -187,11 +203,11 @@ PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor>
 
     ![login server info](images/IoTEnt-Lab/acr-login-info.png)
 
-## Step 6: Containerize the Temperature Simulator app
+## Step 9: Containerize the Temperature Simulator app
 
 In order for an app to be run as an edge module, the app needs to be containerize first. In the section we're going to walk through the steps to containerize an app. 
 
-### 1. Set up Docker Environment 
+### Step 9.1 : Set up Docker Environment 
 
 Set the environment variables **WINDOW_WINMD**  and **DOCKER_HOST**
 
@@ -205,11 +221,11 @@ setx /m WINDOWS_WINMD "C:\Program Files (x86)\Windows Kits\10\UnionMetadata\[ver
 setx /m  DOCKER_HOST npipe:////./pipe/iotedge_moby_engine
 ```
 
-### 2. Close Powershell and Open a new Powershell window for the environment variables to take effect
+### Step 9.2 : Close Powershell and Open a new Powershell window for the environment variables to take effect
 
-### 3. Create docker image for the Temperature Simulator app
+### Step 9.3 : Create docker image for the Temperature Simulator app
 
-Example of creating container calle `tempsim`
+Example of creating container called `tempsim`
 
 ```powershell 
 docker build .\bin\Debug\netcoreapp2.1\win-x64\publish -t tempsim -f .\docker\windows\amd64\Dockerfile
@@ -249,9 +265,9 @@ Successfully built 4aad993849a8
 Successfully tagged tempsim:latest
 ```
 
-## Step 7: Push the Docker container to Azure Container Registry
+## Step 10: Push the Docker container to Azure Container Registry
 
-### 1. Login to your Azure Container Registry
+### Step 10.1 : Login to your Azure Container Registry
 
 ```ps
 docker login <Your ACR Login Server> -u <Your ACR User Name> -p <Your ACR Password> 
@@ -263,7 +279,7 @@ Example:
 docker login rlacr.azurecr.io -u rlacr -p 7098eradioaud8f7aerua
 ```
 
-### 2. Push the Docker image to Azure Container Registry
+### Step 10.2 : Push the Docker image to Azure Container Registry
 
 1. Add `tag` to the container
 
@@ -290,15 +306,15 @@ Example :
 docker push rlacr.azurecr.io/tempsim
 ```
 
-## Step 8: Deploy module to IoT Edge 
+## Step 11 : Deploy module to IoT Edge 
 
 You are now ready to deploy the Simulated Temperature module on your device. 
 
 In this section, you use the **Set Modules** wizard in the Azure portal to create a *deployment manifest*. A deployment manifest is a JSON file that describes all the modules that will be deployed to a device, the container registries that store the module images, how the modules should be managed, and how the modules can communicate with each other. Your IoT Edge device retrieves its deployment manifest from IoT Hub, then uses the information in it to deploy and configure all of its assigned modules. 
 
-### 1. In the Azure portal, in your IoT hub, go to **IoT Edge**, and then open the details page for your IoT Edge device.
+### Step 11.1 : In the Azure portal, in your IoT hub, go to **IoT Edge**, and then open the details page for your IoT Edge device.
 
-### 2. Select **Set modules**
+### Step 11.2 : Select **Set modules**
 
 For the Container Registry Settings:  
 - Name: <Your ACR Name>
@@ -318,7 +334,7 @@ Example :
 - For the image URI, enter **{ACR_NAME}.azurecr.io/tempsim** 
 - Leave the other settings unchanged and select **Save**
 
-## Step 9: Confirm the Temperature Simulator module has been deployed
+## Step 12 : Confirm the Temperature Simulator module has been deployed
 
 To the view logs of the Temperature Simulator module with `iotedge list` command
 
@@ -371,7 +387,7 @@ dity":26},"timeCreated":"2019-05-21T03:31:37.0984276Z"}]
 
 ```
 
-### Step 10: Stop IOT Edge 
+### Step 13: Stop IOT Edge
 
 To  stop IoT Edge, you can run the command below: 
 
