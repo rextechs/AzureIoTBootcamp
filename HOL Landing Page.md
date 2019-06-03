@@ -3,10 +3,11 @@
 
 <!-- ![Imported Script](images/ref_architecture.png "Header Image") -->
 
-## How to Redeem Microsoft Azure Pass
+## Lab 0: How to Redeem Microsoft Azure Pass
 
-### [Follow Instructions Here](https://www.microsoftazurepass.com/Home/HowTo)
+**Duration** 15 minutes 
 
+[How to Redeem Microsoft Azure Pass](Lab0.md)
 
 ## Day 1
 
@@ -69,9 +70,9 @@
 [Connect and Monitor Devices Using IoT Central](Day3-HOL2.md)
 
 
-## Architecture Design Session
+<!-- ## Architecture Design Session
 
-[Architecture Design Session](ADS.md)
+[Architecture Design Session](ADS.md) -->
 
 
 ## Tools and Software for Dev Environment Setup

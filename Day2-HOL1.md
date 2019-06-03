@@ -93,7 +93,7 @@ Locate a storage device mounted to your PC.  The volume name is `AZ3166`
 
 ![DevKit Drive](images/DevKitDrive.PNG)
 
-Download [the latest firmware](https://cdsiotbootcamp.visualstudio.com/bootcamp2019/_git/bootcamp-labs?path=%2FMxChip%2Fdevkit-firmware-1.6.2.bin&version=GBmaster), and save or copy/paste the BIN file to `AZ3166` drive.
+Download [the latest firmware](MXChip/devkit-firmware-1.6.2.bin), and save or copy/paste the BIN file to `AZ3166` drive.
 
 The DevKit will automatically reboot to complete FW update process.
 
@@ -119,7 +119,7 @@ Now, use another Wi-Fi enabled device (computer or mobile phone) to connect to t
 
 Open **192.168.0.1** in the browser. Select the Wi-Fi that you want the IoT DevKit connect to, type the Wi-Fi password, then paste the device connection string you made note of previously. Then click **Save**. 
 
-![Wi-Fi](images/IoTHub-Lab/MXChip_wifi-configuration-ui.png)
+![Wi-Fi](images/IoTHub-Lab/Wifi-Setup.png)
 
 > [!NOTE]  
 > Bootcamp SSID  

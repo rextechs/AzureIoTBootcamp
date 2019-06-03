@@ -60,3 +60,8 @@ At this point, your new account has been created and the promo code has been red
 8. Once the promo code is validated and processed, you'll be redirected to the portal page.
 
 At this point, your promo code has been redeemed to your account. 
+
+## Reference ## 
+
+### [How to Redeem Microsoft Azure Pass](https://www.microsoftazurepass.com/Home/HowTo)
+
