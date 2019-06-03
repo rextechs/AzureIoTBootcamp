@@ -19,7 +19,7 @@ If you don't have an active Azure subscription, create a [free account](https://
 
 In this step, we will create an instance of Azure IoT Hub using [Azure Portal](https://portal.azure.com)
 
-### Step 1.1 : Login to http://portal.azure.com
+### Step 1.1 : Login to [Azure Portal](https://portal.azure.com)
 
 Open a browser and navigate to http://portal.azure.com, then follow sign in prompt to sign in to your Azure account
 
