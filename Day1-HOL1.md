@@ -5,12 +5,9 @@ In many use cases, a Windows Server IoT 2019 can be used an IoT edge gateway tha
 In this lab you learn how to:
 
 1. Create an IoT Hub
-2. Register an IoT Edge device to your IoT hub
-3. Install and start the IoT Edge runtime on a Windows Server IoT 2019
-4. Remotely deploy a module to a Windows Server IoT 2019 to send telemetry to IoT Hub
-
-> [!NOTE]  
-> We are going to install a "Simulated Temperature Sensor"module from Azure IoT Edge Marketplace. This module generates simulated temperature and humidity data.  
+1. Create an IoT Edge device in your IoT hub
+1. Install and start the IoT Edge runtime on a Windows Server IoT 2019
+1. Deploy a module to a Windows Server IoT 2019 from Marketplace
 
 ## Prerequisites
 
@@ -22,22 +19,29 @@ If you don't have an active Azure subscription, create a [free account](https://
 
 ### Step 1.1 : Login to http://portal.azure.com
 
-### Step 1.2 : Select **All service** -> **Internet of Things** -> **IoT Hub** 
+Open a browser and navigate to http://portal.azure.com, then follow sign in prompt to sign in to your Azure account
 
-   ![create-iot-hub](images/WinServer-Lab/Create-IoTHub.png)
+### Step 1.2 : Create an instance of Azure IoT Hub
+
+Select **Create a resource** -> **Internet of Things** -> **IoT Hub** 
 
 ### Step 1.3 : Click **Add** to add a new IotHub instance  
 
-- Select a subscription  
-  Select an existing Resource Group, or create a new one by clicking Create new link
-- Select Region  
-  Select a data center region nearest to you
-- Provide a IoT Hub Name  
-  Provide a name that is globally unique.  You can confirm the uniqueness when the site shows green check box
+Provide these information to create an instance of IoT Hub
+
+
+|Data      |Description  |
+|---------|---------|
+|Subscription     |Subscription to use for the new IoT Hub         |
+|Resource Group | Create a new Resource Group for this lab.   E.g. IoTBootCamp|
+|Region     |Data center region nearest to you         |
+|IoT Hub Name     |Provide a name that is globally unique.|
 
 ![add-iot-hub](images/WinServer-Lab/add-iothub.png)
 
-### Step 1.4 : Click **Next: Size and scale>>**  
+Confirm the uniqueness of IoT Hub name with green check mark.  Once all parameters are entered, Click **Next: Size and scale>>**
+
+### Step 1.4 : Select Size and Scale
 
 Select F1: Free tier for Pricing and scale tier
 
