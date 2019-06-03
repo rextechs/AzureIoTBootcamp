@@ -17,6 +17,8 @@ If you don't have an active Azure subscription, create a [free account](https://
 
 ## Step 1 : Create an instance of IoT Hub
 
+In this step, we will create an instance of Azure IoT Hub using [Azure Portal](https://portal.azure.com)
+
 ### Step 1.1 : Login to http://portal.azure.com
 
 Open a browser and navigate to http://portal.azure.com, then follow sign in prompt to sign in to your Azure account
@@ -25,10 +27,11 @@ Open a browser and navigate to http://portal.azure.com, then follow sign in prom
 
 Select **Create a resource** -> **Internet of Things** -> **IoT Hub** 
 
+![CreateIoTHub](images/IoTHub-Lab/CreateIoTHub.png)
+
 ### Step 1.3 : Click **Add** to add a new IotHub instance  
 
 Provide these information to create an instance of IoT Hub
-
 
 |Data      |Description  |
 |---------|---------|
@@ -37,23 +40,29 @@ Provide these information to create an instance of IoT Hub
 |Region     |Data center region nearest to you         |
 |IoT Hub Name     |Provide a name that is globally unique.|
 
-![add-iot-hub](images/WinServer-Lab/add-iothub.png)
-
 Confirm the uniqueness of IoT Hub name with green check mark.  Once all parameters are entered, Click **Next: Size and scale>>**
+
+![CreateIoTHub2](images/IoTHub-Lab/CreateIoTHub2.png)
 
 ### Step 1.4 : Select Size and Scale
 
-Select F1: Free tier for Pricing and scale tier
+Select `F1: Free tier for Pricing and scale tier`
 
 ![select-tier](images/WinServer-Lab/IoTHub-FreeTier.png)
 
 ### Step 1.5 : Click **Review + create**, to create the IoTHub instance
 
-## Step 2 : Register the Windows Server IoT 2019 as a new Azure IoT Edge device
+## Step 2 : Register a new Azure IoT Edge device
 
-### Step 2.1 : Navigate to the IoTHub that was created, select **IoT Edge** -> **Add an Edge device**
+In this step, we will create `Azure IoT Edge Device` for Windows Server IoT 2019 
 
-### Step 2.2 : Provide a name of the device, then click **Save** to create the device
+### Step 2.1 : Open `IoT Edge` device view
+
+Navigate to the IoTHub that was created, select **IoT Edge** -> **Add an Edge device**
+
+### Step 2.2 : Provide a name for Windows Server IoT 2019
+
+Click **Save** to create the device
 
 ![add-edge-device](images/WinServer-Lab/create-edge-device.png)
 
@@ -63,9 +72,12 @@ All the edge-enabled devices that connect to your IoT hub are listed on the **Io
 
 ## Step 3 : Retrieve the connection string
 
-INFO: When you're ready to set up your physical device, you'll need a connection string which links your physical device with its identity in IoT hub. 
+When you're ready to set up your physical device, you'll need a connection string which links your physical device with its identity in IoT hub.  
+In this step, we will retrieve (Copy) the connection string for later use.
 
-### Step 3.1 : From the **IoT Edge** page in the portal, click on the device ID from the list of Edge devices  
+### Step 3.1 : Locate the Azure IoT Edge Device
+
+From the **IoT Edge** page in the portal, click on the device ID from the list of Edge devices  
 
 ### Step 3.2 : Copy Connection String  
 
@@ -78,35 +90,41 @@ Copy the value of either **Connection string (primary key)** or **Connection str
 > [!IMPORTANT]  
 > Instructors will provide Hostname and/or IP Address of Windows Server 2019 VM
 
-### Step 4.1 : open a Remote Desktop Connection from your machine
+### Step 4.1 : open a Remote Desktop Connection from your Windows 10 Dev machine
 
-INFO: you can type RDP from Window's search, then select then Remote Desktop Connection app
+> [!TIP]  
+> you can type RDP from Window's search, then select then Remote Desktop Connection app
 
 ### Step 4.2 : Type in the hostname or IP address of your server and click **connect**
 
 ### Step 4.3 : Login to your server
 
 Winsdows Server 2019 VM Credential
+
 ```bash  
-User Name    : iotbootcamp  
-Password     : bootcamp  
+User Name : iotbootcamp  
+Password  : bootcamp  
 ```
 
 ## Step 5 : Install IoT Edge Runtime on Windows
 
+In this step, we will install Azure IoT Edge Runtime to your Windows Server IoT
+
 ### Step 5.1 : Open a Powershell window as an Administrator
 
-### Step 5.2 : Run the **Deploy-IoTEdge** powershell cmdlet  
+### Step 5.2 : Deploy IoT Edge Runtime
 
 The cmdlet checks whether your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime.  
+
+Run the **Deploy-IoTEdge** powershell cmdlet. 
 
 ```powershell
 . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge
 ```
 
-### Step 5.3 : Run the  Initialize-IoTEdge cmdlet  
+### Step 5.3 : Initialize IoT Edge Runtime  
 
-The cmdlet initializes the finish the IoT Edge installation
+The cmdlet initializes the finish the IoT Edge installation.  For IoT Edge Runtime to initialize, it needs `Connection String` from [Step 3.2 : Copy Connection String](#step-32--copy-connection-string)
 
 ```powershell
 . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge
@@ -116,9 +134,13 @@ The cmdlet initializes the finish the IoT Edge installation
 
 Provide the connection string from [Step 3.2 : Copy Connection String](#step-32--copy-connection-string)
 
+Example :
+
 ![IoTEdge-Installation](images/WinServer-Lab/IotEdge-Installation.png)
 
-### Step 5.5 : Run the Get-Service command to confirm IoT Edge runtime is installed and running
+### Step 5.5 : Verify Azure IoT Edge Runtime Status
+
+Run the Get-Service command to confirm IoT Edge runtime is installed and running
 
 ```powershell
 Get-Service iotedge
@@ -136,23 +158,30 @@ Azure Marketplace is an online applications and services marketplace where you c
 
 From Azure portal, navigate to Marketplace or type Marketplace at the Search bar and select Marketplace
 
+![MarketPlace](images/IoTHub-Lab/SearchMarketPlace.png)
+
 ### Step 6.2 : Locate **Simulated Temperature Sensor**  
 
 Within Marketplace, select **Get Started**, type in *simulated* at the search bar, then select **Simulated Temperature Sensor**
 
-### Step 6.3 : Click **Create**
+![SearchSimTempSensor](images/IoTHub-Lab/SearchSimTempSensor.png)
+
+### Step 6.3 : Create Simulated Temperature Sensor module
+
+Click **Create**
+
+![CreateSimTempSensor](images/IoTHub-Lab/CreateSimTempSensor.png)
 
 ### Step 6.4 : Fill out the information on the Target Devices for IoT Edge Module
 
 1. Choose your subscription and the IoT Hub to which the target device is attached.
+1. Choose **Deploy to a device**.
 
-2. Choose **Deploy to a device**.
+1. Enter the name of the device or select **Find Device** to browse among the devices registered with your IoTHub and select the device you created earlier, which links to the Windows Server IoT 2019. 
 
-3. Enter the name of the device or select **Find Device** to browse among the devices registered with your IoTHub and select the device you created earlier, which links to the Windows Server IoT 2019. 
+1. Click **Create** to continue the standard process of configuring a deployment manifest, including adding other modules if desired. Details for the new module such as image URI, create options, and desired properties are predefined but can be changed. 
 
-4. Click **Create** to continue the standard process of configuring a deployment manifest, including adding other modules if desired. Details for the new module such as image URI, create options, and desired properties are predefined but can be changed. 
-
-5. Take the default setting for the next few steps, and finally click **Submit** to deploy the temperature simulator to the Windows Server. 
+1. Take the default setting for the next few steps, and finally click **Submit** to deploy the temperature simulator to the Windows Server. 
 
 ## Step 5 : Confirm Temperature Simulator Module Deployment  
 
