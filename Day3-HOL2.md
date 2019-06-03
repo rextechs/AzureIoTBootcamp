@@ -133,11 +133,11 @@ Using the **Windows 10 DevEnv**, create an IoT Hub if you do not have one.
 > Pick your favorite tool to create a new IoT Hub
 
 
-|Tool     |Link     |
-|---------|---------|
-|Portal   |[Create an IoT hub using the Azure portal](articles/iot-hub/iot-hub-create-through-portal.md)           |
-|AZ CLI   |[Create an IoT hub using the Azure CLI](articles/iot-hub/iot-hub-create-using-cli.md)         |
-|VSCode   |[Create an IoT hub using the Azure IoT Tools for Visual Studio Code](articles/iot-hub/iot-hub-create-use-iot-toolkit.md)         |
+| Tool   | Link                                                                                                                     |
+| ------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Portal | [Create an IoT hub using the Azure portal](articles/iot-hub/iot-hub-create-through-portal.md)                            |
+| AZ CLI | [Create an IoT hub using the Azure CLI](articles/iot-hub/iot-hub-create-using-cli.md)                                    |
+| VSCode | [Create an IoT hub using the Azure IoT Tools for Visual Studio Code](articles/iot-hub/iot-hub-create-use-iot-toolkit.md) |
 
 ## Step 2 : Azure IoT Edge Device
 
@@ -146,11 +146,11 @@ Using the **Windows 10 DevEnv**, create an IoT Edge Device in the IoT Hub from [
 > [!TIP]  
 > Pick your favorite tool to create a new Azure IoT Edge device.
 
-|Tool     |Link     |
-|---------|---------|
-|Portal   |[Register a new Azure IoT Edge device from the Azure portal](articles/iot-edge/how-to-register-device-portal.md)         |
-|AZ CLI   |[Register a new Azure IoT Edge device with Azure CLI](articles/iot-edge/how-to-register-device-cli.md)         |
-|VSCode   |[Register a new Azure IoT Edge device from Visual Studio Code](articles/iot-edge/how-to-register-device-vscode.md)         |
+| Tool   | Link                                                                                                               |
+| ------ | ------------------------------------------------------------------------------------------------------------------ |
+| Portal | [Register a new Azure IoT Edge device from the Azure portal](articles/iot-edge/how-to-register-device-portal.md)   |
+| AZ CLI | [Register a new Azure IoT Edge device with Azure CLI](articles/iot-edge/how-to-register-device-cli.md)             |
+| VSCode | [Register a new Azure IoT Edge device from Visual Studio Code](articles/iot-edge/how-to-register-device-vscode.md) |
 
 Please verify you can see the Azure IoT Edge Device in VSCode `Azure IoT Hub Devices` pane in the left bottom corner of VSCode UI.
 
@@ -301,11 +301,11 @@ ACR is used to :
 > Make sure to enable Admin Access.  
 > Copy following information to access from the DevEnv
 
-|Tool     |Link     |
-|---------|---------|
-|Portal   |[Create a private container registry using the Azure portal](articles/container-registry/container-registry-get-started-portal.md)         |
-|AZ CLI   |[Quickstart: Create a private container registry using the Azure CLI](articles/container-registry/container-registry-get-started-azure-cli.md)       |
-|VSCode   |[Create a private container registry using Azure PowerShell](articles/container-registry/container-registry-get-started-powershell.md)        |
+| Tool   | Link                                                                                                                                           |
+| ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Portal | [Create a private container registry using the Azure portal](articles/container-registry/container-registry-get-started-portal.md)             |
+| AZ CLI | [Quickstart: Create a private container registry using the Azure CLI](articles/container-registry/container-registry-get-started-azure-cli.md) |
+| VSCode | [Create a private container registry using Azure PowerShell](articles/container-registry/container-registry-get-started-powershell.md)         |
 
 ## Step 6 : Project Preparation
 
@@ -442,13 +442,21 @@ Update `.env` file for ACR Login credential
 
 Let's build the module and the container and upload (Push) the container to ACR.   
 
-1. Select and right click on `deployment.template.json` in the Explorer pane
+1. Make sure that your docker is running linux container
 
-1. Click `Build and Push IoT Edge Solution`
+  - Click on the Up arrow at the low right corner of your desktop
+  -  then right click on the docker icon. 
+  -  Make sure that the menu has an item of **Switch to Windows Containers...**, which means that the it's on linux containers already. Otherwise, select **Switch to Linux Containers...**
+
+  ![Docker container](images/IntelligentEdge/docker-linux-container.png)
+
+2. Select and right click on `deployment.template.json` in the Explorer pane
+
+3. Click `Build and Push IoT Edge Solution`
 
     ![Build and Push](images/IntelligentEdge/Step7-01.png)
 
-1. Wait until build and push completes
+4. Wait until build and push completes
   You can see the progress in the `terminal window`
 
 1. Verify `deployment.amd64.json` is generated in `config` folder
@@ -476,11 +484,11 @@ Deployment Manifest describes followings:
 
 There are multiple ways you can deploy modules
 
-|Tool     |Link     |
-|---------|---------|
-|Portal   |[Deploy Azure IoT Edge modules from the Azure portal](articles/iot-edge/how-to-deploy-modules-portal.md)         |
-|AZ CLI   |[Deploy Azure IoT Edge modules with Azure CLI](articles/iot-edge/how-to-deploy-modules-cli.md) |
-|VSCode   |[Deploy Azure IoT Edge modules from Visual Studio Code](articles/iot-edge/how-to-deploy-modules-vscode.md)        |
+| Tool   | Link                                                                                                       |
+| ------ | ---------------------------------------------------------------------------------------------------------- |
+| Portal | [Deploy Azure IoT Edge modules from the Azure portal](articles/iot-edge/how-to-deploy-modules-portal.md)   |
+| AZ CLI | [Deploy Azure IoT Edge modules with Azure CLI](articles/iot-edge/how-to-deploy-modules-cli.md)             |
+| VSCode | [Deploy Azure IoT Edge modules from Visual Studio Code](articles/iot-edge/how-to-deploy-modules-vscode.md) |
 
 More on [Deployment Manifest](articles/iot-edge/module-composition.md)
 
@@ -494,13 +502,13 @@ Deploy `YoloModule` container from VSCode.
 
     ![Deploy Module](images/IntelligentEdge/Step8-01.png)
 
-1. `Command Palett` will appear on the top of VSCode window
+1. A selection window will appear on the top of VSCode window
 
-1. Select the Azure IoT Edge device from the list
+2. Navigate to the **config** folder, select **deployment.amd64**, click on the **Select Edge Deployment Manifest** button 
 
-    ![Deploy Module](images/IntelligentEdge/Step8-02.png)
+    ![Deploy Module](images/IntelligentEdge/select-deployment-file.png)
 
-1. Check the progress by monitoring `edgeAgent` log  
+3. Check the progress by monitoring `edgeAgent` log  
 
     > [!TIP]  **For Exam!**  
     >  
@@ -528,7 +536,7 @@ Deploy `YoloModule` container from VSCode.
     2019-05-15 01:34:15.666 +00:00 [INF] - Updated reported properties
     ```
 
-1. Verify `YoloModule` is deployed and running
+4. Verify `YoloModule` is deployed and running
 
     > [!TIP]  **For Exam!**  
     >  
