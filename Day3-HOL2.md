@@ -457,7 +457,8 @@ Let's build the module and the container and upload (Push) the container to ACR.
 
 ## Step 8 : Deploy Module
 
-This modules only reads video stream and display in the web UI.
+The first module *only reads video stream* and display in the web UI to confirm the module's basic functionalities.  
+In the later step, we will add AI Inference to the module.
 
 ### Deployment Manifest
 
@@ -483,7 +484,7 @@ There are multiple ways you can deploy modules
 
 More on [Deployment Manifest](articles/iot-edge/module-composition.md)
 
-### Step 8.1 : Deploy `YoloModule` from VSCode
+### Step 8.1 : Deploy `YoloModule` without AI from VSCode
 
 Deploy `YoloModule` container from VSCode.  
 
