@@ -305,6 +305,14 @@ Example :
 ```ps
 docker push rlacr.azurecr.io/tempsim
 ```
+1. Confirm Docker image in Azure Container Registry
+   
+   From Azure portal, navigate to the Azure Container Registry, select **Repository**, you should see the module that has been pushed into your repository. 
+
+    Example: 
+
+    ![ACR Repository](images/IoTEnt-Lab/acr-repository.png)
+
 
 ## Step 11 : Deploy module to IoT Edge 
 
@@ -312,27 +320,30 @@ You are now ready to deploy the Simulated Temperature module on your device.
 
 In this section, you use the **Set Modules** wizard in the Azure portal to create a *deployment manifest*. A deployment manifest is a JSON file that describes all the modules that will be deployed to a device, the container registries that store the module images, how the modules should be managed, and how the modules can communicate with each other. Your IoT Edge device retrieves its deployment manifest from IoT Hub, then uses the information in it to deploy and configure all of its assigned modules. 
 
-### Step 11.1 : In the Azure portal, in your IoT hub, go to **IoT Edge**, and then open the details page for your IoT Edge device.
+### Step 11.1 : In Azure portal, navigate to your IoT hub, go to **IoT Edge**, and then open the details page for your IoT Edge device.
 
 ### Step 11.2 : Select **Set modules**
 
 For the Container Registry Settings:  
-- Name: <Your ACR Name>
-- Address: <Your ACR Login Server>
+- Name: ACR_NAME
+- Address:  <Your ACR Login Server>
 - Username: <Your ACR User Name>
 - Password: <Your ACR Password> 
 
 Example :
 
-# !!!!! Need ScreenShot
-
+![Container Registry Settings](images/IoTEnt-Lab/container-registry-setting.png)
 > [!NOTE]  
 > ACR Credential can be obtained from your the Azure Container Registry created earlier under Access Keys  
 
 - Click **Add** and select **IoT Edge Module**
-- Type a name for your module, type **tempsim**
-- For the image URI, enter **{ACR_NAME}.azurecr.io/tempsim** 
+- Name: <Your Module Name>
+- Image URI,  <ACR_NAME>.azurecr.io/<Your Module Name> 
 - Leave the other settings unchanged and select **Save**
+
+Example:
+
+![Edge Module Settings](images/IoTEnt-Lab/Edge-Module-Settings.png)
 
 ## Step 12 : Confirm the Temperature Simulator module has been deployed
 

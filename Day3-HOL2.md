@@ -444,11 +444,10 @@ Let's build the module and the container and upload (Push) the container to ACR.
 
 1. Make sure that your docker is running linux container
 
-  - Click on the Up arrow at the low right corner of your desktop
-  -  then right click on the docker icon. 
-  -  Make sure that the menu has an item of **Switch to Windows Containers...**, which means that the it's on linux containers already. Otherwise, select **Switch to Linux Containers...**
-
-  ![Docker container](images/IntelligentEdge/docker-linux-container.png)
+     - Click on the Up arrow at the low right corner of your desktop
+     - Then right click on the docker icon. 
+     - Select **Switch to Linux Containers...**. If the menu has an item of **Switch to Windows Containers...**, it means that the it's been switched to linux containers already.  
+     ![Docker container](images/IntelligentEdge/switch-container.png)
 
 2. Select and right click on `deployment.template.json` in the Explorer pane
 
