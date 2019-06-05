@@ -83,32 +83,51 @@ The value for the `device-id` parameter is case-sensitive. Don't copy the quotat
 
 Note: The Intel Compute Stick is the IoT Core device for this lab.
 
-### Step 2.1 : Remote powershell into your IoT Core device 
+### Step 2.1 : Remote powershell into your IoT Core device
 
-- Download and install IoT Core Dashboard from: https://docs.microsoft.com/en-us/windows/iot-core/connect-your-device/iotdashboard
-- Launch IoT Core Dashboad, Right click on the device and select **Launch Powershell**
+- Install IoT Core Dashboard  
 
-![IoT Core Dashboard](images/IoTCore-Lab/IoTCoreDashboard.png)
+    > [!TIP]  
+    > IoT Core Dashboard setup file is already downloaded on your desktop  
+    > ![IoTCoreDashboardIcon](images/IoTCore-Lab/IoTCoreDashboardIcon.PNG)
 
+- If you do not have installation file, download and install IoT Core Dashboard from: https://docs.microsoft.com/en-us/windows/iot-core/connect-your-device/iotdashboard
+- Launch IoT Core Dashboad
+- Open `My device` tab and locate your IoT Core device  
+  > [!TIP]  
+  > Please use IP Address to locate your IoT Core device
+
+- Right click on the device and select **Launch Powershell**
+
+  ![IoT Core Dashboard](images/IoTCore-Lab/IoTCoreDashboard.png)
+
+    > [!TIP]  
+    > Please ensure you are in Powershell Remote Console.  When you see IP Address in the beginning of command prompt, your are in Powershell Remote Console.  If not, please re-connect to your IoT Core device again.  
+    > ![PSRemote](images/IoTCore-Lab/PSRemotePrompt.png)
+    
 ### Step 2.2 : The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
 
 ```powershell
-[192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge -ContainerOs Windows
-```
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge -ContainerOs Windows
 
-Note: The stick PC will be restarted as part of the installation. 
+```
 
 ### Step 2.3 : Run the Initialize-IoTEdge command to complete the installation process
 
 Need to re-connect to IoT Core, since the prior session was disconnected because of the restart
 
 ```powershell
-
-[192.168.0.81]: PS C:\Data\Users\administrator\Documents> . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge -ContainerOs Windows
+. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Initialize-IoTEdge -ContainerOs Windows
 
 ```
 
 ### Step 2.4 : Provide the device connection string
+
+The cmdlet will prompt for `connection string`.  Please provide your connection string from [Step 1.4 : Retrieve the connection string](#step-14--retrieve-the-connection-string)
+
+Output Example:
+
+![IoTEdgeInstall](images/IoTCore-Lab/IoTEdgeInstall.png)
 
 ### Step 2.5 : Confirm IoT Edge runtime is installed and running on the IoT Core device
 
