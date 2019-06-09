@@ -10,6 +10,7 @@ The Stream Analytics module in this lab calculates the average temperature over 
 
 In this lab, you learn how to:
 
+* How to manupulate Azure Resources from Azure Command Line Interface (AZ CLI)
 * Create an Azure Stream Analytics job to process data on the edge.
 * Connect Azure Stream Analytics job with other IoT Edge modules.
 * Deploy the Azure Stream Analytics job to an Azure IoT Core device.
@@ -19,85 +20,202 @@ Windows IoT Core device is a small device with lesser resources, so we'll be doi
 ## Prerequisites
 
 - An instance of IoT Hub from the previous HOL
-- IoT Core device, for instance an Intel Compute Stick PC. 
+- IoT Core device, for instance an Intel Compute Stick PC
+- AZ CLI and IoT Extension  
+    They are preinstalled into your HOL Windows 10 Dev Macine
+
+References :
+- AZ CLI : https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest
+- IoT Extension : https://github.com/Azure/azure-iot-cli-extension
 
 ## Step 1 : Register the IoT Core device as an Azure IoT Edge device (On your DevEnv)
 
 Command line interface (CLI) is the only interface available in some occasions, so in this lab, we are going to use the Azure Command Line Interface (AZ CLI) to create devices.
 
-### Step 1.1 : Sign in to your Azure account.
+### Step 1.1 : Sign in to your Azure Account
 
-If you hadn't signed in to your account. Use the login command which will open a web browser, and sign in to your account with your credential. 
+1. Open a command prompt, Powershell prompt, or VSCode Terminal
+1. Run `az login` command which will open a web browser, and sign in to your account with your credential
 
-   ```bash
-   az login
-   ```
+```bash
+az login
+```
 
-### Step 1.2 : Create a device
+### Step 1.2 : Create a IoT Edge device
 
 Use the following command to create a new device identity in your IoT hub:
 
-   ```bash
-   az iot hub device-identity create --device-id [device id] --hub-name [hub name] --edge-enabled
-   ```
+```bash
+az iot hub device-identity create --device-id [device id] --hub-name [hub name] --edge-enabled
+```
 
 This command includes three parameters:
 
- - **device-id**: Provide a descriptive name of your IoT Core device, which is unique to your IoT hub.
+|Parameters  |Description  |Example  |
+|---------|---------|---------|
+|Device ID | Provide a descriptive name of your IoT Core device, which is unique to your IoT hub.         | MyIoTCore-01        |
+|Hub Name     | Provide the name of your IoT hub to which your IoT Edge device will connect  |MsIoTBootCamp1234        |
+|Edge Enabled     |This parameter declares that the device is for use with IoT Edge         |         |
 
- - **hub-name**: Provide the name of your IoT hub.
+![az iot hub device-identity create output](images/IotCore-Lab/Create-edge-device.png)
 
- - **edge-enabled**: This parameter declares that the device is for use with IoT Edge.
+> [!TIP]  
+> If your environment did not have the device-identity extension installed, run the following command  
+>  ```bash  
+>   az extension add --name azure-cli-iot-ext  
+>```
 
-   ![az iot hub device-identity create output](images/IotCore-Lab/Create-edge-device.png)
+### Step 1.3 : Check the new device
 
-
-Note: If your environment did not have the device-identity extension installed, run the following command
+Run the following command to view all devices in your IoT hub:
 
 ```bash
-   az extension add --name azure-cli-iot-ext
+az iot hub device-identity list --hub-name [hub name]
 ```
 
-### Step 1.3 : View all devices
+Example :
 
-Use the following command to view all devices in your IoT hub:
+> [!TIP]  
+> You should see 3 devices at this point
 
-   ```bash
-   az iot hub device-identity list --hub-name [hub name]
+```ps
+PS C:\> az iot hub device-identity list --hub-name MsIoTBootCamp1234
+[
+  {
+    "authenticationType": "sas",
+    "capabilities": {
+      "iotEdge": true
+    },
+    :
+    <Snip>
+    :
+  },
+  {
+    "authenticationType": "sas",
+    "capabilities": {
+      "iotEdge": true   <<<=====================
+    },
+    "cloudToDeviceMessageCount": 0,
+    "connectionState": "Disconnected",
+    "deviceEtag": "NzE3NTI2NTQ0",
+    "deviceId": "MyIoTCore-01",
+    "deviceScope": "ms-azure-iot-edge://MyIoTCore-01-636956957779426343",
+    "etag": "AAAAAAAAAAE=",
+    "lastActivityTime": "0001-01-01T00:00:00Z",
+    "properties": {
+      "desired": {
+        "$metadata": {
+          "$lastUpdated": "2019-06-09T16:49:37.9426343Z"
+        },
+        "$version": 1
+      },
+      "reported": {
+        "$metadata": {
+          "$lastUpdated": "2019-06-09T16:49:37.9426343Z"
+        },
+        "$version": 1
+      }
+    },
+    "status": "enabled",
+    "statusUpdateTime": "0001-01-01T00:00:00Z",
+    "tags": {
+      "$metadata": {
+        "$lastUpdated": null
+      },
+      "$version": 1
+    },
+    "version": 2,
+    "x509Thumbprint": {
+      "primaryThumbprint": null,
+      "secondaryThumbprint": null
+    }
+  },
+  {
+    :
+    <Snip>
+    :
+  }
+]
 
-   ```
+```
 
-Any device that is registered as an IoT Edge device will have the property **capabilities.iotEdge** set to **true**.
+> [!TIP]  
+> Any device that is registered as an IoT Edge device will have the property  
+> **capabilities.iotEdge** set to **true**  
+>  
+> ```json  
+>     "capabilities": {
+>      "iotEdge": true
+>    },
+> ```
 
 ### Step 1.4 : Retrieve the connection string
 
 When you're ready to set up your device, you need the connection string that links your physical device with its identity in the IoT hub. Use the following command to return the connection string for a single device:
 
-   ```bash
-   az iot hub device-identity show-connection-string --device-id [device id] --hub-name [hub name]
-   ```
+```bash
+az iot hub device-identity show-connection-string --device-id [device id] --hub-name [hub name]
+```
 
-The value for the `device-id` parameter is case-sensitive. Don't copy the quotation marks around the connection string.
+> [!TIP]  
+> The value for the `device-id` parameter is case-sensitive. Don't copy the quotation marks around the connection string
 
-## Step 2: Install IoT Edge on the IoT Core device 
+Example :
 
-Note: The Intel Compute Stick is the IoT Core device for this lab.
+```ps
+PS C:\> az iot hub device-identity show-connection-string --device-id MyIoTCore-01 --hub-name MsIoTBootCamp1234
+{
+  "connectionString": "HostName=MsIoTBootCamp1234.azure-devices.net;DeviceId=MyIoTCore-01;SharedAccessKey=&()*(Fdafdkafda90(*)(*("
+}
+```
 
-### Step 2.1 : Remote powershell into your IoT Core device
+### Step 2 : IoT Core Dashboard
+
+IoT Core Dashboard is a tool to help you download, connect, and configure your Windows 10 IoT Core device.  
+Using IoT Core Dashboard, we will  
+
+- Identify your Windows 10 IoT Core Device
+- Connect to your Windows 10 IoT Core Device
+
+### Step 2.1 : Launch IoT Core Dashboard
 
 - Install IoT Core Dashboard  
 
     > [!TIP]  
     > IoT Core Dashboard setup file is already downloaded on your desktop  
     > ![IoTCoreDashboardIcon](images/IoTCore-Lab/IoTCoreDashboardIcon.PNG)
+  
+    If you do not have installation file, download and install IoT Core Dashboard from: https://docs.microsoft.com/en-us/windows/iot-core/connect-your-device/iotdashboard
 
-- If you do not have installation file, download and install IoT Core Dashboard from: https://docs.microsoft.com/en-us/windows/iot-core/connect-your-device/iotdashboard
 - Launch IoT Core Dashboad
-- Open `My device` tab and locate your IoT Core device  
+- Open **My devices** tab  
+    If there is any Windows 10 IoT Core devices on the same network, they will be listed here
+
+## Step 3: Windows 10 IoT Core
+
+The Intel Compute Stick is the IoT Core device for this lab.
+
+> [!NOTE]  
+> Please pick up your Windows 10 IoT Core from instructor  
+> The kit is consist of followings  
+> Kit #1 (With 10 inch HDMI Monitor)
+> - Intel Compute Stick + AC Adapter
+> - HDMI Monitor + AC Adapter
+> - HDMI Extension Cable
+>
+> Kit #2 (With 15" HDMI Monitor)
+> - Intel Compute Stick + AC Adapter
+> - HDMI Monitor + AC Adapter + USB Cable
+> - HDMI cable + Female-Female Adapter  
+
+### Step 3.1 : Connect to your IoT Core device
+
+1. Launch IoT Core Dashboad
+1. Open `My device` tab and locate your IoT Core device  
   > [!TIP]  
   > Please use IP Address to locate your IoT Core device
 
-- Right click on the device and select **Launch Powershell**
+1. Right click on the device and select **Launch Powershell**
 
   ![IoT Core Dashboard](images/IoTCore-Lab/IoTCoreDashboard.png)
 
