@@ -77,6 +77,13 @@ You can also select **Get Device Info** from the right-click menu to see all the
 
 In this step, we will install (Deploy) and initialize Azure IoT Edge Runtime to your Windows 10
 
+> [!TIP]  
+> In this instruction, we will use `iotedge` command.  If you are familiar with `docker` command, you need to specify host to connect to by specifying `-H npipe:////./pipe/iotedge_moby_engine` parameter.  
+> E.g.  
+> ```ps
+> docker -H npipe:////./pipe/iotedge_moby_engine ps
+> ```
+
 ### Step 4.1 : Open a Powershell window as an Administrator
 
 Please make sure to start Powershell as an **Administrator**
@@ -92,6 +99,9 @@ This command checks whether your Windows machine is on a supported version, turn
 ```
 
 Click Yes to the following pop-up questions. The machine will be restarted. After it's restarted, open a powershell window and run the command to finish the installation.
+
+> [!NOTE]  
+> This requires a reboot.  After reboot, restart admin Powershell and continue the rest of lab.
 
 ### Step 4.3 : Run the  Initialize-IoTEdge command to initialize the finish the IoT Edge installation
 
@@ -590,14 +600,35 @@ edgeHub          running          Up 3 minutes     mcr.microsoft.com/azureiotedg
 mysimtempsensor  running          Up 3 minutes     iotbootcamp2019acr1.azurecr.io/simtemp:0.0.1
 ```
 
-### Step 9 : Verify Your Module 
+## Step 9 : Verify Your Module 
 
 Please follow the same procedure in the [previous lab](Day1-HOL1.md#step-7--confirm-temperature-simulator-module-deployment) to confirm your module is deployed and running as expected.
 
-Clean up
-
-### Step 10 : Clean up
+- Run `iotedge list` command to confirm the module is deployed and running
+- Run `iotedge logs -f <You Module Name>` to see logs from your module
+- Run `Device Explorer` to see logs are sent to your IoT Hub
+ 
+## Step 10 : Clean up
 
 To uninstall Azure IoT Edge, run `uninstall-edge -force` command
 
 Reference : https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-windows#all-installation-parameters 
+
+## Step 11 : Optional Challenger Step
+
+Deploy IoT Edge with Device Provisioning Service (DPS).
+
+### Step 11.1 : Create DPS instance
+
+Follow steps described [here](https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#create-a-new-instance-for-the-iot-hub-device-provisioning-service) and [here](https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service) to create a new instnace of DPS
+
+References : 
+- https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#create-a-new-instance-for-the-iot-hub-device-provisioning-service
+- https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service
+
+### Step 11.2 : Install IoT Edge Runtime with DPS
+
+Follow steps described [here](https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service) to install IoT Edge Runtime with DPS
+
+Reference :
+- https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service
