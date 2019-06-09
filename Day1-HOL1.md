@@ -60,7 +60,7 @@ For this lab, please select `F1: Free tier for Pricing and scale tier`, then cli
 
 Reference : [https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-scaling](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-scaling)
 
-### Step 1.5 : Create IoT Hub 
+### Step 1.5 : Start IoT Hub Deployment
 
 Click **Create** button to start creating the new IoT Hub instance.  
 
@@ -76,6 +76,9 @@ Wait until your deployment completes.
 > You can also check deployment progress in `Notifications`  
 >  
 > ![CreateIoTHub6](images/IoTHub-Lab/CreateIoTHub6.png)
+
+> [!TIP]  
+> You may want to **Pin to dashboard** for later use
 
 ## Step 2 : Register a new Azure IoT Edge device
 
