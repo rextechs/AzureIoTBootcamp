@@ -1,18 +1,20 @@
 # Windows Server IoT 2019 + Azure IoT Edge (45 Min)
 
-In many use cases, a Windows Server IoT 2019 can be used an IoT edge gateway that connects local devices and sensors to cloud services and apps. In this lab, we're going to walk you through how to turn a Windows Server IoT 2019 server into an IoT edge gateway. We will use virtual machines for this lab, however, the same steps described in this article can be applied to a Windows Server IoT 2019 on a physical machine.  
+In many use cases, a Windows Server IoT 2019 can be used an IoT edge gateway that connects local devices and sensors to cloud services and apps. In this lab, we're going to walk you through how to turn a Windows Server IoT 2019 into an IoT edge gateway. We will use virtual machines in this lab, however, the same steps described in this article can be applied to a physical machine.  
 
 In this lab you learn how to:
 
 1. Create an IoT Hub
-1. Create an IoT Edge device in your IoT hub
-1. Install and start the IoT Edge runtime on a Windows Server IoT 2019
-1. Deploy a module to a Windows Server IoT 2019 from Marketplace
+2. Create an IoT Edge device in your IoT hub
+3. Install and start the IoT Edge runtime on a Windows Server IoT 2019
+4. Deploy a module to a Windows Server IoT 2019 from Marketplace
 
 ## Prerequisites
 
 - Azure Subscription  
-If you don't have an active Azure subscription, create a [free account](https://azure.microsoft.com/free) before you begin.
+
+  If you don't have an active Azure subscription, refer to [Lab 0](Lab0.md) to redeem your Azure pass, or create a [free account](https://azure.microsoft.com/free) before you begin. 
+  
 - Windows Server 2019, which can be a physical or virtual machine  
 
 ## Step 1 : Create an instance of IoT Hub
@@ -33,17 +35,17 @@ Select **Create a resource** -> **Internet of Things** -> **IoT Hub**
 
 There are 4 required parameters you must provide in order to create a new instance of IoT Hub.
 
-|Data      |Description  | Example |
-|---------|---------|--------------|
-|Subscription     |Subscription to use for the new IoT Hub | Visual Studio Enterprise |
-|Resource Group | Create a new Resource Group for this lab | IoTBootCamp2019 |
-|Region     |Data center region nearest to you             | West US |
-|IoT Hub Name     |Provide a name that is globally unique  | MsIoTBootCamp1234 |
+| Data           | Description                              | Example                  |
+| -------------- | ---------------------------------------- | ------------------------ |
+| Subscription   | Subscription to use for the new IoT Hub  | Visual Studio Enterprise |
+| Resource Group | Create a new Resource Group for this lab | IoTBootCamp2019          |
+| Region         | Data center region nearest to you        | West US                  |
+| IoT Hub Name   | Provide a name that is globally unique   | MsIoTBootCamp1234        |
 
 1. Provide these information to create an instance of IoT Hub  
     Make sure to use your own Subscription, Resource Group Name, Region, and unique IoT Hub Name.
-1. Confirm the uniqueness of IoT Hub name with green check mark.  
-1. Click **Next: Size and scale>>**
+2. Confirm the uniqueness of IoT Hub name with green check mark.  
+3. Click **Next: Size and scale>>**
 
 ![CreateIoTHub2](images/IoTHub-Lab/CreateIoTHub2.png)
 
@@ -254,11 +256,11 @@ Click **Create** to start the wizard
 
 In this step, you need to specify to which device, you would like to deploy the Simulated Temperature Sensor IoT Edge Module.
 
-|Parameter  |Description  |Example  |
-|---------|---------|---------|
-|Subscription     | Select your subscription | MSNSubscription         |
-|IoT Hub     | Select your IoT Hub to which the target device created in [the previous step](#step-24--device-id) is attached |MsIoTBootCamp1234         |
-|IoT Edge Device Name     | Select the target IoT Edge Device created in [the previous step](#step-24--device-id)         |IoTBootCampServer2019-1         |
+| Parameter            | Description                                                                                                    | Example                 |
+| -------------------- | -------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| Subscription         | Select your subscription                                                                                       | MSNSubscription         |
+| IoT Hub              | Select your IoT Hub to which the target device created in [the previous step](#step-24--device-id) is attached | MsIoTBootCamp1234       |
+| IoT Edge Device Name | Select the target IoT Edge Device created in [the previous step](#step-24--device-id)                          | IoTBootCampServer2019-1 |
 
 Click **Create** to move to the next step
 
@@ -299,7 +301,7 @@ Click **Submit** to deploy the temperature simulator to the Windows Server
 
 ## Step 7 : Confirm Temperature Simulator Module Deployment  
 
-The module that you pushed creates sample data that you can use for testing. The simulated temperature sensor module generates environment data that you can use for testing later. The simulated sensor is monitoring both a machine and the environment around the machine. For example, this sensor might be in a server room, on a factory floor, or on a wind turbine. The message includes ambient temperature and humidity, machine temperature and pressure, and a timestamp. The IoT Edge tutorials use the data created by this module as test data for analytics.
+ The simulated temperature sensor module generates environment data that you can use for testing later. The simulated sensor is monitoring both a machine and the environment around the machine. For example, this sensor might be in a server room, on a factory floor, or on a wind turbine. The message includes ambient temperature and humidity, machine temperature and pressure, and a timestamp. 
 
 ### Step 7.1 : Confirm the module is deployed and running
 
@@ -331,6 +333,7 @@ This is different from **Connection String** for your IoT Edge device.  (Sometim
 1. Start Device Explorer  
     > [!TIP]  
     > Open Device Exploer from the shortcut on your desktop  
+    
     ![DeviceExploere1](images/WinServer-Lab/DeviceExplorer1.png)
 1. **Shared Access Policies**  
     Open Shared Access Policies page in Azure Portal to retrieve **Connection String** for your IoT Hub  
