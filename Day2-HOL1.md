@@ -255,3 +255,17 @@ You can use [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemNam
 ## Finished!
 
 You have successfully connected an MXChip IoT DevKit to your IoT hub, and you have sent the captured sensor data to your IoT hub.
+
+## Optional Challenger Lab 
+
+### How to save your telemetry data to a Cold storage? 
+
+>[!Tip]
+>1. Create an AZure Storage Account 
+>2. Add an Endpoint to your IoT Hub which links to your created Azure Storage Account
+>3. Add a Route to your IoT Hub to save telemetry data to your new Endpoint 
+
+References: 
+- https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+
+- https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-d2c

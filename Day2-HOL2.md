@@ -89,3 +89,15 @@ View data in a table. If you have multiple devices, they will appear as separate
 ## Finished!
 
 You have successfully set up Azure Time Series Insights and analyzed your device's time series data.
+
+## Optional Chellenger Lab 
+
+### How to Incorporate Time Series Insight Data into Your Own App? 
+
+>[!Tip]
+> - TSI data can be accessed via REST API
+> - Leverage Azure AD to grant permissions to TSI API
+
+Reference: 
+- https://docs.microsoft.com/en-us/azure/time-series-insights/tutorial-create-tsi-sample-spa
+- https://docs.microsoft.com/en-us/rest/api/time-series-insights/ga-query-api
