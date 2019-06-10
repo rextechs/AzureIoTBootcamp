@@ -1,6 +1,6 @@
 # Windows 10 IoT + Azure IoT Edge - Advance Lab (60 Min)
 
-In this lab, you will learn how to :
+Visual Studio Code (VSCode) has become one of the premier development environments with many powerful tools to help developers accelerate the development process.  In this lab, we'll walk you through the process of developing an IoT Edge module and deploying the module to an IoT Edge device using VSCode. You will learn how to:
 
 - Create Azure IoT Edge device id with VSCode
 - Install and initialize Azure IoT Edge Runtime on Windows 10
@@ -23,16 +23,16 @@ Using the Azure IoT extensions for Visual Studio Code to perform operations with
 
 1. In Visual Studio Code, open the **Explorer** view.
 
-1. At the bottom of the Explorer, expand the **Azure IoT Hub Devices** section.
+2. At the bottom of the Explorer, expand the **Azure IoT Hub Devices** section.
 
-1. Click **Select IoT Hub**.
+3. Click **Select IoT Hub**.
 
-1. Sign in to Azure account
+4. Sign in to Azure account
     If you are not signed in to your Azure account, follow the prompts and sign in to your Azure account.
 
     ![Expand Azure IoT Hub Devices section](./images/Register-device-vscode/azure-iot-hub-devices.png)
 
-1. Select Subscription and IoT Hub
+5. Select Subscription and IoT Hub
     Select your subscription and IoT Hub from the selection box on the top of VSCode window
 
     ![SelectSubscriptionAndHub](images/Register-device-vscode/azure-iot-hub-devices2.png)
@@ -57,7 +57,7 @@ In this step, you will create a new IoT Edge Device for your Windows 10 Dev Mach
 
     ![VSCode-IoTEdge3](images/IoTEnt-Lab/VSCode-IoTEdgeDevice3.png)
 
-In the output screen, you see the result of the command. The device info is printed, which includes the **deviceId** that you provided and the **Device Connection String** that you can use to connect your physical device to your IoT hub.
+In the **OUTPUT** screen, you see the result of the command. The device info is printed, which includes the **deviceId** that you provided and the **Device Connection String** that you can use to connect your physical device to your IoT hub.
 
 ## Step 3 : Retrieve the device connection string
 
@@ -73,9 +73,9 @@ The connection string is copied to your clipboard.
 
 You can also select **Get Device Info** from the right-click menu to see all the device info, including the connection string, in the output window.
 
-## Step 4 : Install IoT Edge on Windows 10
+## Step 4 : Install IoT Edge on Windows 10 Enterprise
 
-In this step, we will install (Deploy) and initialize Azure IoT Edge Runtime to your Windows 10
+In this step, we will install (Deploy) and initialize Azure IoT Edge Runtime to your Windows 10 Enterprise
 
 > [!TIP]  
 > In this instruction, we will use `iotedge` command.  If you are familiar with `docker` command, you need to specify host to connect to by specifying `-H npipe:////./pipe/iotedge_moby_engine` parameter.  
@@ -142,13 +142,13 @@ Example :
 
 ## Step 5 : Create Azure Container Registry (ACR)
 
-You need a container registry to push your app image to once the image is built. Once your image is available in a container registry, you will deploy directly from that registry.
+You need a container registry where your app image can be stored online after the image is built. Once your image is available in a container registry, you can deploy directly from that registry to IoT Edge. Please keep in mind, the ACR can be used to stored multiple images. We'll create a new Azure Container Registry for this lab. 
 
 ### Step 5.1 : Create Azure Container Registry
 
 1. Sign in to the [Azure Portal](https://portal.azure.com/)
 
-1. Create **Container Registry**  
+2. Create **Container Registry**  
     **Create a resource** -> **Containers** -> **Container Registry**
 
     ![AcrCreate1](images/IoTEnt-Lab/ACR-Create1.png)
@@ -159,17 +159,17 @@ Enter values for Registry name and Resource group.
 
 ![AcrCreate2](images/IoTEnt-Lab/ACR-Create2.png)
 
-|Parameter  |Description  |Example  |
-|---------|---------|---------|
-|Registry Name     | Unique name within Azure and 5-50 alphanumeric characters only | IoTBootCamp2019acr1         |
-|Subscription     | Your subscription         |         |
-|Resource Group     | Select the resource group used for your IoT Hub         | IoTBootCamp2019         |
-|Location     | Select the same region as your IoT Hub         | West US         |
-|Admin user     | This enables "User Name" and "Password" to access ACR.  Set to **Enable** | Enabled          |
-|SKU     | Tier of ACR.  Different tier gives different storage size limit, etc.  Set to **Basic** for this lab         | Basic        |
+| Parameter      | Description                                                                                          | Example             |
+| -------------- | ---------------------------------------------------------------------------------------------------- | ------------------- |
+| Registry Name  | Unique name within Azure and 5-50 alphanumeric characters only                                       | IoTBootCamp2019acr1 |
+| Subscription   | Your subscription                                                                                    |                     |
+| Resource Group | Select the resource group used for your IoT Hub                                                      | IoTBootCamp2019     |
+| Location       | Select the same region as your IoT Hub                                                               | West US             |
+| Admin user     | This enables "User Name" and "Password" to access ACR.  Set to **Enable**                            | Enabled             |
+| SKU            | Tier of ACR.  Different tier gives different storage size limit, etc.  Set to **Basic** for this lab | Basic               |
 
 - ACR Pricing : https://azure.microsoft.com/en-us/pricing/details/container-registry/
-1. When the **Deployment succeeded** message appears, select the container registry in the portal. 
+  1. When the **Deployment succeeded** message appears, select the container registry in the portal. 
 
 ### Step 5.3 : Start ACR Deployment
 
@@ -178,7 +178,7 @@ Click **Create** and wait for deployment to finish
 > [!TIP]  
 > You may want to **Pin to dashboard** for later use 
 
-### Step 5.4 : Login to your ACR
+### Step 5.4 : Login to your ACR from VSCode
 
 ACR is secure container registry, meaning you can control access to your registry.
 
@@ -226,8 +226,9 @@ Reference : [IoT Edge Samples](https://github.com/Azure/iotedge)
 Download (or pull) source code for `Simulated Temperature Sensor` from Github with following commands
 
 1. Open Console (CMD), Powershell, or VSCode terminal
-1. Run git command
-    Example : Clone to C:\Repo
+2. Create a local directory, and run git command to clone some sample code
+   
+    Below is an Example to clone the code to C:\Repo
     
     ```powershell  
     md c:\Repo
@@ -275,7 +276,7 @@ Before we containerize the module for Azure IoT Edge deployment, compile and run
     -a----        5/20/2019   8:01 PM           2958 SimulatedTemperatureSensor.csproj                                                                                              
     
     ```
-1. Build Sample Code  
+2. Build Sample Code  
     Run dotnet command to build module
 
     ```ps
@@ -467,14 +468,14 @@ Example with `simtemp` and tag `0.0.1`
 
 Now you prepared Azure IoT Edge module ready for the deployment to your Windows 10 device.
 
-In order to deploy the image, you must prepare `Deployment Manifest`.  
+In order to deploy the image, you must prepare `Deployment Manifest`   
 
 In this step, we will create a deployment manifest through Azure Portal.
 
 ### Step 8.1 : IoT Edge Details page
 
 1. Sign to [Azure Portal](https://portal.azure.com)
-1. Navigate to your IoT Edge Device ID  
+2. Navigate to your IoT Edge Device ID  
 
     **IoT Hub** -> **IoT Edge** -> **Your Windows 10 Device ID**
 
@@ -484,7 +485,7 @@ In this step, we will create a deployment manifest through Azure Portal.
     > Runtime Response shows an error status at this point.  
     > This is because there is nothing deployed.  This is expected.
 
-1. Open **Device details** and click **Set modules**
+3. Open **Device details** and click **Set modules**
 
     ![SimTempSensor4](images/IoTEnt-Lab/SimulatedTempSensor4.png)
 
@@ -493,12 +494,12 @@ In this step, we will create a deployment manifest through Azure Portal.
 IoT Edge Runtime needs to pull images from your ACR, so set following information so IoT Edge Runtime can access ACR.  
 Refer to [Step 5.4 : Login to your ACR](#step-54--login-to-your-acr)
 
-|Parameter  |Description  |Example  |
-|---------|---------|---------|
-|Name     | Name of this setting | BootCampACR   |
-|Address     | Your ACR Login Server Address        | iotbootcamp2019acr1.azurecr.io         |
-|User Name   | Your ACR Admin User Name       | iotbootcamp2019acr1        |
-|Password     | Your ACR Password        |         |
+| Parameter | Description                   | Example                        |
+| --------- | ----------------------------- | ------------------------------ |
+| Name      | Name of this setting          | BootCampACR                    |
+| Address   | Your ACR Login Server Address | iotbootcamp2019acr1.azurecr.io |
+| User Name | Your ACR Admin User Name      | iotbootcamp2019acr1            |
+| Password  | Your ACR Password             |                                |
 
 ![SimTempSensor5](images/IoTEnt-Lab/SimulatedTempSensor5.png)
 
@@ -531,7 +532,7 @@ You may copy the contents and share with others so your teammates can deploy you
 > [!WARNING]  
 > Deplyment Manifest contains credential to your ACR.
 
-Review the settings and click **Submit**
+Review the settings and click **Submit** to kickoff the deployment process.
 
 ### Step 8.6 : Monitor deployment progress
 

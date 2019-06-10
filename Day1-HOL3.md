@@ -89,6 +89,7 @@ Note: The Intel Compute Stick is the IoT Core device for this lab.
 
     > [!TIP]  
     > IoT Core Dashboard setup file is already downloaded on your desktop  
+
     > ![IoTCoreDashboardIcon](images/IoTCore-Lab/IoTCoreDashboardIcon.PNG)
 
 - If you do not have installation file, download and install IoT Core Dashboard from: https://docs.microsoft.com/en-us/windows/iot-core/connect-your-device/iotdashboard
@@ -103,6 +104,7 @@ Note: The Intel Compute Stick is the IoT Core device for this lab.
 
     > [!TIP]  
     > Please ensure you are in Powershell Remote Console.  When you see IP Address in the beginning of command prompt, your are in Powershell Remote Console.  If not, please re-connect to your IoT Core device again.  
+
     > ![PSRemote](images/IoTCore-Lab/PSRemotePrompt.png)
     
 ### Step 2.2 : The **Deploy-IoTEdge** command checks that your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime. The command defaults to using Windows containers.
@@ -149,12 +151,12 @@ When you create an Azure Stream Analytics job to run on an IoT Edge device, it n
 
 1. Provide the following values to create your storage account:
 
-   | Field | Value |
-   | ----- | ----- |
-   | Name | Provide a unique name for your storage account. | 
-   | Location | Choose a location close to you. |
-   | Subscription | Choose the same subscription as your IoT hub. |
-   | Resource group | We recommend that you use the same resource group for all of the test resources that you create for all the labs.|
+   | Field          | Value                                                                                                             |
+   | -------------- | ----------------------------------------------------------------------------------------------------------------- |
+   | Name           | Provide a unique name for your storage account.                                                                   |
+   | Location       | Choose a location close to you.                                                                                   |
+   | Subscription   | Choose the same subscription as your IoT hub.                                                                     |
+   | Resource group | We recommend that you use the same resource group for all of the test resources that you create for all the labs. |
 
 1. Keep the default values for the other fields and select **Create**. 
 
@@ -164,13 +166,13 @@ When you create an Azure Stream Analytics job to run on an IoT Edge device, it n
 
 1. Provide the following values to create your job:
 
-   | Field | Value |
-   | ----- | ----- |
-   | Job name | Provide a name for your job. For example, **IoTEdgeJob** | 
-   | Subscription | Choose the same subscription as your IoT hub. |
-   | Resource group | We recommend that you use the same resource group for all of the test resources that you create for all the labs.|
-   | Location | Choose a location close to you. | 
-   | Hosting environment | Select **Edge**. |
+   | Field               | Value                                                                                                             |
+   | ------------------- | ----------------------------------------------------------------------------------------------------------------- |
+   | Job name            | Provide a name for your job. For example, **IoTEdgeJob**                                                          |
+   | Subscription        | Choose the same subscription as your IoT hub.                                                                     |
+   | Resource group      | We recommend that you use the same resource group for all of the test resources that you create for all the labs. |
+   | Location            | Choose a location close to you.                                                                                   |
+   | Hosting environment | Select **Edge**.                                                                                                  |
 
 1. Select **Create**.
 
