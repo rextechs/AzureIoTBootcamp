@@ -146,9 +146,9 @@ From the **IoT Edge** page in Azure Portal, click on the IoT Edge device to open
 
 ### Step 3.2 : Copy Connection String  
 
-Copy the value of either **Connection string (primary key)** or **Connection string (secondary key)**.
+Copy the value of either **Connection string (primary key)** or **Connection string (secondary key)**
 
-1. Click on **Copy button** ![Copy](images/IoTHub-Lab/Copy-Icon.png) to copy into clipboard.
+1. Click on **Copy button** ![Copy](images/IoTHub-Lab/Copy-Icon.png) to copy into clipboard  
   ![CreateIoTEdge7.png](images/IoTHub-Lab/CreateIoTEdge7.png)
 1. Paste and save to a text file for later use
 
@@ -337,7 +337,7 @@ This is different from **Connection String** for your IoT Edge device.  (Sometim
 1. **Shared Access Policies**  
     Open Shared Access Policies page in Azure Portal to retrieve **Connection String** for your IoT Hub  
 1. View **iothubowner**  
-    Open iothubowner to retrieve the connection string
+    Open iothubowner to retrieve the connection string  
     ![DeviceExplorer2](images/WinServer-Lab/DeviceExplorer2.png)
 1. Copy Connection String  
     ![DeviceExplorer3](images/WinServer-Lab/DeviceExplorer3.png)
