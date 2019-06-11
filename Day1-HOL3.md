@@ -563,7 +563,7 @@ Navigate to your IoT Hub page in Azure Portal, then locate your IoT Edge device
 
 ![asa14](images/IoTCore-Lab/ASA14.png)
 
-### Step 9.2 : Add Routes
+### Step 9.3 : Add Routes
 
 IoT Edge modules send and receive data through Azure IoT Edge Runtime.  
 
@@ -607,7 +607,7 @@ Example with **SimulatedTemperatureSensor** and **MyASAonEdgeJob**
 
 ![asa15](images/IoTCore-Lab/ASA15.png)
 
-### Step 9.3 : Check deployment
+### Step 9.4 : Check deployment
 
 Monitor and check deployment progress and results with following commands
 

@@ -265,7 +265,7 @@ Click **Create** to move to the next step
 
 ![SimTempSensor1](images/IoTHub-Lab/SimulatedTempSensor1.png)
 
-### Step 6.4 : Add Modules
+### Step 6.5 : Add Modules
 
 In some cases, you may need to provide additional parameters.  
 
@@ -273,7 +273,7 @@ Click **Next** with default settings
 
 ![SimTempSensor2](images/IoTHub-Lab/SimulatedTempSensor2.png)
 
-### Step 6.5 : Specify Routes
+### Step 6.6 : Specify Routes
 
 You may configure message route to/from IoT Edge modules.
 
@@ -292,7 +292,7 @@ Click **Next** with default settings
 
 Reference : [https://docs.microsoft.com/en-us/azure/iot-edge/module-composition#declare-routes](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition#declare-routes)
 
-### Step 6.6 : Submit deployment request
+### Step 6.7 : Submit deployment request
 
 Click **Submit** to deploy the temperature simulator to the Windows Server
 
