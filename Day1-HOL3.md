@@ -657,73 +657,70 @@ Monitor and check deployment progress and results with following commands
 > [!NOTE]  
 > Simulated Temperature Sensor module stops sending messages after 500 messages.  
 > If you see logs saying **Done sending 500 massages**, restart the module to start sending another 500 messages.  
->  
-> `iotedge restart SimulatedTemperatureSensor`  
+> 
+> To restart SimulatedTemperatureSensor module, run `iotedge restart <your module name>`  
+> E.g. `iotedge restart SimulatedTemperatureSensor`  
 >
-> ```ps
-> iotedge logs -f SimulatedTemperatureSensor
->    :
->  <Snip>
->    :
-> 6/10/2019 6:13:58 AM> Sending message: 495, Body: [{"machine":{"temperature":100.64361063735272,"pressure":10.073322730837651},"ambient":{"temperature":20.681532002138688,"humidity":24},"timeCreated":"2019-06-10T13:13:58.684986Z"}]  
+```ps
+iotedge logs -f SimulatedTemperatureSensor
+   :
+ <Snip>
+   :
+6/10/2019 6:13:58 AM> Sending message: 495, Body: [{"machine":{"temperature":100.64361063735272,"pressure":10.073322730837651},"ambient":{"temperature":20.681532002138688,"humidity":24},"timeCreated":"2019-06-10T13:13:58.684986Z"}]  
 Done sending 500 messages
-> ```
->  
-
-1. Once your Stream Analytics job is published to the storage container that you created, click on the **Configure** of your ASA module to see how a Stream Analytics module is structured. 
-
-   The image URI points to a standard Azure Stream Analytics image. This is the same image used for every job that gets deployed to an IoT Edge device. 
-
-   The module twin is configured with a desired property called **ASAJobInfo**. The value of that property points to the job definition in your storage container. This property is how the Stream Analytics image is configured with your specific job information. 
-
-1. Close the module page.
-
-1. Make a note of the name of your Stream Analytics module because you'll need it in the next step, then select **Next** to continue.
-
-1. Replace the default value in **Routes** with the following code. Update all three instances of _{moduleName}_ with the name of your Azure Stream Analytics module. 
-
-    ```json
-    {
-        "routes": {
-            "telemetryToCloud": "FROM /messages/modules/tempSensor/* INTO $upstream",
-            "alertsToCloud": "FROM /messages/modules/{moduleName}/* INTO $upstream",
-            "alertsToReset": "FROM /messages/modules/{moduleName}/* INTO BrokeredEndpoint(\"/modules/tempSensor/inputs/control\")",
-            "telemetryToAsa": "FROM /messages/modules/tempSensor/* INTO BrokeredEndpoint(\"/modules/{moduleName}/inputs/temperature\")"
-        }
-    }
-    ```
-
-   The routes that you declare here define the flow of data through the IoT Edge device. The telemetry data from tempSensor are sent to IoT Hub and to the **temperature** input that was configured in the Stream Analytics job. The **alert** output messages are sent to IoT Hub and to the tempSensor module to trigger the reset command. 
-
-1. Select **Next**.
-
-1. In the **Review Deployment** step, select **Submit**.
-
-1. Return to the device details page, and then select **Refresh**.  
-
-    You should see the new Stream Analytics module running, along with the IoT Edge agent module and the IoT Edge hub.
-
-    ![tempSensor and ASA module reported by device](images/IoTCore-Lab/module-output2.png)
-
-## Step 7: View the Data
-
-Now you can go to your IoT Edge device to check out the interaction between the Azure Stream Analytics module and the tempSensor module.
-
-1. Check that all the modules are running in Docker:
-
-   ```cmd/sh
-   iotedge list  
-   ```
-   
-   ![Docker output](images/IoTCore-Lab/running-module-list.png)
+```
   
-1. View all system logs and metrics data. Use the Stream Analytics module name:
 
-   ```cmd/sh
-   iotedge logs -f {moduleName}  
-   ```
+## Step 10 : Check ASA Query Result
 
-You should be able to watch the machine's temperature gradually rise until it reaches 70 degrees for 30 seconds. Then the Stream Analytics module triggers a reset, and the machine temperature drops back to 21. 
+The query we created for ASA Edge Job sends **reset** command when a 30-second window reaches 35 degrees.  We also defined Route Rule to send message to Cloud (IoT Hub)
 
-   ![Reset command output into module logs](images/IoTCore-Lab/ASA-Alert-Log.png)
+Confirm this with logs from :  
 
+- Simulated Temperature Sensor log  
+- Device Explorer  
+
+Examples :
+
+- `iotedge logs -f SimulatedTemperatureSensor`  
+  
+```cmd
+        6/11/2019 12:50:19 AM> Sending message: 67, Body: [{"machine":{"temperature":36.115638783139005,"pressure":2.7220347980791271},"ambient":{"temperature":21.238499270630303,"humidity":24},"timeCreated":"2019-06-11T07:50:19.8207774Z"}]
+        6/11/2019 12:50:24 AM> Sending message: 68, Body: [{"machine":{"temperature":36.766889925239084,"pressure":2.796227966166478},"ambient":{"temperature":20.82198495479393,"humidity":25},"timeCreated":"2019-06-11T07:50:24.962392Z"}]
+        6/11/2019 12:50:30 AM> Sending message: 69, Body: [{"machine":{"temperature":37.231523926826895,"pressure":2.84916095368914},"ambient":{"temperature":21.469507630900249,"humidity":26},"timeCreated":"2019-06-11T07:50:30.0242983Z"}]
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Received message Body: [{"command":"reset"}]   <<===========================
+Resetting temperature sensor..
+        6/11/2019 12:50:35 AM> Sending message: 70, Body: [{"machine":{"temperature":21.815419431573442,"pressure":1.0928958846096326},"ambient":{"temperature":20.773474650119187,"humidity":25},"timeCreated":"2019-06-11T07:50:35.1582115Z"}]
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+        6/11/2019 12:50:40 AM> Sending message: 71, Body: [{"machine":{"temperature":22.16299533083243,"pressure":1.1324931389555934},"ambient":{"temperature":20.758661693082498,"humidity":24},"timeCreated":"2019-06-11T07:50:40.2224446Z"}]
+```
+    
+- Device Explorer
+
+![ASA16](images/IoTCore-Lab/ASA16.png) 
+
+## Finished!
+
+You have succesfully deployed ASA Edge job to your Windows 10 IoT Core device.
+
+## Optional Challenger lab
+
+Add Azure Function module to filter data from Simulated Temperature Sensor
+
+### Key Points
+
+- These samples contains dockerfile for Windows and Linux  
+    Please make sure you use Windows Container
+- Module compile/build steps are very similar to what you have done in [Lab 2](Day1-HOL2.md)
+- Use one of two samples moudules as a example
+
+Reference : 
+
+- https://azure.microsoft.com/en-us/resources/samples/azure-functions-iot-timeseries-analytics/
+- https://github.com/Azure/iotedge/tree/master/edge-modules/TemperatureFilter 
+
+Hint :
+- https://github.com/Azure/iotedge/tree/master/edge-modules/functions
+- 
