@@ -347,5 +347,5 @@ This is different from **Connection String** for your IoT Edge device.  (Sometim
 1. Open **Data** tab
 1. Select Device ID of your Windows Server IoT 2019
 1. Click **Monitor**
-1. Confirm Messages are received
+1. Confirm Messages are received  
     ![DeviceExplorer4](images/WinServer-Lab/DeviceExplorer5.png)
