@@ -13,7 +13,7 @@ In this lab you learn how to:
 
 - Azure Subscription  
 
-  If you don't have an active Azure subscription, refer to [Lab 0](Lab0.md) to redeem your Azure pass, or create a [free account](https://azure.microsoft.com/free) before you begin. 
+  If you don't have an active Azure subscription, refer to [Lab 0](Lab0.md) to redeem your Azure pass, or create a [free account](https://azure.microsoft.com/free) before you begin
   
 - Windows Server 2019, which can be a physical or virtual machine  
 
@@ -23,7 +23,7 @@ In this step, we will create an instance of Azure IoT Hub using [Azure Portal](h
 
 ### Step 1.1 : Login to [Azure Portal](https://portal.azure.com)
 
-Open a browser and navigate to http://portal.azure.com, then follow sign in prompt to sign in to your Azure account
+Open a browser and navigate to [http://portal.azure.com](http://portal.azure.com), then follow sign in prompt to sign in to your Azure account
 
 ### Step 1.2 : Create an instance of Azure IoT Hub
 
@@ -56,7 +56,7 @@ IoT Hub support multiple scale and size, hence pricing.  Each tier has different
 For this lab, please select `F1: Free tier for Pricing and scale tier`, then click **Review + create**
 
 > [!NOTE]  
-> Only one `F1 (Free) tier` is avaiable per subscription.  If you already have F1 Hub, you will not able to create 2nd free Hub.
+> Only one `F1 (Free) tier` is available per subscription.  If you already have F1 Hub, you will not able to create 2nd free Hub.
 
 ![CreateIoTHub3](images/IoTHub-Lab/CreateIoTHub3.png)
 
@@ -78,8 +78,7 @@ Wait until your deployment completes.
 > You can also check deployment progress in `Notifications`  
 >  
 > ![CreateIoTHub6](images/IoTHub-Lab/CreateIoTHub6.png)
-
-> [!TIP]  
+>  
 > You may want to **Pin to dashboard** for later use
 
 ## Step 2 : Register a new Azure IoT Edge device
@@ -196,7 +195,7 @@ Please make sure to start Powershell as an **Administrator**
 
 The cmdlet checks whether your Windows machine is on a supported version, turns on the containers feature, and then downloads the moby runtime and the IoT Edge runtime.  
 
-Run the **Deploy-IoTEdge** powershell cmdlet. 
+Run the **Deploy-IoTEdge** powershell cmdlet
 
 ```powershell
 . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge -ContainerOs Windows
@@ -230,7 +229,7 @@ Get-Service iotedge
 
 ## Step 6 : Deploy Simulated Temperature Sensor from Marketplace to Windows Server
 
-IoT Edge is used to connect devices and sensors to cloud. In this lab, we're going to use an existing simulator from Azure Marketplace. 
+IoT Edge is used to connect devices and sensors to cloud. In this lab, we're going to use an existing simulator from Azure Marketplace
 
 Azure Marketplace is an online applications and services marketplace where you can browse through a wide range of enterprise applications and solutions that are certified and optimized to run on Azure, including [IoT Edge modules](https://azuremarketplace.microsoft.com/marketplace/apps/category/internet-of-things?page=1&subcategories=iot-edge-modules).
 
@@ -301,7 +300,7 @@ Click **Submit** to deploy the temperature simulator to the Windows Server
 
 ## Step 7 : Confirm Temperature Simulator Module Deployment  
 
- The simulated temperature sensor module generates environment data that you can use for testing later. The simulated sensor is monitoring both a machine and the environment around the machine. For example, this sensor might be in a server room, on a factory floor, or on a wind turbine. The message includes ambient temperature and humidity, machine temperature and pressure, and a timestamp. 
+ The simulated temperature sensor module generates environment data that you can use for testing later. The simulated sensor is monitoring both a machine and the environment around the machine. For example, this sensor might be in a server room, on a factory floor, or on a wind turbine. The message includes ambient temperature and humidity, machine temperature and pressure, and a timestamp
 
 ### Step 7.1 : Confirm the module is deployed and running
 
@@ -323,7 +322,7 @@ iotedge logs SimulatedTemperatureSensor -f
 
    ![View the data from your module](./images/WinServer-Lab/iotedge-logs.png)
 
-### Step 7.3 : Confirm the messages are recieved by IoT Hub
+### Step 7.3 : Confirm the messages are received by IoT Hub
 
 In this step, we will use Device Explorer to view messages received by IoT Hub.
 
@@ -332,21 +331,21 @@ This is different from **Connection String** for your IoT Edge device.  (Sometim
 
 1. Start Device Explorer  
     > [!TIP]  
-    > Open Device Exploer from the shortcut on your desktop  
-    
-    ![DeviceExploere1](images/WinServer-Lab/DeviceExplorer1.png)
+    > Open Device Explorer from the shortcut on your desktop  
+  
+    ![DeviceExplorer1](images/WinServer-Lab/DeviceExplorer1.png)
 1. **Shared Access Policies**  
     Open Shared Access Policies page in Azure Portal to retrieve **Connection String** for your IoT Hub  
 1. View **iothubowner**  
     Open iothubowner to retrieve the connection string
-    ![DeviceExploere2](images/WinServer-Lab/DeviceExplorer2.png)
+    ![DeviceExplorer2](images/WinServer-Lab/DeviceExplorer2.png)
 1. Copy Connection String  
-    ![DeviceExploere3](images/WinServer-Lab/DeviceExplorer3.png)
+    ![DeviceExplorer3](images/WinServer-Lab/DeviceExplorer3.png)
 1. Enter Connection String to Device Explorer
 1. Click **Update**
-    ![DeviceExploere4](images/WinServer-Lab/DeviceExplorer4.png)
+    ![DeviceExplorer4](images/WinServer-Lab/DeviceExplorer4.png)
 1. Open **Data** tab
 1. Select Device ID of your Windows Server IoT 2019
 1. Click **Monitor**
 1. Confirm Messages are received
-    ![DeviceExploere4](images/WinServer-Lab/DeviceExplorer5.png)
+    ![DeviceExplorer4](images/WinServer-Lab/DeviceExplorer5.png)

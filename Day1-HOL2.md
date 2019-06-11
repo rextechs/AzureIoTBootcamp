@@ -10,8 +10,8 @@ Visual Studio Code (VSCode) has become one of the premier development environmen
 ## Prerequisites
 
 - An instance of IoT Hub from the previous HOL
-- Dot Net Core 2.2
-https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.107-windows-x64-installer
+- .Net Core
+    [https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.107-windows-x64-installer](https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.107-windows-x64-installer)
 
 ## Step 1: Register a new Azure IoT Edge device
 
@@ -80,6 +80,7 @@ In this step, we will install (Deploy) and initialize Azure IoT Edge Runtime to 
 > [!TIP]  
 > In this instruction, we will use `iotedge` command.  If you are familiar with `docker` command, you need to specify host to connect to by specifying `-H npipe:////./pipe/iotedge_moby_engine` parameter.  
 > E.g.  
+>  
 > ```ps
 > docker -H npipe:////./pipe/iotedge_moby_engine ps
 > ```
@@ -92,7 +93,7 @@ Please make sure to start Powershell as an **Administrator**
 
 ### Step 4.2 : Run the **Deploy-IoTEdge** command  
 
-This command checks whether your Windows machine is on a supported version, turns on the containers feature, and then downloads the Moby runtime and the IoT Edge runtime. 
+This command checks whether your Windows machine is on a supported version, turns on the containers feature, and then downloads the Moby runtime and the IoT Edge runtime
 
 ```powershell
 . {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Deploy-IoTEdge -ContainerOs Windows
@@ -168,21 +169,24 @@ Enter values for Registry name and Resource group.
 |Admin user     | This enables "User Name" and "Password" to access ACR.  Set to **Enable** | Enabled          |
 |SKU     | Tier of ACR.  Different tier gives different storage size limit, etc.  Set to **Basic** for this lab         | Basic        |
 
-- ACR Pricing : https://azure.microsoft.com/en-us/pricing/details/container-registry/
-1. When the **Deployment succeeded** message appears, select the container registry in the portal. 
+When the **Deployment succeeded** message appears, select the container registry in the portal.
+
+Reference :
+
+- ACR Pricing : [https://azure.microsoft.com/en-us/pricing/details/container-registry/](https://azure.microsoft.com/en-us/pricing/details/container-registry/)
 
 ### Step 5.3 : Start ACR Deployment
 
 Click **Create** and wait for deployment to finish  
 
 > [!TIP]  
-> You may want to **Pin to dashboard** for later use 
+> You may want to **Pin to dashboard** for later use
 
 ### Step 5.4 : Login to your ACR
 
 ACR is secure container registry, meaning you can control access to your registry.
 
-Later in this lab, you will upload (push) your conatiner image to your container registry.  In order to push your image, you need to be authenticated.
+Later in this lab, you will upload (push) your container image to your container registry.  In order to push your image, you need to be authenticated.
 
 In this step, you will log in to your ACR using **Admin user** credential.
 
@@ -207,8 +211,9 @@ In this step, you will log in to your ACR using **Admin user** credential.
 
     ![AcrCreate5](images/IoTEnt-Lab/ACR-Create5.png)
 
-References :  
-- ACR Authentication : https://docs.microsoft.com/en-us/azure/container-registry/container-registry-authentication
+References :
+
+- ACR Authentication : [https://docs.microsoft.com/en-us/azure/container-registry/container-registry-authentication](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-authentication)
 
 ## Step 6 : Prepare IoT Edge Module Sample
 
@@ -228,14 +233,14 @@ Download (or pull) source code for `Simulated Temperature Sensor` from Github wi
 1. Open Console (CMD), Powershell, or VSCode terminal
 1. Run git command
     Example : Clone to C:\Repo
-    
+  
     ```powershell  
     md c:\Repo
     cd C:\Repo
     git clone https://github.com/Azure/iotedge
     ```
 
-![SimTempSensor1](images/IoTEnt-Lab/SimulatedTempSensor1.png)
+    ![SimTempSensor1](images/IoTEnt-Lab/SimulatedTempSensor1.png)
 
 ### Step 6.2 : Build Sample
 
@@ -243,14 +248,16 @@ Using .Net Core SDK, build sample code.
 
 > [!NOTE]  
 > Make sure your have .Net Core SDK installed on your Windows 10 Dev Machine by running the following command  
+>
 > ```ps  
 > PS C:\repo> dotnet --version  
 > 2.2.204  
 > PS C:\repo>  
-> ``` 
+> ```
+>
 > This command shows version number for .Net Core SDK
 
-Reference : https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.107-windows-x64-installer
+Reference : [https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.107-windows-x64-installer](https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.107-windows-x64-installer)
 
 ### Step 6.3 : Compile Simulated Temperature Sensor module
 
@@ -258,23 +265,24 @@ Before we containerize the module for Azure IoT Edge deployment, compile and run
 
 1. Navigate to `SimulatedTemperatureSensor` directory  
     Navigate to the directory containing source code for `SimulatedTemperatureSensor`  
-    The source code is in <SampleRoot>\edge-modules\SimulatedTemperatureSensor  
+    The source code is in `<SampleRoot>\edge-modules\SimulatedTemperatureSensor`
 
     E.g. : C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor
 
     ```powershell
     PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> dir
-    
+  
         Directory: C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor
-    
-    Mode                LastWriteTime         Length Name                                                                                                                           
-    ----                -------------         ------ ----                                                                                                                           
-    d-----        5/20/2019   8:01 PM                config                                                                                                                         
-    d-----        5/20/2019   8:01 PM                docker                                                                                                                         
-    d-----        5/20/2019   8:01 PM                src                                                                                                                            
-    -a----        5/20/2019   8:01 PM           2958 SimulatedTemperatureSensor.csproj                                                                                              
-    
+  
+    Mode                LastWriteTime         Length Name
+    ----                -------------         ------ ----
+    d-----        5/20/2019   8:01 PM                config
+    d-----        5/20/2019   8:01 PM                docker
+    d-----        5/20/2019   8:01 PM                src
+    -a----        5/20/2019   8:01 PM           2958 SimulatedTemperatureSensor.csproj
+
     ```
+
 1. Build Sample Code  
     Run dotnet command to build module
 
@@ -285,13 +293,13 @@ Before we containerize the module for Azure IoT Edge deployment, compile and run
     This will generate binaries in `C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor\bin\Debug\netcoreapp2.1\win-x64`  
 
     Example Output :
-    
+  
     ```powershell
     PS C:\repo> cd .\iotedge\edge-modules\SimulatedTemperatureSensor\
     PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> dotnet publish -r win-x64
     Microsoft (R) Build Engine version 16.0.450+ga8dc7f1d34 for .NET Core
     Copyright (C) Microsoft Corporation. All rights reserved.
-    
+  
       Restore completed in 6.21 sec for C:\repo\iotedge\edge-util\src\Microsoft.Azure.Devices.Edge.Util\Microsoft.Azure.Devices.Edge.Util.csproj.
       Restore completed in 8.48 sec for C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor\SimulatedTemperatureSensor.csproj.
       Restore completed in 8.59 sec for C:\repo\iotedge\edge-modules\ModuleLib\Microsoft.Azure.Devices.Edge.ModuleUtil.csproj.
@@ -331,6 +339,7 @@ Image name is made up of slash-separated names.  An image can be prefixed with r
 Example : myazureregistry.azurecr.io/myimage
 
 Rules :
+
 - Lowercase letters
 - Digits
 - Separators (`.`, `_`, `-`)
@@ -358,13 +367,13 @@ As a result, we must build **Windows Container** (vs. Linux Container).
     ![Docker1](images/IoTEnt-Lab/Docker1.png)
 
 1. Select **Switch to Windows containers...**  
-    
+  
     ![Docker2](images/IoTEnt-Lab/Docker2.png)
 
 1. Confirm Warning  
 
     ![Docker3](images/IoTEnt-Lab/Docker3.png)
-    
+  
 1. Wait for Docker Desktop to finish switching container type
 
 ### Step 7.2 : Containerize App
@@ -452,7 +461,7 @@ a2bb3d322957: Pushed
 
 ### Step 7.5 : Confirm your image is pushed to your ACR
 
-Check and varify the image is pushed to your ACR
+Check and verify the image is pushed to your ACR
 
 1. Sign to [Azure Portal](https://portal.azure.com)
 1. Navigate to your ACR resource
@@ -511,7 +520,7 @@ The next step is specifying a module to deploy.
 1. Give a name for this module  
     This is the name used by Azure IoT Edege (vs. Module name)
 1. Provide Image URL  
-    The full image path you pushed to your ACR 
+    The full image path you pushed to your ACR
 1. Click **Save**
 1. Click **Next**
 
@@ -525,11 +534,11 @@ Take default route setting and click **Next**
 
 ### Step 8.5 : Review and Submit
 
-The contents displayed in **Review Deployment** page is `Deplyment Manifest`.  
+The contents displayed in **Review Deployment** page is `Deployment Manifest`.  
 You may copy the contents and share with others so your teammates can deploy your module, for example.
 
 > [!WARNING]  
-> Deplyment Manifest contains credential to your ACR.
+> Deployment Manifest contains credential to your ACR.
 
 Review the settings and click **Submit**
 
@@ -547,9 +556,7 @@ iotedge logs -f edgeAgent
 
 Enter `Ctrl + c` to exit from log monitoring, then check with `iotedge list` command to see the list of modules and their status
 
-
-
-Example : 
+Example :
 
 ```ps
 PS C:\repo\iotedge\edge-modules\SimulatedTemperatureSensor> iotedge logs -f edgeAgent
@@ -600,19 +607,19 @@ edgeHub          running          Up 3 minutes     mcr.microsoft.com/azureiotedg
 mysimtempsensor  running          Up 3 minutes     iotbootcamp2019acr1.azurecr.io/simtemp:0.0.1
 ```
 
-## Step 9 : Verify Your Module 
+## Step 9 : Verify Your Module
 
 Please follow the same procedure in the [previous lab](Day1-HOL1.md#step-7--confirm-temperature-simulator-module-deployment) to confirm your module is deployed and running as expected.
 
 - Run `iotedge list` command to confirm the module is deployed and running
 - Run `iotedge logs -f <You Module Name>` to see logs from your module
 - Run `Device Explorer` to see logs are sent to your IoT Hub
- 
+
 ## Step 10 : Clean up
 
 To uninstall Azure IoT Edge, run `uninstall-edge -force` command
 
-Reference : https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-windows#all-installation-parameters 
+Reference : [https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-windows#all-installation-parameters](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-windows#all-installation-parameters)
 
 ## Step 11 : Optional Challenger Step
 
@@ -620,15 +627,17 @@ Deploy IoT Edge with Device Provisioning Service (DPS).
 
 ### Step 11.1 : Create DPS instance
 
-Follow steps described [here](https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#create-a-new-instance-for-the-iot-hub-device-provisioning-service) and [here](https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service) to create a new instnace of DPS
+Follow steps described [here](https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#create-a-new-instance-for-the-iot-hub-device-provisioning-service) and [here](https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service) to create a new instance of DPS
 
-References : 
-- https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#create-a-new-instance-for-the-iot-hub-device-provisioning-service
-- https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service
+References :
+
+- [https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#create-a-new-instance-for-the-iot-hub-device-provisioning-service](https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#create-a-new-instance-for-the-iot-hub-device-provisioning-service)
+- [https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service](https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service)
 
 ### Step 11.2 : Install IoT Edge Runtime with DPS
 
 Follow steps described [here](https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service) to install IoT Edge Runtime with DPS
 
 Reference :
-- https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service
+
+- [https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service](https://docs.microsoft.com/en-us/azure/iot-dps/quick-setup-auto-provision#link-the-iot-hub-and-your-device-provisioning-service)

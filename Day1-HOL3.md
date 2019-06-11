@@ -10,10 +10,10 @@ The Stream Analytics module in this lab calculates the average temperature over 
 
 In this lab, you learn how to:
 
-* How to manupulate Azure Resources from Azure Command Line Interface (AZ CLI)
-* Create an Azure Stream Analytics job to process data on the edge.
-* Connect Azure Stream Analytics job with other IoT Edge modules.
-* Deploy the Azure Stream Analytics job to an Azure IoT Core device.
+- How to manipulate Azure Resources from Azure Command Line Interface (AZ CLI)
+- Create an Azure Stream Analytics job to process data on the edge.
+- Connect Azure Stream Analytics job with other IoT Edge modules.
+- Deploy the Azure Stream Analytics job to an Azure IoT Core device.
 
 Windows IoT Core device is a small device with lesser resources, so we'll be doing most the steps on your lab development machine, then deploy the module to the IoT Core device.
 
@@ -22,11 +22,12 @@ Windows IoT Core device is a small device with lesser resources, so we'll be doi
 - An instance of IoT Hub from the previous HOL
 - IoT Core device, for instance an Intel Compute Stick PC
 - AZ CLI and IoT Extension  
-    They are preinstalled into your HOL Windows 10 Dev Macine
+    They are preinstalled into your HOL Windows 10 Dev Machine
 
 References :
-- AZ CLI : https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest
-- IoT Extension : https://github.com/Azure/azure-iot-cli-extension
+
+- AZ CLI : [https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest)
+- IoT Extension : [https://github.com/Azure/azure-iot-cli-extension](https://github.com/Azure/azure-iot-cli-extension)
 
 ## Step 1 : Register the IoT Core device as an Azure IoT Edge device (On your DevEnv)
 
@@ -61,6 +62,7 @@ This command includes three parameters:
 
 > [!TIP]  
 > If your environment did not have the device-identity extension installed, run the following command  
+>  
 >  ```bash  
 >   az extension add --name azure-cli-iot-ext  
 >```
@@ -185,9 +187,9 @@ Using IoT Core Dashboard, we will
     > IoT Core Dashboard setup file is already downloaded on your desktop  
     > ![IoTCoreDashboardIcon](images/IoTCore-Lab/IoTCoreDashboardIcon.PNG)
   
-    If you do not have installation file, download and install IoT Core Dashboard from: https://docs.microsoft.com/en-us/windows/iot-core/connect-your-device/iotdashboard
+    If you do not have installation file, download and install IoT Core Dashboard from: [https://docs.microsoft.com/en-us/windows/iot-core/connect-your-device/iotdashboard](https://docs.microsoft.com/en-us/windows/iot-core/connect-your-device/iotdashboard)
 
-2. Launch IoT Core Dashboad
+2. Launch IoT Core Dashboard
 3. Open **My devices** tab  
     If there is any Windows 10 IoT Core devices on the same network, they will be listed here
 
@@ -201,38 +203,41 @@ The Intel Compute Stick is the IoT Core device for this lab.
 > Please pick up your Windows 10 IoT Core from instructor  
 > The kit is consist of followings  
 > Kit #1 (With 10 inch HDMI Monitor)
+>
 > - Intel Compute Stick + AC Adapter
 > - HDMI Monitor + AC Adapter
 > - HDMI Extension Cable
 >
 > Kit #2 (With 15" HDMI Monitor)
+>
 > - Intel Compute Stick + AC Adapter
 > - HDMI Monitor + AC Adapter + USB Cable
 > - HDMI cable + Female-Female Adapter  
 
 ### Step 3.1 : Connect to your IoT Core device
 
-1. Launch IoT Core Dashboad
-1. Open `My device` tab and locate your IoT Core device  
+1. Launch IoT Core Dashboard
+1. Open `My device` tab and locate your IoT Core device
+
   > [!TIP]  
   > Please check IP Address of Windows 10 IoT Core device to locate your device
 
-1. Right click on the device and select **Launch Powershell**
-
-  ![IoT Core Dashboard](images/IoTCore-Lab/IoTCoreDashboard.png)
+1. Right click on the device and select **Launch Powershell**  
+    Use following credential to login to Windows 10 IoT Core
 
     > [!NOTE]  
     > IoT Core Credential  
-    > User Name : localhost\administrator
+    > User Name : localhost\administrator  
     > Password  : bootcamp
 
     > [!TIP]  
-    > It may take a minutes or so during the first connection
-
-    > [!TIP]  
+    > It may take a minutes or so during the first remote Powershell connection  
+    >  
     > Please ensure you are in Powershell Remote Console.  When you see IP Address in the beginning of command prompt, your are in Powershell Remote Console.  If not, please re-connect to your IoT Core device again.  
     >  
     > ![PSRemote](images/IoTCore-Lab/PSRemotePrompt.png)
+
+  ![IoT Core Dashboard](images/IoTCore-Lab/IoTCoreDashboard.png)
 
 ### Step 3.2 : Deploy Azure IoT Edge Runtime
 
@@ -243,7 +248,7 @@ Run `Deploy-IoTEdge` cmdlet to deploy the runtime.
 ```
 
 > [!NOTE]  
-> This will require a reboot.  Re-connect to Powreshell Remote Console upon reboot to continue this lab
+> This will require a reboot.  Re-connect to Powershell Remote Console upon reboot to continue this lab
 
 ### Step 3.3 : Initialize Azure IoT Edge Runtime
 
@@ -264,17 +269,20 @@ Run `Deploy-IoTEdge` cmdlet to deploy the runtime.
 Confirm IoT Edge runtime is installed and running on the IoT Core device.  Initialization may take a few minutes.  
 
 - Check the status of the IoT Edge service with `Get-Service` cmdlet
-    
+  
     ```powershell
     Get-Service iotedge
     ```  
 
 - Check running module with `iotedge list` command
+
     ```ps
     iotedge list
     ```
+
     > [!TIP]  
     > Only edgeAgent is expected to be up and running at this point  
+    >
     > ```ps  
     > [10.123.98.82]: PS C:\Data\Users\Administrator\Documents> iotedge list
     > NAME             STATUS           DESCRIPTION      CONFIG  
@@ -282,6 +290,7 @@ Confirm IoT Edge runtime is installed and running on the IoT Core device.  Initi
     > ```
 
 - Check logs from the runtime with `Get-IoTEdgelog` cmdlet
+
     ```ps  
     Get-IoTEdgeLog
     ```
@@ -296,7 +305,7 @@ Deploy Simulated Temperature Sensor module to Windows 10 IoT Core device with on
 Once deployed, please make sure you can see messages from Simulated Temperature Sensor
 
 - Logs from the module `iotedge log -f SimulatedTemperatureSensor` command (Instruction [Here](Day1-HOL1.md#step-72--confirm-messages-are-being-sent))
-- With `Device Explorer` (Instruction [Here](Day1-HOL1.md#step-73--confirm-the-messages-are-recieved-by-iot-hub))
+- With `Device Explorer` (Instruction [Here](Day1-HOL1.md#step-73--confirm-the-messages-are-received-by-iot-hub))
 
 > [!TIP]  
 > Complete og output from `edgeAgent` module during deployment, for your reference.
@@ -358,8 +367,9 @@ In this section, you will create an ASA on IoT Edge job, and deploy to your IoT 
 - Deploy ASA on your Windows 10 IoT Core device
 
 Reference :
-- https://docs.microsoft.com/en-us/azure/stream-analytics/
-- https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-edge 
+
+- [https://docs.microsoft.com/en-us/azure/stream-analytics/](https://docs.microsoft.com/en-us/azure/stream-analytics/)
+- [https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-edge](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-edge)
 
 ## Step 5 : Create a storage account
 
@@ -374,7 +384,7 @@ In this step, we will create a new storage account for your ASA Edge Job.
     Keep all default options for ASA edge job  
     See table below for description and example field data
 
-1. Click on **Review + create**, then **Create** on the next page to start deployment 
+1. Click on **Review + create**, then **Create** on the next page to start deployment
 
     ![StorageAccount2](images/IoTCore-Lab/StorageAccount2.png)
 
@@ -411,16 +421,16 @@ ASA job is consist of a few parts
 |Subscription         | Subscription used for this lab                |                  |
 |Resource Group       | Resource Group you created from previous labs | IoTBootCamp2019        |
 |Location             | Location of data center.  Use the same region as your IoT Hub       | West US        |
-|Hosting environment  | Detemines the job runs in Cloud or Edge.  Select **Edge** | Edge |
+|Hosting environment  | Determines the job runs in Cloud or Edge.  Select **Edge** | Edge |
 
 ## Step 7 : ASA Edge Job Definition
 
 Once your Stream Analytics job is created in the Azure portal, you can configure it with an input, an output, and a query to run on the data that passes through.
 
-Using the three elements of input, output, and query, this section creates a job that : 
+Using the three elements of input, output, and query, this section creates a job that :  
 
 - Receives temperature data from the IoT Edge device as input
-- Runs query to analyze that data in a rolling 30-second window 
+- Runs query to analyze that data in a rolling 30-second window
 - Sends an alert to output if the average temperature in that window goes over 70 degrees
   
     ![asa3](images/IoTCore-Lab/ASA3.png)
@@ -497,9 +507,8 @@ The SQL code sends a reset command to the alert output if the average machine te
 ![asa10](images/IoTCore-Lab/ASA10.png)
 
 Reference :  
-- Window functions : https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-window-functions
 
-
+- Window functions : [https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-window-functions](https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-window-functions)
 
 ## Step 8 : Configure Storage for ASA Job
 
@@ -568,6 +577,7 @@ Route rule defines how messages are sent and received.  In this step, we will ad
 In **Specify Routes** page, modify route rule
 
 > [!IMPORTANT]  
+>
 > - Replace **tempSensor** with your Simulated Temperature Sensor module name  
 >   Check module name with `iotedge list` command in remote Powershell console  
 > - Replace **AsaEdge** with your ASA Edge job name you [created](#step-6--create-a-new-asa-edge-job)
@@ -603,6 +613,7 @@ Monitor and check deployment progress and results with following commands
 
 - `iotedge log edgeAgent`  
     You should see logs like this example
+
     ```bash
     [10.123.98.82]: PS C:\Data\Users\Administrator\Documents> iotedge list
         :
@@ -614,9 +625,10 @@ Monitor and check deployment progress and results with following commands
     2019-06-10 07:45:40.882 -07:00 [INF] - Updated reported properties
     2019-06-10 07:45:46.162 -07:00 [INF] - Updated reported properties
     ```
+
 - `iotedge list`  
     You should see 4 modules in running status  
-    
+  
     ```bash
     [10.123.98.82]: PS C:\Data\Users\Administrator\Documents> iotedge list
     NAME                        STATUS           DESCRIPTION      CONFIG
@@ -625,8 +637,9 @@ Monitor and check deployment progress and results with following commands
     edgeHub                     running          Up 2 hours       mcr.microsoft.com/azureiotedge-hub:1.0
     edgeAgent                   running          Up 2 hours       mcr.microsoft.com/azureiotedge-agent:1.0
     ```
+
 - `iotedge logs <Your ASA on Edge Job Module Name>`  
-    You should see logs liek this example
+    You should see logs like this example
 
     ```bash
     [10.123.98.82]: PS C:\Data\Users\Administrator\Documents> iotedge logs MyASAonEdgeJob
@@ -634,7 +647,7 @@ Monitor and check deployment progress and results with following commands
     2019-06-10 07:45:58.191 -07:00 [INF] - Opened module client connection
     2019-06-10 07:46:01.098 -07:00 [INF] - ASA getting path: https://bootcamphol3stor.blob.core.windows.net/myasajobcontainer/ASAEdgeJobs/e3d2efb5-acca-484c-abe1-ff2ad9e14076/40fb1b37-55bc-4ca5-b403-554d57410901/ASAEdgeJobDefinition.zip?sv=2018-03-28&sr=b&sig=RogFBCpCzyZ4cgInlq8xTM3cii8EVCwiygdcieU7eEI%3D&st=2019-06-10T14%3A21%3A35Z&se=2022-06-10T14%3A31%3A35Z&sp=r
     2019-06-10 07:46:04.285 -07:00 [INF] - Unzip ASA job definition...
-    2019-06-10 07:46:04.531 -07:00 [INF] - Initalizing ASA Engine ...
+    2019-06-10 07:46:04.531 -07:00 [INF] - Initializing ASA Engine ...
     2019-06-10 07:46:11.163 -07:00 [INF] -
     =============================Metrics report=============================
      Errors                                       :                   0
@@ -649,7 +662,7 @@ Monitor and check deployment progress and results with following commands
      OutputEvents                                 :                   0
      DroppedOrAdjustedEvents                      :                   0
     ========================================================================
-    
+  
     2019-06-10 07:46:38.166 -07:00 [INF] - ASA module registered message endpoint : [temperature]
     2019-06-10 07:46:47.252 -07:00 [INF] - Module reported job status successfully, Job Status : Idle, Is Runtime Error : False
     ```
@@ -657,7 +670,7 @@ Monitor and check deployment progress and results with following commands
 > [!NOTE]  
 > Simulated Temperature Sensor module stops sending messages after 500 messages.  
 > If you see logs saying **Done sending 500 massages**, restart the module to start sending another 500 messages.  
-> 
+>  
 > To restart SimulatedTemperatureSensor module, run `iotedge restart <your module name>`  
 > E.g. `iotedge restart SimulatedTemperatureSensor`  
 >
@@ -669,7 +682,6 @@ iotedge logs -f SimulatedTemperatureSensor
 6/10/2019 6:13:58 AM> Sending message: 495, Body: [{"machine":{"temperature":100.64361063735272,"pressure":10.073322730837651},"ambient":{"temperature":20.681532002138688,"humidity":24},"timeCreated":"2019-06-10T13:13:58.684986Z"}]  
 Done sending 500 messages
 ```
-  
 
 ## Step 10 : Check ASA Query Result
 
@@ -696,14 +708,14 @@ Resetting temperature sensor..
 
         6/11/2019 12:50:40 AM> Sending message: 71, Body: [{"machine":{"temperature":22.16299533083243,"pressure":1.1324931389555934},"ambient":{"temperature":20.758661693082498,"humidity":24},"timeCreated":"2019-06-11T07:50:40.2224446Z"}]
 ```
-    
+  
 - Device Explorer
 
-![ASA16](images/IoTCore-Lab/ASA16.png) 
+![ASA16](images/IoTCore-Lab/ASA16.png)
 
-## Finished!
+## Finished
 
-You have succesfully deployed ASA Edge job to your Windows 10 IoT Core device.
+You have successfully deployed ASA Edge job to your Windows 10 IoT Core device.
 
 ## Optional Challenger lab
 
@@ -714,13 +726,13 @@ Add Azure Function module to filter data from Simulated Temperature Sensor
 - These samples contains dockerfile for Windows and Linux  
     Please make sure you use Windows Container
 - Module compile/build steps are very similar to what you have done in [Lab 2](Day1-HOL2.md)
-- Use one of two samples moudules as a example
+- Use one of two samples modules as a example
 
-Reference : 
+Reference :
 
-- https://azure.microsoft.com/en-us/resources/samples/azure-functions-iot-timeseries-analytics/
-- https://github.com/Azure/iotedge/tree/master/edge-modules/TemperatureFilter 
+- [https://azure.microsoft.com/en-us/resources/samples/azure-functions-iot-timeseries-analytics/](https://azure.microsoft.com/en-us/resources/samples/azure-functions-iot-timeseries-analytics/)
+- [https://github.com/Azure/iotedge/tree/master/edge-modules/TemperatureFilter](https://github.com/Azure/iotedge/tree/master/edge-modules/TemperatureFilter)
 
 Hint :
-- https://github.com/Azure/iotedge/tree/master/edge-modules/functions
-- 
+
+- [https://github.com/Azure/iotedge/tree/master/edge-modules/functions](https://github.com/Azure/iotedge/tree/master/edge-modules/functions)
