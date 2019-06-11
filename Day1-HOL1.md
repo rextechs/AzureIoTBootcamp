@@ -342,7 +342,7 @@ This is different from **Connection String** for your IoT Edge device.  (Sometim
 1. Copy Connection String  
     ![DeviceExplorer3](images/WinServer-Lab/DeviceExplorer3.png)
 1. Enter Connection String to Device Explorer
-1. Click **Update**
+1. Click **Update**  
     ![DeviceExplorer4](images/WinServer-Lab/DeviceExplorer4.png)
 1. Open **Data** tab
 1. Select Device ID of your Windows Server IoT 2019
