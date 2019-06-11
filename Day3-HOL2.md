@@ -26,7 +26,7 @@ This HOL consists of 10 major steps and 1 optional step.
 - [Step 2:](#step-2--azure-iot-edge-device) Setup the Azure IoT Edge device in the IoT Hub
 - [Step 3:](#step-3--azure-iot-edge-runtime-environment) Connect to the target device (Ubuntu 18.04 Virtual Machine)
 - [Step 4:](#step-4--clone-source-code) Clone Sample Source Code from Azure Devops
-- [Step 5:](#step-5--azure-container-registry) Setup the Azure Container Registry (ACR) 
+- [Step 5:](#step-5--azure-container-registry) Setup the Azure Container Registry (ACR)
 - [Step 6:](#step-6--modify-sample-code) Modify Sample Source Code
 - [Step 7:](#step-7--build-and-push-container-image) Build and Push IoT Edge module without AI
 - [Step 8:](#step-8--deploy-module) Deploy the container
@@ -73,7 +73,7 @@ Hyper-V Virtual Machines are pre-configured with following settings/software/too
 - VNC Server
 
 > [!IMPORTANT]  
->   
+>  
 > Instructors will provide Hostname and/or IP Address of Ubuntu VM
 
 ### Ubuntu VM Credential
@@ -132,7 +132,6 @@ Using the **Windows 10 DevEnv**, create an IoT Hub if you do not have one.
 > [!TIP]  
 > Pick your favorite tool to create a new IoT Hub
 
-
 | Tool   | Link                                                                                                                     |
 | ------ | ------------------------------------------------------------------------------------------------------------------------ |
 | Portal | [Create an IoT hub using the Azure portal](articles/iot-hub/iot-hub-create-through-portal.md)                            |
@@ -169,14 +168,16 @@ Installing the Azure IoT Edge Runtime to the Hyper-V VM is x steps.
 In order to install the Azure IoT Edge runtime you need a console access.  
 The target Ubuntu installation is pre-configured to accept 2 options:
 
+> [!NOTE]  
+> Instructors will provide you Host Name and/or IP Address of VMs for your use.  
+>  
+> Your Ubuntu VM's Host Name is Ubuntu-[Number]
+
 - Connect with SSH
 - Connect with VNC Viewer
 
 > [!TIP]  
-> Feel Free to install your favorite SSH client and/or VNC Client software to the DevEnv. 
-
-> [!NOTE]  
-> Instructors will provide you Host Name and/or IP Address of VMs for your use
+> Feel Free to install your favorite SSH client and/or VNC Client software to the DevEnv
 
 #### Option 1 : SSH
 
@@ -211,7 +212,7 @@ The target Ubuntu installation is pre-configured to accept 2 options:
   With this setting you do not have to see this warning again.  
    ![VNCViewer](images/IntelligentEdge/VNC3.png)
 
-1. Enter Password `bootcamp` 
+1. Enter Password `bootcamp`
   You may want to select `Remember password` checkbox so you do not need to enter password again  
   ![VNCViewer](images/IntelligentEdge/VNC4.png)
 
@@ -260,7 +261,7 @@ You may use `git` command line or `Git Desktop`.
 ```bash
 md C:\Repo
 cd C:\Repo
-git clone https://cdsiotbootcamp.visualstudio.com/bootcamp2019/_git/IntelligentEdgeHOL 
+git clone https://cdsiotbootcamp.visualstudio.com/bootcamp2019/_git/IntelligentEdgeHOL
 ```
 
 ### Step 4.2 : Clone Source Code
@@ -295,11 +296,10 @@ ACR is used to :
 - The Azure IoT Edge runtime downloads (a.k.a. **Pull**) the Azure IoT Edge module(s) during module deployment
 
 > [!TIP]  
-> Pick your favorite tool to create a new ACR.
-
-> [!TIP]  
-> Make sure to enable Admin Access.  
-> Copy following information to access from the DevEnv
+>  
+> - Pick your favorite tool to create a new ACR  
+> - Make sure to enable Admin Access  
+> - Copy/save Admin Credential for later use
 
 | Tool   | Link                                                                                                                                           |
 | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -384,7 +384,7 @@ This step is required to push the containers to ACR from VSCode.
 
 1. Open `Terminal` in VSCode  
 
-  `ctrl + `` or `[View] menu -> Terminal`
+  **ctrl + \`** or **[View] menu -> Terminal**
 
   ![VSCode](images/IntelligentEdge/VSCode06.png)
 
@@ -422,7 +422,7 @@ Update `.env` file for ACR Login credential
 
 ### Step 6.5 : Video Source URL
 
-1. Open Web Browser and navigate to http://www.youtube.com
+1. Open Web Browser and navigate to [http://www.youtube.com](http://www.youtube.com)
 1. Select any video
 1. `Right Click` on the video window, and select `Copy video URL`  
 
@@ -440,22 +440,22 @@ Update `.env` file for ACR Login credential
 
 ## Step 7 : Build and Push Container Image
 
-Let's build the module and the container and upload (Push) the container to ACR.   
+Let's build the module and the container and upload (Push) the container to ACR
 
 1. Make sure that your docker is running linux container
 
      - Click on the Up arrow at the low right corner of your desktop
-     - Then right click on the docker icon. 
+     - Then right click on the docker icon
      - Select **Switch to Linux Containers...**. If the menu has an item of **Switch to Windows Containers...**, it means that the it's been switched to linux containers already.  
      ![Docker container](images/IntelligentEdge/switch-container.png)
 
-2. Select and right click on `deployment.template.json` in the Explorer pane
+1. Select and right click on `deployment.template.json` in the Explorer pane
 
-3. Click `Build and Push IoT Edge Solution`
+1. Click `Build and Push IoT Edge Solution`
 
     ![Build and Push](images/IntelligentEdge/Step7-01.png)
 
-4. Wait until build and push completes
+1. Wait until build and push completes
   You can see the progress in the `terminal window`
 
 1. Verify `deployment.amd64.json` is generated in `config` folder
@@ -503,11 +503,11 @@ Deploy `YoloModule` container from VSCode.
 
 1. A selection window will appear on the top of VSCode window
 
-2. Navigate to the **config** folder, select **deployment.amd64**, click on the **Select Edge Deployment Manifest** button 
+1. Navigate to the **config** folder, select **deployment.amd64**, click on the **Select Edge Deployment Manifest** button
 
     ![Deploy Module](images/IntelligentEdge/select-deployment-file.png)
 
-3. Check the progress by monitoring `edgeAgent` log  
+1. Check the progress by monitoring `edgeAgent` log  
 
     > [!TIP]  **For Exam!**  
     >  
@@ -519,7 +519,7 @@ Deploy `YoloModule` container from VSCode.
     > `-f` : option is to *follow* logging  
     > `--tail <number>` : show last N lines  
     >  
-    > `sudo docker logs -f YoloModule --tail 100 
+    > `sudo docker logs -f YoloModule --tail 100
   
     Example output
 
@@ -535,7 +535,7 @@ Deploy `YoloModule` container from VSCode.
     2019-05-15 01:34:15.666 +00:00 [INF] - Updated reported properties
     ```
 
-4. Verify `YoloModule` is deployed and running
+1. Verify `YoloModule` is deployed and running
 
     > [!TIP]  **For Exam!**  
     >  
@@ -552,7 +552,7 @@ Deploy `YoloModule` container from VSCode.
     edgeAgent        running          Up 11 hours      mcr.microsoft.com/azureiotedge-agent:1.0
     edgeHub          running          Up 11 hours      mcr.microsoft.com/azureiotedge-hub:1.0
     YoloModule       running          Up 36 seconds    bootcampfy19acr.azurecr.io/yolomodule:step7-8-amd64
-    
+
     iotbootcamp@Ubuntu201:~$ sudo docker ps
     CONTAINER ID        IMAGE                                                 COMMAND                   CREATED             STATUS              PORTS                                                                  NAMES
     2357e72e612b        bootcampfy19acr.azurecr.io/yolomodule:step7-8-amd64   "python -u ./main.py"     3 minutes ago       Up 3 minutes        0.0.0.0:80->80/tcp                                                     YoloModule
@@ -561,7 +561,7 @@ Deploy `YoloModule` container from VSCode.
     ```
 
   > [!TIP]  
-  >   
+  >  
   > VSCode also shows module status  
   > ![VSCode](images/IntelligentEdge/VSCode08.png)
 
@@ -570,13 +570,13 @@ Deploy `YoloModule` container from VSCode.
 Confirm the module is working as expected by accessing the web server.
 
 1. Open the Web Server with IP Address or Ubuntu VM Host Name  
-  Example : http://ubuntu201 or http://192.168.0.120
+  Example : [http://ubuntu201](http://ubuntu201) or
 
-2. You should be able to see video stream
+1. You should be able to see video stream
 
     ![YouTube](images/IntelligentEdge/Youtube02.png)
 
-3. Check logs from `YoloModule`
+1. Check logs from `YoloModule`
 
     ```bash
     iotbootcamp@Ubuntu201:~$ sudo docker logs -f YoloModule --tail 50
@@ -592,7 +592,7 @@ Confirm the module is working as expected by accessing the web server.
     Camera frame size    : 1280x720
            frame size    : 1280x720
     Frame rate (FPS)     : 29
-    
+
     device_twin_callback()
        - status  : COMPLETE
        - payload :
@@ -607,7 +607,7 @@ Confirm the module is working as expected by accessing the web server.
        - Verbose         : 0
        - Inference       : 1
        - VideoSource     : https://www.youtube.com/watch?v=tYcvF8o5GXE
-    
+
     ===> YouTube Video Source
     Start downloading video
     WARNING: Assuming --restrict-filenames since file system encoding cannot encode all characters. Set the LC_ALL environment variable to fix this.
@@ -622,7 +622,7 @@ Confirm the module is working as expected by accessing the web server.
 
 Let's change Youtube video through Module Twin.  
 
-1. In VSCode, `Azure IoT Hub Devices` window, expand the Azure IoT Edge Device until you see `YoloModul`
+1. In VSCode, `Azure IoT Hub Devices` window, expand the Azure IoT Edge Device until you see `YoloModule`
 
 1. Select and right click on `YoloModule`
 1. Select `Edit Module Twin`
@@ -679,9 +679,8 @@ In the sample source code, AI inference code is disabled.  Please re-enable 2 co
   - Line 290 and 291  
     Sends frame (Picture) to Yolo inference
 
-
 > [!TIP]  
->   
+>  
 > You can find the current line number in the right bottom corner of VSCode  
 >  
 > ![VSCode](images/IntelligentEdge/VSCode09.png)
@@ -721,7 +720,7 @@ CONTAINER_MODULE_VERSION=Step10
 
 ### Step 10.3 : Re-Build and deploy new YoloModule
 
-Follow the same procedure in [Step 7](#step-7--build-and-push-container-image) and [Step 8 ](#step-8--deploy-module) to re-build and deploy the new module
+Follow the same procedure in [Step 7](#step-7--build-and-push-container-image) and [Step 8](#step-8--deploy-module) to re-build and deploy the new module
 
 ### Step 10.4 : Confirm the new module is deployed and running
 
@@ -780,10 +779,11 @@ Full Yolo v3 model is available in `Yolo-Full` branch.
 
 1. Clone `Yolo-Full` branch  
   Example : Clone to C:\Repo\YoloFull folder  
-  
-  ```
+
+  ```bash
   git clone https://cdsiotbootcamp.visualstudio.com/bootcamp2019/_git/IntelligentEdgeHOL -b Yolo-Full c:\Repo\YoloFull
   ```
+
 1. Edit `.env` file
 1. Build and Push container
 1. Deploy module
@@ -792,7 +792,7 @@ Full Yolo v3 model is available in `Yolo-Full` branch.
 > [!WARNING]  
 > Pre-trained Yolo v3 model file size is about 240MB.  Clone, push, and pull may take time.
 
-Notice that with Full AI Model, recognition rate is higher but runs slower (FPS) 
+Notice that with Full AI Model, recognition rate is higher but runs slower (FPS)
 
 ## Yolo Pre-trained Model Object List
 
