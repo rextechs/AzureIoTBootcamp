@@ -1,6 +1,6 @@
 # Windows 10 IoT + Azure IoT Edge - Advance Lab (60 Min)
 
-In this lab, you will learn how to :
+Visual Studio Code (VSCode) has become one of the premier development environments with many powerful tools to help developers accelerate the development process.  In this lab, we'll walk you through the process of developing an IoT Edge module and deploying the module to an IoT Edge device using VSCode. You will learn how to:
 
 - Create Azure IoT Edge device id with VSCode
 - Install and initialize Azure IoT Edge Runtime on Windows 10
@@ -57,7 +57,7 @@ In this step, you will create a new IoT Edge Device for your Windows 10 Dev Mach
 
     ![VSCode-IoTEdge3](images/IoTEnt-Lab/VSCode-IoTEdgeDevice3.png)
 
-In the output screen, you see the result of the command. The device info is printed, which includes the **deviceId** that you provided and the **Device Connection String** that you can use to connect your physical device to your IoT hub.
+In the **output** screen, you see the result of the command. The device info is printed, which includes the **deviceId** that you provided and the **Device Connection String** that you can use to connect your physical device to your IoT hub.
 
 ## Step 3 : Retrieve the device connection string
 
@@ -65,7 +65,7 @@ When you're ready to set up your device, you need the connection string that lin
 
 1. Right-click on the ID of your device in the **Azure IoT Hub Devices** section.
 
-2. Select **Copy Device Connection String**.
+2. Select **Copy Device Connection String**
 
     ![VSCode-IoTEdge4](images/IoTEnt-Lab/VSCode-IoTEdgeDevice4.png)
 
@@ -73,9 +73,9 @@ The connection string is copied to your clipboard.
 
 You can also select **Get Device Info** from the right-click menu to see all the device info, including the connection string, in the output window.
 
-## Step 4 : Install IoT Edge on Windows 10
+## Step 4 : Install IoT Edge on Windows 10 Enterprise
 
-In this step, we will install (Deploy) and initialize Azure IoT Edge Runtime to your Windows 10
+In this step, we will install (Deploy) and initialize Azure IoT Edge Runtime to your Windows 10 Enterprise
 
 > [!TIP]  
 > In this instruction, we will use `iotedge` command.  If you are familiar with `docker` command, you need to specify host to connect to by specifying `-H npipe:////./pipe/iotedge_moby_engine` parameter.  
@@ -467,9 +467,9 @@ Example with `simtemp` and tag `0.0.1`
 
 Now you prepared Azure IoT Edge module ready for the deployment to your Windows 10 device.
 
-In order to deploy the image, you must prepare `Deployment Manifest`.  
+In order to deploy the image, you must prepare `Deployment Manifest`  
 
-In this step, we will create a deployment manifest through Azure Portal.
+In this step, we will create a deployment manifest through Azure Portal  
 
 ### Step 8.1 : IoT Edge Details page
 
