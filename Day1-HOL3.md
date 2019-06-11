@@ -183,7 +183,6 @@ Using IoT Core Dashboard, we will
 
     > [!TIP]  
     > IoT Core Dashboard setup file is already downloaded on your desktop  
-
     > ![IoTCoreDashboardIcon](images/IoTCore-Lab/IoTCoreDashboardIcon.PNG)
   
     If you do not have installation file, download and install IoT Core Dashboard from: https://docs.microsoft.com/en-us/windows/iot-core/connect-your-device/iotdashboard
