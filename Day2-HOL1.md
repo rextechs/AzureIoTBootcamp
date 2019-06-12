@@ -34,9 +34,9 @@ Click on **Create a resource** and click on **Internet of Things**. Then click o
 
 ![Create IoTHub](images/IoTHub-Lab/04_Create_IoTHub.png)
 
-Make sure you select the resource group you created in previous step. 
+Make sure you select the resource group you created in previous step.
 
-In the Name field, enter a unique name for your IoT hub. 
+In the Name field, enter a unique name for your IoT hub.
 
 > [!NOTE]  
 > IoT Hub Name : The name of your IoT hub must be **unique** across all IoT hubs.
@@ -58,7 +58,7 @@ Give your device a descriptive **Device ID** and click **Save**.
 
 ![Save IoTHub Device](images/IoTHub-Lab/register-device2.png)
 
-Select your device and copy the connection string. Save the connection string to use later in the lab. 
+Select your device and copy the connection string. Save the connection string to use later in the lab.
 
 ![Device Connection String](images/IoTHub-Lab/connection-string.png)
 
@@ -103,7 +103,7 @@ IoT projects rely on internet connectivity. Use the following instructions to co
 
 ### Enter AP mode
 
-Hold down button B, push and release the reset button, and then release button B.   
+Hold down button B, push and release the reset button, and then release button B.
 
 Your DevKit enters AP mode for configuring Wi-Fi. The screen displays the service set identifier (SSID) of the DevKit and the configuration portal IP address.
 
@@ -117,7 +117,7 @@ Now, use another Wi-Fi enabled device (computer or mobile phone) to connect to t
 
 ### Configure Wi-Fi for the DevKit
 
-Open **192.168.0.1** in the browser. Select the Wi-Fi that you want the IoT DevKit connect to, type the Wi-Fi password, then paste the device connection string you made note of previously. Then click **Save**. 
+Open **[192.168.0.1](http://192.168.0.1)** in the browser. Select the Wi-Fi that you want the IoT DevKit connect to, type the Wi-Fi password, then paste the device connection string you made note of previously. Then click **Save**.
 
 ![Wi-Fi](images/IoTHub-Lab/Wifi-Setup.png)
 
@@ -139,48 +139,38 @@ After Wi-Fi is configured, your credentials will persist on the device for that 
 
 ### Configure Azure IoT Tools
 
+> [!NOTE]  
+> VSCode extensions are pre-installed to your lab machine.  This is for your reference in case you would like to build your own development environment
+
 Follow these steps to prepare the development environment for DevKit:
 
 1. *If the Arduino extension is already installed, you can skip this step.* Launch VS Code, look for **Arduino** in the extension marketplace and install it. This extension provides enhanced experiences for developing on Arduino platform.
+
     ![Install Arduino](images/IoTHub-Lab/install-arduino.png)
 
-    > [!NOTE]  
-    > Arduino IDE and VSCode Extension is already installed
+1. *If the Azure IoT Tools extension is already installed, you can skip this step.* Look for **Azure IoT Tools** in the extension marketplace and install it.
 
-2. *If the Azure IoT Tools extension is already installed, you can skip this step.* Look for **Azure IoT Tools** in the extension marketplace and install it.
     ![Install Azure IoT Tools](images/IoTHub-Lab/install-azure-iot-tools.png)
 
-3. Configure VS Code with Arduino settings.
+1. Configure VS Code with Arduino settings.
 
     In Visual Studio Code, click `F1` to open the command palette. Then click search for and select **"Open Settings (JSON)"** to open the **settings.json** file.
     ![Install Azure IoT Tools](images/IoTHub-Lab/open-settings.png)
-    
-    Add following lines to configure Arduino depending on your platform: 
 
-    * **Windows**:
-      
-        ```json
-        "arduino.path": "C:\\Program Files (x86)\\Arduino",
-        "arduino.additionalUrls": "https://raw.githubusercontent.com/VSChina/azureiotdevkit_tools/master/package_azureboard_index.json"
-        ```
+    Add following lines to configure Arduino depending on your platform:
 
-    * **macOS**:
+    ```json
+    "arduino.path": "C:\\Program Files (x86)\\Arduino",
+    "arduino.additionalUrls": "https://raw.githubusercontent.com/VSChina/azureiotdevkit_tools/master/package_azureboard_index.json"
+    ```
 
-        ```json
-        "arduino.path": "/Applications",
-        "arduino.additionalUrls": "https://raw.githubusercontent.com/VSChina/azureiotdevkit_tools/master/package_azureboard_index.json"
-        ```
+    > [!IMPORTANT]  
+    > Make sure you add **,** to the end of 4th line  
 
-    * **Ubuntu**:
-    
-        Replace the **{username}** placeholder below with your username.
+    ![settings](images/Settings.png)
 
-        ```json
-        "arduino.path": "/home/{username}/Downloads/arduino-1.8.8",
-        "arduino.additionalUrls": "https://raw.githubusercontent.com/VSChina/azureiotdevkit_tools/master/package_azureboard_index.json"
-        ```
+1. Click `F1` to open the command palette, type and select **Arduino: Board Manager**. Search for **AZ3166** and install the latest version.
 
-4. Click `F1` to open the command palette, type and select **Arduino: Board Manager**. Search for **AZ3166** and install the latest version.
     ![Install DevKit SDK](images/IoTHub-Lab/install-az3166-sdk.png)
 
 Now you are all set with preparing and configuring your development environment. Let us build the “Hello World” sample for IoT: sending temperature telemetry data to Azure IoT Hub.
@@ -199,7 +189,6 @@ Now you are all set with preparing and configuring your development environment.
 ### Select IoT Hub and device
 
 In the new opened project window, click `F1` to open the command palette, type and select **Azure IoT Device Workbench: Provision Azure Services...**. Follow the step by step guide to select your Azure IoT Hub and IoT Hub device.
-
 
 ### Configure and compile device code
 
@@ -256,16 +245,16 @@ You can use [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemNam
 
 You have successfully connected an MXChip IoT DevKit to your IoT hub, and you have sent the captured sensor data to your IoT hub.
 
-## Optional Challenger Lab 
+## Optional Challenger Lab
 
-### How to save your telemetry data to a Cold storage? 
+### How to save your telemetry data to a Cold storage?
 
 >[!Tip]
->1. Create an AZure Storage Account 
+>1. Create an AZure Storage Account
 >2. Add an Endpoint to your IoT Hub which links to your created Azure Storage Account
->3. Add a Route to your IoT Hub to save telemetry data to your new Endpoint 
+>3. Add a Route to your IoT Hub to save telemetry data to your new Endpoint
 
-References: 
-- https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+References:
+- <https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal>
 
 - https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-messages-d2c
