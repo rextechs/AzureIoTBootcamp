@@ -37,23 +37,25 @@
 
 [Connect to Azure IoT Hub using MXChip](Day2-HOL1.md) 
 
-### Lab 2 : Device Provisioning Service 
+### Lab 2 : Create Azure Time Series Insights and Visualize Device Data 
 
 **Duration**: 60 minutes
 
-[Device Provisioning Service](Day2-HOL2.md)
+[Time Series Insights Lab](Day2-HOL2.md)
 
-### Lab 3 : Create Azure Time Series Insights and Visualize Device Data
+### Lab 3 : Capture Device Events and Send Notifications
 
 **Duration**: 60 minutes
 
-[Time Series Insights Lab](Day2-HOL3.md) 
+[Capture Device Events and Send Notifications](Day2-HOL3.md) 
 
-### Lab 4: Capture Device Events and Send Notifications
+### Lab 4: Device Provisioning Service 
 
-**Duration**: 30 minutes
+**Duration**: 60 minutes
 
-[Capture Device Events and Send Notifications](Day2-HOL4.md)
+[Device Provisioning Service](Day2-HOL4.md)
+
+
 
 ## Day 3
 
