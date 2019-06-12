@@ -304,7 +304,7 @@ Deploy Simulated Temperature Sensor module to Windows 10 IoT Core device with on
 
 Once deployed, please make sure you can see messages from Simulated Temperature Sensor
 
-- Logs from the module `iotedge log -f SimulatedTemperatureSensor` command (Instruction [Here](Day1-HOL1.md#step-72--confirm-messages-are-being-sent))
+- Logs from the module `iotedge logs -f SimulatedTemperatureSensor` command (Instruction [Here](Day1-HOL1.md#step-72--confirm-messages-are-being-sent))
 - With `Device Explorer` (Instruction [Here](Day1-HOL1.md#step-73--confirm-the-messages-are-received-by-iot-hub))
 
 > [!TIP]  
