@@ -55,7 +55,7 @@ In this section, you will add a configuration to the Device Provisioning service
 
 ## Save a Unique Device Secret on device security storage
 
-Auto-provisioning can be configured on a device based on the device's [attestation mechanism](concepts-security.md). The MXChip IoT DevKit uses the [Device Identity Composition Engine](https://trustedcomputinggroup.org/wp-content/uploads/Foundational-Trust-for-IOT-and-Resource-Constrained-Devices.pdf) from the [Trusted Computing Group](https://trustedcomputinggroup.org). A **Unique Device Secret** (UDS) saved in an STSAFE security chip ([STSAFE-A100](https://microsoft.github.io/azure-iot-developer-kit/docs/understand-security-chip/)) on the DevKit is used to generate the device's unique [X.509 certificate](concepts-security.md#x509-certificates). The certificate is used later for the enrollment process in the Device Provisioning service, and during registration at runtime.
+Auto-provisioning can be configured on a device based on the device's [attestation mechanism](concepts-security.md#attestation-mechanism). The MXChip IoT DevKit uses the [Device Identity Composition Engine](https://trustedcomputinggroup.org/wp-content/uploads/Foundational-Trust-for-IOT-and-Resource-Constrained-Devices.pdf) from the [Trusted Computing Group](https://trustedcomputinggroup.org). A **Unique Device Secret** (UDS) saved in an STSAFE security chip ([STSAFE-A100](https://microsoft.github.io/azure-iot-developer-kit/docs/understand-security-chip/)) on the DevKit is used to generate the device's unique [X.509 certificate](concepts-security.md#x509-certificates). The certificate is used later for the enrollment process in the Device Provisioning service, and during registration at runtime.
 
 A typical UDS is a 64-character string, as seen in the following sample:
 
@@ -100,16 +100,16 @@ In device code, you need to specify the [Device provisioning endpoint](/azure/io
 
 ## Generate X.509 certificate
 
-The [attestation mechanism](concepts-security.md#attestation-mechanism) used by this sample is X.509 certificate. You need to use a utility to generate it.
+The [attestation mechanism](/azure/iot-dps/concepts-device#attestation-mechanism) used by this sample is X.509 certificate. You need to use a utility to generate it.
 
 > [!NOTE]
 > The X.509 certificate generator only supports Windows now.
 
 1. In VS Code, click `F1`, type and select **Open New Terminal** to open terminal window.
 
-2. Run `dps_cert_gen.exe` in `tool` folder.
+1. Run `dps_cert_gen.exe` in `tool` folder.
 
-3. Specify the compiled binary file location as `..\.build\DevKitDPS`. Then paste the **UDS** and **registrationId** you just noted down. 
+1. Specify the compiled binary file location as `..\.build\DevKitDPS`. Then paste the **UDS** and **registrationId** you just noted down. 
   ![Generate X.509](images/how-to-connect-mxchip-iot-devkit/gen-x509.png)
 
 1. A `.pem` X.509 certificate generates in the same folder.
