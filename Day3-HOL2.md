@@ -46,7 +46,7 @@ In this lab, laptops / Surface Pro are pre-configured with following software/to
   - [Azure IoT Edge Extension](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-edge)
   - [Docker Extension](https://marketplace.visualstudio.com/items?itemName=PeterJausovec.vscode-docker)
   - [Azure IoT Toolkit Extension](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-toolkit)
-- Git tools  
+- Git tool(s)  
   [Git command line](https://git-scm.com/) tool as well as [Github Desktop](https://desktop.github.com/) are pre-installed in DevEnv
 - [Docker Desktop for Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows)
 - [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/)
@@ -74,7 +74,8 @@ Hyper-V Virtual Machines are pre-configured with following settings/software/too
 
 > [!IMPORTANT]  
 >  
-> Instructors will provide Hostname and/or IP Address of Ubuntu VM
+> Instructors will provide Hostname and/or IP Address of Ubuntu VM  
+> VM hostnames are in **Ubuntu-[number on your badge]
 
 ### Ubuntu VM Credential
 
@@ -277,15 +278,6 @@ Git Desktop provides GUI environment, which may be more convenient.
 1. Clone the sample source code from `https://cdsiotbootcamp@dev.azure.com/cdsiotbootcamp/bootcamp2019/_git/IntelligentEdgeHOL`
 
 ![GitDesktop](images/IntelligentEdge/GitDesktop.png)
-
-### Step 4.3 : Uninstall Moby and install Docker for Windows
-
-Run this in `Admin Powershell` console
-
-```ps
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Uninstall-IoTEdge -f
-choco install -y docker-desktop
-```
 
 ## Step 5 : Azure Container Registry
 
