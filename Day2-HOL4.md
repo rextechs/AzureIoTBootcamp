@@ -137,3 +137,16 @@ Press the **Reset** button on your DevKit. You should see **DPS Connected!** on 
 ## Finished!
 
 You have successfully set up autoprovisioning and registered a device with IoT Hub Device Provisioning Service. 
+
+
+## Optional Challenger Lab: 
+
+### Throughout the device lifecycle, there are needs at different stage for example disenroll a device, or change the certicate of a device. How to accomplish common tasks like that? 
+
+>[!Tip]
+>Device Prosioning Service provides capabilities to help manage  a device's life cycle. Take a closer look at the options available under Manage Enrollment.  
+
+References: 
+- https://docs.microsoft.com/en-us/azure/iot-dps/how-to-reprovision
+- https://docs.microsoft.com/en-us/azure/iot-dps/how-to-reprovision
+- https://docs.microsoft.com/en-us/azure/iot-dps/how-to-unprovision-devices
