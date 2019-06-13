@@ -202,6 +202,8 @@ The target Ubuntu installation is pre-configured to accept 2 options:
 
 #### Option 2 : VNC
 
+If you choose VNC to control Ubuntu, please access Azure Portal so you can copy and paste data such as Connection String.  You **cannot** copy & paste between VNC session and your Windows.
+
 1. Start VNC Client on **Windows 10 DevEnv**  
   ![VNCViewer](images/IntelligentEdge/VNC1.png)
 
@@ -311,7 +313,7 @@ Before we compile and build container, several settings have to be saved in the 
 
 1. Select `IntelligentEdgeHOL` folder you cloned the sample code in the [previous step](#step-4--clone-source-code)  
     Example :  `C:\Repo\IntelligentEdgeHOL`
-
+  
     ![VSCode](images/IntelligentEdge/VSCode01.png)
 
 ### Step 6.1 : Login to Azure
@@ -327,7 +329,7 @@ This step is required so your can access IoT Hub and the Azure IoT Edge Devices 
 
 1. Complete the sign in process using browser
   Browser should automatically open with Sign in page  
-
+  
   ![VSCode](images/IntelligentEdge/VSCode05.png)
 
 ### Step 6.2 : Retrieve ACR Credential
@@ -435,11 +437,15 @@ Update `.env` file for ACR Login credential
 Let's build the module and the container and upload (Push) the container to ACR
 
 1. Make sure that your docker is running linux container
+  
+  - Right click on Docker Icon in Task Tray  
+  ![Docker1](images/IoTEnt-Lab/Docker1.png)
 
-     - Click on the Up arrow at the low right corner of your desktop
-     - Then right click on the docker icon
-     - Select **Switch to Linux Containers...**. If the menu has an item of **Switch to Windows Containers...**, it means that the it's been switched to linux containers already.  
-     ![Docker container](images/IntelligentEdge/switch-container.png)
+  - Select **Switch to Linux Containers...**  
+  
+  If the menu says **Switch to Windows Containers...**, Docker Desktop is already running Linux containers.
+
+    ![Docker container](images/IntelligentEdge/switch-container.png)
 
 1. Select and right click on `deployment.template.json` in the Explorer pane
 
@@ -495,10 +501,6 @@ Deploy `YoloModule` container from VSCode.
 
 1. A selection window will appear on the top of VSCode window
 
-1. Navigate to the **config** folder, select **deployment.amd64**, click on the **Select Edge Deployment Manifest** button
-
-    ![Deploy Module](images/IntelligentEdge/select-deployment-file.png)
-
 1. Check the progress by monitoring `edgeAgent` log  
 
     > [!TIP]  **For Exam!**  
@@ -552,10 +554,10 @@ Deploy `YoloModule` container from VSCode.
     46771922a8b9        mcr.microsoft.com/azureiotedge-agent:1.0              "/bin/sh -c 'echo \"$…"   12 hours ago        Up 12 hours                                                                                edgeAgent
     ```
 
-  > [!TIP]  
-  >  
-  > VSCode also shows module status  
-  > ![VSCode](images/IntelligentEdge/VSCode08.png)
+    > [!TIP]  
+    >  
+    > VSCode also shows module status  
+    > ![VSCode](images/IntelligentEdge/VSCode08.png)
 
 ### Step 8.2 : Verify the deployment results
 
@@ -668,7 +670,7 @@ In the sample source code, AI inference code is disabled.  Please re-enable 2 co
     Imports AI Inference Class)
   - Line 69  
     Initialization of the class
-  - Line 290 and 291  
+  - Line 293 and 294  
     Sends frame (Picture) to Yolo inference
 
 > [!TIP]  
@@ -723,7 +725,6 @@ Example
 
 ```bash
 iotbootcamp@Ubuntu201:~$ sudo iotedge list
-[sudo] password for iotbootcamp:
 NAME             STATUS           DESCRIPTION      CONFIG
 edgeHub          running          Up a minute      mcr.microsoft.com/azureiotedge-hub:1.0
 edgeAgent        running          Up a minute      mcr.microsoft.com/azureiotedge-agent:1.0
