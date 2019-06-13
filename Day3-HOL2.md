@@ -260,7 +260,7 @@ You may use `git` command line or `Git Desktop`.
 ```bash
 md C:\Repo
 cd C:\Repo
-git clone https://cdsiotbootcamp.visualstudio.com/bootcamp2019/_git/IntelligentEdgeHOL 
+git clone https://cdsiotbootcamp.visualstudio.com/bootcamp2019/_git/IntelligentEdgeHOL
 ```
 
 ### Step 4.2 : Clone Source Code
