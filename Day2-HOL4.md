@@ -55,7 +55,7 @@ In this section, you will add a configuration to the Device Provisioning service
 
 ## Save a Unique Device Secret on device security storage
 
-Auto-provisioning can be configured on a device based on the device's [attestation mechanism](concepts-security.md#attestation-mechanism). The MXChip IoT DevKit uses the [Device Identity Composition Engine](https://trustedcomputinggroup.org/wp-content/uploads/Foundational-Trust-for-IOT-and-Resource-Constrained-Devices.pdf) from the [Trusted Computing Group](https://trustedcomputinggroup.org). A **Unique Device Secret** (UDS) saved in an STSAFE security chip ([STSAFE-A100](https://microsoft.github.io/azure-iot-developer-kit/docs/understand-security-chip/)) on the DevKit is used to generate the device's unique [X.509 certificate](concepts-security.md#x509-certificates). The certificate is used later for the enrollment process in the Device Provisioning service, and during registration at runtime.
+Auto-provisioning can be configured on a device based on the device's [attestation mechanism](https://docs.microsoft.com/en-us/azure/iot-dps/concepts-security#attestation-mechanism). The MXChip IoT DevKit uses the [Device Identity Composition Engine](https://trustedcomputinggroup.org/wp-content/uploads/Foundational-Trust-for-IOT-and-Resource-Constrained-Devices.pdf) from the [Trusted Computing Group](https://trustedcomputinggroup.org). A **Unique Device Secret** (UDS) saved in an STSAFE security chip ([STSAFE-A100](https://microsoft.github.io/azure-iot-developer-kit/docs/understand-security-chip/)) on the DevKit is used to generate the device's unique [X.509 certificate](concepts-security.md#x509-certificates). The certificate is used later for the enrollment process in the Device Provisioning service, and during registration at runtime.
 
 A typical UDS is a 64-character string, as seen in the following sample:
 
@@ -100,7 +100,7 @@ In device code, you need to specify the [Device provisioning endpoint](/azure/io
 
 ## Generate X.509 certificate
 
-The [attestation mechanism](/azure/iot-dps/concepts-device#attestation-mechanism) used by this sample is X.509 certificate. You need to use a utility to generate it.
+The [attestation mechanism](https://docs.microsoft.com/en-us/azure/iot-dps/concepts-security#attestation-mechanism) used by this sample is X.509 certificate. You need to use a utility to generate it.
 
 > [!NOTE]
 > The X.509 certificate generator only supports Windows now.
@@ -137,3 +137,16 @@ Press the **Reset** button on your DevKit. You should see **DPS Connected!** on 
 ## Finished!
 
 You have successfully set up autoprovisioning and registered a device with IoT Hub Device Provisioning Service. 
+
+
+## Optional Challenger Lab: 
+
+### Throughout the device lifecycle, there are needs at different stage for example disenroll a device, or change the certicate of a device. How to accomplish common tasks like that? 
+
+>[!Tip]
+>Device Prosioning Service provides capabilities to help manage  a device's life cycle. Take a closer look at the options available under Manage Enrollment.  
+
+References: 
+- https://docs.microsoft.com/en-us/azure/iot-dps/how-to-reprovision
+- https://docs.microsoft.com/en-us/azure/iot-dps/how-to-reprovision
+- https://docs.microsoft.com/en-us/azure/iot-dps/how-to-unprovision-devices

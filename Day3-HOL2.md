@@ -26,7 +26,7 @@ This HOL consists of 10 major steps and 1 optional step.
 - [Step 2:](#step-2--azure-iot-edge-device) Setup the Azure IoT Edge device in the IoT Hub
 - [Step 3:](#step-3--azure-iot-edge-runtime-environment) Connect to the target device (Ubuntu 18.04 Virtual Machine)
 - [Step 4:](#step-4--clone-source-code) Clone Sample Source Code from Azure Devops
-- [Step 5:](#step-5--azure-container-registry) Setup the Azure Container Registry (ACR) 
+- [Step 5:](#step-5--azure-container-registry) Setup the Azure Container Registry (ACR)
 - [Step 6:](#step-6--modify-sample-code) Modify Sample Source Code
 - [Step 7:](#step-7--build-and-push-container-image) Build and Push IoT Edge module without AI
 - [Step 8:](#step-8--deploy-module) Deploy the container
@@ -46,7 +46,7 @@ In this lab, laptops / Surface Pro are pre-configured with following software/to
   - [Azure IoT Edge Extension](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-edge)
   - [Docker Extension](https://marketplace.visualstudio.com/items?itemName=PeterJausovec.vscode-docker)
   - [Azure IoT Toolkit Extension](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-toolkit)
-- Git tools  
+- Git tool(s)  
   [Git command line](https://git-scm.com/) tool as well as [Github Desktop](https://desktop.github.com/) are pre-installed in DevEnv
 - [Docker Desktop for Windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows)
 - [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/)
@@ -73,8 +73,9 @@ Hyper-V Virtual Machines are pre-configured with following settings/software/too
 - VNC Server
 
 > [!IMPORTANT]  
->   
-> Instructors will provide Hostname and/or IP Address of Ubuntu VM
+>  
+> Instructors will provide Hostname and/or IP Address of Ubuntu VM  
+> VM hostnames are in **Ubuntu-[number on your badge]
 
 ### Ubuntu VM Credential
 
@@ -132,12 +133,11 @@ Using the **Windows 10 DevEnv**, create an IoT Hub if you do not have one.
 > [!TIP]  
 > Pick your favorite tool to create a new IoT Hub
 
-
-|Tool     |Link     |
-|---------|---------|
-|Portal   |[Create an IoT hub using the Azure portal](articles/iot-hub/iot-hub-create-through-portal.md)           |
-|AZ CLI   |[Create an IoT hub using the Azure CLI](articles/iot-hub/iot-hub-create-using-cli.md)         |
-|VSCode   |[Create an IoT hub using the Azure IoT Tools for Visual Studio Code](articles/iot-hub/iot-hub-create-use-iot-toolkit.md)         |
+| Tool   | Link                                                                                                                     |
+| ------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Portal | [Create an IoT hub using the Azure portal](articles/iot-hub/iot-hub-create-through-portal.md)                            |
+| AZ CLI | [Create an IoT hub using the Azure CLI](articles/iot-hub/iot-hub-create-using-cli.md)                                    |
+| VSCode | [Create an IoT hub using the Azure IoT Tools for Visual Studio Code](articles/iot-hub/iot-hub-create-use-iot-toolkit.md) |
 
 ## Step 2 : Azure IoT Edge Device
 
@@ -146,11 +146,11 @@ Using the **Windows 10 DevEnv**, create an IoT Edge Device in the IoT Hub from [
 > [!TIP]  
 > Pick your favorite tool to create a new Azure IoT Edge device.
 
-|Tool     |Link     |
-|---------|---------|
-|Portal   |[Register a new Azure IoT Edge device from the Azure portal](articles/iot-edge/how-to-register-device-portal.md)         |
-|AZ CLI   |[Register a new Azure IoT Edge device with Azure CLI](articles/iot-edge/how-to-register-device-cli.md)         |
-|VSCode   |[Register a new Azure IoT Edge device from Visual Studio Code](articles/iot-edge/how-to-register-device-vscode.md)         |
+| Tool   | Link                                                                                                               |
+| ------ | ------------------------------------------------------------------------------------------------------------------ |
+| Portal | [Register a new Azure IoT Edge device from the Azure portal](articles/iot-edge/how-to-register-device-portal.md)   |
+| AZ CLI | [Register a new Azure IoT Edge device with Azure CLI](articles/iot-edge/how-to-register-device-cli.md)             |
+| VSCode | [Register a new Azure IoT Edge device from Visual Studio Code](articles/iot-edge/how-to-register-device-vscode.md) |
 
 Please verify you can see the Azure IoT Edge Device in VSCode `Azure IoT Hub Devices` pane in the left bottom corner of VSCode UI.
 
@@ -169,14 +169,16 @@ Installing the Azure IoT Edge Runtime to the Hyper-V VM is x steps.
 In order to install the Azure IoT Edge runtime you need a console access.  
 The target Ubuntu installation is pre-configured to accept 2 options:
 
+> [!NOTE]  
+> Instructors will provide you Host Name and/or IP Address of VMs for your use.  
+>  
+> Your Ubuntu VM's Host Name is Ubuntu-[Number]
+
 - Connect with SSH
 - Connect with VNC Viewer
 
 > [!TIP]  
-> Feel Free to install your favorite SSH client and/or VNC Client software to the DevEnv. 
-
-> [!NOTE]  
-> Instructors will provide you Host Name and/or IP Address of VMs for your use
+> Feel Free to install your favorite SSH client and/or VNC Client software to the DevEnv
 
 #### Option 1 : SSH
 
@@ -200,6 +202,8 @@ The target Ubuntu installation is pre-configured to accept 2 options:
 
 #### Option 2 : VNC
 
+If you choose VNC to control Ubuntu, please access Azure Portal so you can copy and paste data such as Connection String.  You **cannot** copy & paste between VNC session and your Windows.
+
 1. Start VNC Client on **Windows 10 DevEnv**  
   ![VNCViewer](images/IntelligentEdge/VNC1.png)
 
@@ -211,7 +215,7 @@ The target Ubuntu installation is pre-configured to accept 2 options:
   With this setting you do not have to see this warning again.  
    ![VNCViewer](images/IntelligentEdge/VNC3.png)
 
-1. Enter Password `bootcamp` 
+1. Enter Password `bootcamp`
   You may want to select `Remember password` checkbox so you do not need to enter password again  
   ![VNCViewer](images/IntelligentEdge/VNC4.png)
 
@@ -277,15 +281,6 @@ Git Desktop provides GUI environment, which may be more convenient.
 
 ![GitDesktop](images/IntelligentEdge/GitDesktop.png)
 
-### Step 4.3 : Uninstall Moby and install Docker for Windows
-
-Run this in `Admin Powershell` console
-
-```ps
-. {Invoke-WebRequest -useb aka.ms/iotedge-win} | Invoke-Expression; Uninstall-IoTEdge -f
-choco install -y docker-desktop
-```
-
 ## Step 5 : Azure Container Registry
 
 On the **Windows 10 DevEnv laptop**, create an instance of Azure Container Registry (ACR).  
@@ -295,17 +290,16 @@ ACR is used to :
 - The Azure IoT Edge runtime downloads (a.k.a. **Pull**) the Azure IoT Edge module(s) during module deployment
 
 > [!TIP]  
-> Pick your favorite tool to create a new ACR.
+>  
+> - Pick your favorite tool to create a new ACR  
+> - Make sure to enable Admin Access  
+> - Copy/save Admin Credential for later use
 
-> [!TIP]  
-> Make sure to enable Admin Access.  
-> Copy following information to access from the DevEnv
-
-|Tool     |Link     |
-|---------|---------|
-|Portal   |[Create a private container registry using the Azure portal](articles/container-registry/container-registry-get-started-portal.md)         |
-|AZ CLI   |[Quickstart: Create a private container registry using the Azure CLI](articles/container-registry/container-registry-get-started-azure-cli.md)       |
-|VSCode   |[Create a private container registry using Azure PowerShell](articles/container-registry/container-registry-get-started-powershell.md)        |
+| Tool   | Link                                                                                                                                           |
+| ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Portal | [Create a private container registry using the Azure portal](articles/container-registry/container-registry-get-started-portal.md)             |
+| AZ CLI | [Quickstart: Create a private container registry using the Azure CLI](articles/container-registry/container-registry-get-started-azure-cli.md) |
+| VSCode | [Create a private container registry using Azure PowerShell](articles/container-registry/container-registry-get-started-powershell.md)         |
 
 ## Step 6 : Project Preparation
 
@@ -319,7 +313,7 @@ Before we compile and build container, several settings have to be saved in the 
 
 1. Select `IntelligentEdgeHOL` folder you cloned the sample code in the [previous step](#step-4--clone-source-code)  
     Example :  `C:\Repo\IntelligentEdgeHOL`
-
+  
     ![VSCode](images/IntelligentEdge/VSCode01.png)
 
 ### Step 6.1 : Login to Azure
@@ -335,7 +329,7 @@ This step is required so your can access IoT Hub and the Azure IoT Edge Devices 
 
 1. Complete the sign in process using browser
   Browser should automatically open with Sign in page  
-
+  
   ![VSCode](images/IntelligentEdge/VSCode05.png)
 
 ### Step 6.2 : Retrieve ACR Credential
@@ -384,7 +378,7 @@ This step is required to push the containers to ACR from VSCode.
 
 1. Open `Terminal` in VSCode  
 
-  `ctrl + `` or `[View] menu -> Terminal`
+  **ctrl + \`** or **[View] menu -> Terminal**
 
   ![VSCode](images/IntelligentEdge/VSCode06.png)
 
@@ -422,7 +416,7 @@ Update `.env` file for ACR Login credential
 
 ### Step 6.5 : Video Source URL
 
-1. Open Web Browser and navigate to http://www.youtube.com
+1. Open Web Browser and navigate to [http://www.youtube.com](http://www.youtube.com)
 1. Select any video
 1. `Right Click` on the video window, and select `Copy video URL`  
 
@@ -440,7 +434,18 @@ Update `.env` file for ACR Login credential
 
 ## Step 7 : Build and Push Container Image
 
-Let's build the module and the container and upload (Push) the container to ACR.   
+Let's build the module and the container and upload (Push) the container to ACR
+
+1. Make sure that your docker is running linux container
+  
+  - Right click on Docker Icon in Task Tray  
+  ![Docker1](images/IoTEnt-Lab/Docker1.png)
+
+  - Select **Switch to Linux Containers...**  
+  
+  If the menu says **Switch to Windows Containers...**, Docker Desktop is already running Linux containers.
+
+    ![Docker container](images/IntelligentEdge/switch-container.png)
 
 1. Select and right click on `deployment.template.json` in the Explorer pane
 
@@ -476,11 +481,11 @@ Deployment Manifest describes followings:
 
 There are multiple ways you can deploy modules
 
-|Tool     |Link     |
-|---------|---------|
-|Portal   |[Deploy Azure IoT Edge modules from the Azure portal](articles/iot-edge/how-to-deploy-modules-portal.md)         |
-|AZ CLI   |[Deploy Azure IoT Edge modules with Azure CLI](articles/iot-edge/how-to-deploy-modules-cli.md) |
-|VSCode   |[Deploy Azure IoT Edge modules from Visual Studio Code](articles/iot-edge/how-to-deploy-modules-vscode.md)        |
+| Tool   | Link                                                                                                       |
+| ------ | ---------------------------------------------------------------------------------------------------------- |
+| Portal | [Deploy Azure IoT Edge modules from the Azure portal](articles/iot-edge/how-to-deploy-modules-portal.md)   |
+| AZ CLI | [Deploy Azure IoT Edge modules with Azure CLI](articles/iot-edge/how-to-deploy-modules-cli.md)             |
+| VSCode | [Deploy Azure IoT Edge modules from Visual Studio Code](articles/iot-edge/how-to-deploy-modules-vscode.md) |
 
 More on [Deployment Manifest](articles/iot-edge/module-composition.md)
 
@@ -494,11 +499,7 @@ Deploy `YoloModule` container from VSCode.
 
     ![Deploy Module](images/IntelligentEdge/Step8-01.png)
 
-1. `Command Palett` will appear on the top of VSCode window
-
-1. Select the Azure IoT Edge device from the list
-
-    ![Deploy Module](images/IntelligentEdge/Step8-02.png)
+1. A selection window will appear on the top of VSCode window
 
 1. Check the progress by monitoring `edgeAgent` log  
 
@@ -512,7 +513,7 @@ Deploy `YoloModule` container from VSCode.
     > `-f` : option is to *follow* logging  
     > `--tail <number>` : show last N lines  
     >  
-    > `sudo docker logs -f YoloModule --tail 100 
+    > `sudo docker logs -f YoloModule --tail 100
   
     Example output
 
@@ -545,7 +546,7 @@ Deploy `YoloModule` container from VSCode.
     edgeAgent        running          Up 11 hours      mcr.microsoft.com/azureiotedge-agent:1.0
     edgeHub          running          Up 11 hours      mcr.microsoft.com/azureiotedge-hub:1.0
     YoloModule       running          Up 36 seconds    bootcampfy19acr.azurecr.io/yolomodule:step7-8-amd64
-    
+
     iotbootcamp@Ubuntu201:~$ sudo docker ps
     CONTAINER ID        IMAGE                                                 COMMAND                   CREATED             STATUS              PORTS                                                                  NAMES
     2357e72e612b        bootcampfy19acr.azurecr.io/yolomodule:step7-8-amd64   "python -u ./main.py"     3 minutes ago       Up 3 minutes        0.0.0.0:80->80/tcp                                                     YoloModule
@@ -553,23 +554,23 @@ Deploy `YoloModule` container from VSCode.
     46771922a8b9        mcr.microsoft.com/azureiotedge-agent:1.0              "/bin/sh -c 'echo \"$…"   12 hours ago        Up 12 hours                                                                                edgeAgent
     ```
 
-  > [!TIP]  
-  >   
-  > VSCode also shows module status  
-  > ![VSCode](images/IntelligentEdge/VSCode08.png)
+    > [!TIP]  
+    >  
+    > VSCode also shows module status  
+    > ![VSCode](images/IntelligentEdge/VSCode08.png)
 
 ### Step 8.2 : Verify the deployment results
 
 Confirm the module is working as expected by accessing the web server.
 
 1. Open the Web Server with IP Address or Ubuntu VM Host Name  
-  Example : http://ubuntu201 or http://192.168.0.120
+  Example : [http://ubuntu201](http://ubuntu201) or
 
-2. You should be able to see video stream
+1. You should be able to see video stream
 
     ![YouTube](images/IntelligentEdge/Youtube02.png)
 
-3. Check logs from `YoloModule`
+1. Check logs from `YoloModule`
 
     ```bash
     iotbootcamp@Ubuntu201:~$ sudo docker logs -f YoloModule --tail 50
@@ -585,7 +586,7 @@ Confirm the module is working as expected by accessing the web server.
     Camera frame size    : 1280x720
            frame size    : 1280x720
     Frame rate (FPS)     : 29
-    
+
     device_twin_callback()
        - status  : COMPLETE
        - payload :
@@ -600,7 +601,7 @@ Confirm the module is working as expected by accessing the web server.
        - Verbose         : 0
        - Inference       : 1
        - VideoSource     : https://www.youtube.com/watch?v=tYcvF8o5GXE
-    
+
     ===> YouTube Video Source
     Start downloading video
     WARNING: Assuming --restrict-filenames since file system encoding cannot encode all characters. Set the LC_ALL environment variable to fix this.
@@ -615,7 +616,7 @@ Confirm the module is working as expected by accessing the web server.
 
 Let's change Youtube video through Module Twin.  
 
-1. In VSCode, `Azure IoT Hub Devices` window, expand the Azure IoT Edge Device until you see `YoloModul`
+1. In VSCode, `Azure IoT Hub Devices` window, expand the Azure IoT Edge Device until you see `YoloModule`
 
 1. Select and right click on `YoloModule`
 1. Select `Edit Module Twin`
@@ -669,12 +670,11 @@ In the sample source code, AI inference code is disabled.  Please re-enable 2 co
     Imports AI Inference Class)
   - Line 69  
     Initialization of the class
-  - Line 290 and 291  
+  - Line 293 and 294  
     Sends frame (Picture) to Yolo inference
 
-
 > [!TIP]  
->   
+>  
 > You can find the current line number in the right bottom corner of VSCode  
 >  
 > ![VSCode](images/IntelligentEdge/VSCode09.png)
@@ -714,7 +714,7 @@ CONTAINER_MODULE_VERSION=Step10
 
 ### Step 10.3 : Re-Build and deploy new YoloModule
 
-Follow the same procedure in [Step 7](#step-7--build-and-push-container-image) and [Step 8 ](#step-8--deploy-module) to re-build and deploy the new module
+Follow the same procedure in [Step 7](#step-7--build-and-push-container-image) and [Step 8](#step-8--deploy-module) to re-build and deploy the new module
 
 ### Step 10.4 : Confirm the new module is deployed and running
 
@@ -725,7 +725,6 @@ Example
 
 ```bash
 iotbootcamp@Ubuntu201:~$ sudo iotedge list
-[sudo] password for iotbootcamp:
 NAME             STATUS           DESCRIPTION      CONFIG
 edgeHub          running          Up a minute      mcr.microsoft.com/azureiotedge-hub:1.0
 edgeAgent        running          Up a minute      mcr.microsoft.com/azureiotedge-agent:1.0
@@ -773,10 +772,11 @@ Full Yolo v3 model is available in `Yolo-Full` branch.
 
 1. Clone `Yolo-Full` branch  
   Example : Clone to C:\Repo\YoloFull folder  
-  
-  ```
+
+  ```bash
   git clone https://cdsiotbootcamp.visualstudio.com/bootcamp2019/_git/IntelligentEdgeHOL -b Yolo-Full c:\Repo\YoloFull
   ```
+
 1. Edit `.env` file
 1. Build and Push container
 1. Deploy module
@@ -785,7 +785,7 @@ Full Yolo v3 model is available in `Yolo-Full` branch.
 > [!WARNING]  
 > Pre-trained Yolo v3 model file size is about 240MB.  Clone, push, and pull may take time.
 
-Notice that with Full AI Model, recognition rate is higher but runs slower (FPS) 
+Notice that with Full AI Model, recognition rate is higher but runs slower (FPS)
 
 ## Yolo Pre-trained Model Object List
 
