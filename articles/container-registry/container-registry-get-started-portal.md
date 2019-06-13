@@ -14,17 +14,17 @@ Sign in to the Azure portal at https://portal.azure.com.
 
 Select **Create a resource** > **Containers** > **Container Registry**.
 
-![Creating a container registry in the Azure portal][qs-portal-01]
+![container1](media/container-registry-get-started-portal/qs-portal-01.png)
 
 Enter values for **Registry name** and **Resource group**. The registry name must be unique within Azure, and contain 5-50 alphanumeric characters. For this quickstart create a new resource group in the `West US` location named `myResourceGroup`, and for **SKU**, select 'Basic'. Select **Create** to deploy the ACR instance.
 
-![Create container registry in the Azure portal][qs-portal-03]
+![container2](media/container-registry-get-started-portal/qs-portal-02.png)
 
 In this quickstart you create a *Basic* registry, which is a cost-optimized option for developers learning about Azure Container Registry. For details on available service tiers, see [Container registry SKUs][container-registry-skus].
 
 When the **Deployment succeeded** message appears, select the container registry in the portal. 
 
-![Container registry Overview in the Azure portal][qs-portal-05]
+![container5](media/container-registry-get-started-portal/qs-portal-05.png)
 
 Take note of the value of the **Login server**. You use this value in the following steps while working with your registry with the Azure CLI and Docker.
 
